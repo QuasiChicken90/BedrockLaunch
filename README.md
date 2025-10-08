@@ -7,6 +7,9 @@ A fully functional (prototype) minecraft Bedrock launcher
 - Enable developer mode in settings
 - Download release from [releases](https://github.com/QuasiChicken90/BedrockLaunch/releases/)
 
+# ⚠️ Warning
+- When installing a new version and starting it for the first time, all resource packs, worlds, and other content will be deleted!
+
 # 🔨 Building
 - Create a python virtual environment
 - Go into the venv and run BuildLauncher.py
