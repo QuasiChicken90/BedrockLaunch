@@ -2,6 +2,7 @@
 A fully functional (prototype) minecraft Bedrock launcher
 
 <img width="1484" height="962" alt="image" src="https://github.com/user-attachments/assets/8ac27d8a-f4a4-424c-a5db-ab72ca04c736" />
+<img width="1481" height="960" alt="image" src="https://github.com/user-attachments/assets/6a9e6ce3-eed8-4c2f-ba7b-438abbe3c317" />
 
 # 🚀 Installation
 - Enable developer mode in settings
