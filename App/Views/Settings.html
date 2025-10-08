@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launcher | Settings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    * {
+        font-family: 'Inter', sans-serif;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background: #1e1e1e;
+    }
+
+    html, body {
+        background: transparent;
+    }
+    
+    .LauncherContainer {
+        width: 100%;
+        height: 100vh;
+    }
+
+    .LauncherVideo {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+        z-index: -1;
+    }
+
+.windowControls {
+    position: fixed;
+    top: 32px;
+    right: 32px;
+    z-index: 999;
+    width: 40px;              
+    height: 40px;             
+    display: flex;            
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+    border-radius: 100%;      
+}
+    .windowControls svg.closeButton:active {
+        filter: brightness(0.4)
+    }
+
+.sideBar {
+    position: fixed; 
+    top: 50%;        
+    left: 50%;     
+    transform: translate(-190%, -50%);
+    
+    width: 372px;
+    height: 900px;
+    
+    background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
+    box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25),
+                inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+                inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+    backdrop-filter: blur(15px);
+    border-radius: 37px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+    justify-content: flex-start; 
+    padding-top: 30px;      
+    gap: 20px;    
+    z-index: 9999;          
+}
+
+.btnActiveTab {
+    width: 90%;
+    height: 60px;
+    padding: 15px 20px;
+    background-color: rgb(37, 95, 255);
+    color: white;
+    font-weight: 500;
+    border: none;
+    border-radius: 15px;
+}
+
+.btnInactiveTab {
+    width: 90%;
+    height: 60px;
+    padding: 15px 20px;
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    font-weight: 500;
+    border: none;
+    border-radius: 15px;
+}
+
+.btnInactiveTab:active {
+    filter: opacity(0.5) !important;
+}
+
+button:active {
+    filter: brightness(1.5);
+}
+
+.sideBar button {
+    width: 90%;
+    height: 60px;
+    padding: 0 20px;         
+    color: white;
+    font-weight: 500;
+    border: none;
+    border-radius: 15px;
+
+    display: flex;           
+    align-items: center;  
+    gap: 15px;               
+    font-size: 18px;       
+}
+
+.sideBar button i {
+    font-size: 22px;         
+    width: 30px;              
+    text-align: center;       
+}
+
+.btnPlay {
+    position: absolute;
+    width: 352px;
+    height: 91px;
+    border: none;
+    background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
+    box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+    backdrop-filter: blur(4px);
+    border-radius: 256px;
+    font-weight: 900;
+    font-size: 27px;
+    color: white;
+
+    /* positioning 😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭 */
+    bottom: 10%;
+    left: 62%;
+    transform: translate(-50%, 0);
+    
+    
+
+}
+.btnPlay i {
+    font-size: 32px; 
+    color: white;   
+}
+
+.btnPlay:active {
+    background-color: rgb(37, 95, 255, 0.5);
+}
+
+.Settings {
+    position: fixed;
+    top: 1%;
+    left: 30%;
+    color: white;
+    font-size: 30px;
+    font-weight: 700;
+    z-index: 256;
+}
+
+.UpperDepthEffect {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(180deg, rgb(0, 0, 0) 0%, rgba(30, 30, 30, 0) 100%);
+    pointer-events: none;
+    z-index: 0;
+    backdrop-filter: blur(3px);
+}
+
+.SettingsOptions {
+    position: fixed;
+    top: 10%;
+    left: 30%;
+    width: 90%;
+    height: 150%;
+    background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
+    box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25),
+                inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+                inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+    backdrop-filter: blur(15px);
+    border-radius: 37px;
+    padding: 30px;
+    color: white;
+    z-index: 999;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.btnSaveAll {
+    top: 80%;
+    left: 30%;
+    width: 10%;
+    height: 60px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-weight: 500;
+    border: none;
+    border-radius: 15px;
+    font-size: 20px;
+}
+
+.btnSaveAll:active {
+    filter: brightness(1.5);
+}
+
+.dropdown {
+    top: 80%;
+    left: 30%;
+    width: 10%;
+    height: 60px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-weight: 500;
+    border: none;
+    border-radius: 15px;
+    font-size: 20px;
+    text-align: center;         
+    text-align-last: center;   
+    padding: 0;              
+    appearance: none;           
+    line-height: 60px;            
+}
+
+
+</style>
+
+<script>
+
+</script>
+
+<body>
+
+
+
+<div class="LauncherContainer">
+
+    <div onclick="location.href = '/launcher/quit'" class="windowControls">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="white" class="closeButton">
+            <path d="M18 6L6 18M6 6l12 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </div>
+
+
+    <video autoplay muted loop class="LauncherVideo">
+        <source src="{{ themePath }}" type="video/mp4">
+        Failed to load theme. Video not supported.
+    </video>
+
+<div class="sideBar">
+    <button onclick="location.href = '/'" class="btnInactiveTab">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </button>
+    <button onclick="location.href = '/launcher/library'" class="btnInactiveTab">
+        <i class="fas fa-book"></i>
+        <span>Library</span>
+    </button>
+    <button class="btnActiveTab">
+        <i class="fas fa-cog"></i>
+        <span>Settings</span>
+    </button>
+</div>
+
+    <h3 class="Settings">Settings</h3>
+    <div class="UpperDepthEffect"></div>
+
+    <div class="SettingsOptions">
+        <h4>App Theme</h4>
+        <p>Theme Numbers: 1, 2, 3, 4 (enter a number in the input box)</p>
+        <form id="themeForm" action="/launcher/settings/theme" method="get">
+            <input type="text" name="number" class="dropdown" id="themeSelect">
+            <button class="btnSaveAll" type="submit">Set</button>
+        </form>
+
+    </div>
+
+
+</div>
+
+</body>
+</html>
