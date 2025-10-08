@@ -1,0 +1,8 @@
+{
+    "wv_frameless_window": true,
+    "wv_easy_drag": "true",
+    "wv_confirm_close": true,
+    "win_dpi_awareness": true,
+    "win_dpi_awareness_level": 2,
+    "app_themeBG": "http://localhost:21934/launcherfiles/Themes/2.mp4"
+}
