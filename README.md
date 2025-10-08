@@ -19,3 +19,4 @@ A fully functional (prototype) minecraft Bedrock launcher
 - Some installer/launching code used from [here](github.com/CrystalVortex/Minecraft-Bedrock-Version-Manager/tree/TestVersion-9)
 - Theme backgrounds from [Qklid](https://pixabay.com/users/qkild-35912031/)
 - Version lists from [ddf8196, mc-w10-versiondb-auto-update](https://github.com/ddf8196/mc-w10-versiondb-auto-update)
+- Appx downloader from [tinytengu](https://github.com/tinytengu/python-bedrock-appx) (user is no longer active)
