@@ -15,5 +15,6 @@ A fully functional (prototype) minecraft Bedrock launcher
 - Go into the venv and run BuildLauncher.py
 
 # 📃 Credits
-- Some code used from [here](github.com/CrystalVortex/Minecraft-Bedrock-Version-Manager/tree/TestVersion-9)
+- Some installer/launching code used from [here](github.com/CrystalVortex/Minecraft-Bedrock-Version-Manager/tree/TestVersion-9)
 - Themes from [Qklid](https://pixabay.com/users/qkild-35912031/)
+- 
