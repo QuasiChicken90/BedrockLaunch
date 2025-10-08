@@ -1,0 +1,6 @@
+flask
+pywebview
+
+requests
+
+pyinstaller
