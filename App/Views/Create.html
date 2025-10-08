@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launcher | Create</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+</head>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    * {
+        font-family: 'Inter', sans-serif;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background: #1e1e1e;
+    }
+
+    html, body {
+        background: transparent;
+    }
+    
+    .LauncherContainer {
+        width: 100%;
+        height: 100vh;
+    }
+
+    .LauncherVideo {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+        z-index: -1;
+    }
+
+.windowControls {
+    position: fixed;
+    top: 32px;
+    right: 32px;
+    z-index: 999;
+    width: 40px;              
+    height: 40px;             
+    display: flex;            
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+    border-radius: 100%;      
+}
+    .windowControls svg.closeButton:active {
+        filter: brightness(0.4)
+    }
+
+.sideBar {
+    position: fixed; 
+    top: 50%;        
+    left: 50%;     
+    transform: translate(-190%, -50%);
+    
+    width: 372px;
+    height: 900px;
+    
+    background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
+    box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25),
+                inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+                inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+    backdrop-filter: blur(15px);
+    border-radius: 37px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+    justify-content: flex-start; 
+    padding-top: 30px;      
+    gap: 20px;         
+    z-index: 99999;     
+}
+
+.btnActiveTab {
+    width: 90%;
+    height: 60px;
+    padding: 15px 20px;
+    background-color: rgb(37, 95, 255);
+    color: white;
+    font-weight: 500;
+    border: none;
+    border-radius: 15px;
+}
+
+.btnInactiveTab {
+    width: 90%;
+    height: 60px;
+    padding: 15px 20px;
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    font-weight: 500;
+    border: none;
+    border-radius: 15px;
+}
+
+.btnInactiveTab:active {
+    filter: opacity(0.5) !important;
+}
+
+button:active {
+    filter: brightness(1.5);
+}
+
+.sideBar button {
+    width: 90%;
+    height: 60px;
+    padding: 0 20px;         
+    color: white;
+    font-weight: 500;
+    border: none;
+    border-radius: 15px;
+
+    display: flex;           
+    align-items: center;  
+    gap: 15px;               
+    font-size: 18px;       
+}
+
+.sideBar button i {
+    font-size: 22px;         
+    width: 30px;              
+    text-align: center;       
+}
+
+.btnPlay {
+    position: absolute;
+    width: 352px;
+    height: 91px;
+    border: none;
+    background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
+    box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+    backdrop-filter: blur(4px);
+    border-radius: 256px;
+    font-weight: 900;
+    font-size: 27px;
+    color: white;
+
+    /* positioning 😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭 */
+    bottom: 10%;
+    left: 62%;
+    transform: translate(-50%, 0);
+    
+    
+
+}
+.btnPlay i {
+    font-size: 32px; 
+    color: white;   
+}
+
+.btnPlay:active {
+    background-color: rgb(37, 95, 255, 0.5);
+}
+
+.UpperDepthEffect {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(180deg, rgb(0, 0, 0) 0%, rgba(30, 30, 30, 0) 100%);
+    pointer-events: none;
+    z-index: 512;
+    backdrop-filter: blur(0px);
+}
+
+.Create {
+    position: fixed;
+    top: 1%;
+    left: 30%;
+    color: white;
+    font-size: 30px;
+    font-weight: 700;
+    z-index: 9999;
+}
+
+input[list="versions"] {
+    position: absolute;
+    width: 50%;
+    padding: 10px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
+    box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+    backdrop-filter: blur(4px);
+    font-size: 14px;
+    border: none;
+    color: white;
+    top: 70%;            
+    left: 63%;       
+    transform: translate(-50%, -50%); 
+}
+
+
+  input[list="versions"]::placeholder {
+    color: white;
+    opacity: 1; 
+}
+
+.promptCreating {
+    width: 550px;
+    height: 350px;
+    position: absolute;
+    top: 48%;
+    left: 64%;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;   
+    gap: 15px;               
+    background: rgba(25, 25, 25, 0.719);
+    border: 1px solid #555555;
+    box-shadow: 0px 0px 0px 1px #000000;
+    border-radius: 15px;
+    z-index: 100000;
+    padding: 20px;          
+    opacity: 0%;
+    backdrop-filter: blur(25px);
+}
+
+.progress-bar {
+  width: 100%;         
+  max-width: 400px;        
+  height: 6px;             
+  background-color: #333;     
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.progress-fill {
+  width: 30%;            
+  height: 100%;
+  background: linear-gradient(90deg, #1e90ff, #007bff);
+  border-radius: 3px;
+  animation: move 1.5s linear infinite;
+}
+
+@keyframes move {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}
+</style>
+
+<script>
+</script>
+
+<body>
+
+    <h3 class="Create">Create</h3>
+    <div class="UpperDepthEffect"></div>
+
+    <div class="LauncherContainer">
+
+        <div onclick="location.href = '/launcher/quit'" class="windowControls">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="white" class="closeButton">
+                <path d="M18 6L6 18M6 6l12 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </div>
+
+
+        <video id="video" autoplay muted loop class="LauncherVideo">
+            <source src="{{ themePath }}" type="video/mp4"> Failed to load theme. Video not supported.
+        </video>
+
+        <div>
+
+
+            <form onsubmit="event.preventDefault(); create();" type="none" id="createForm">
+                <label for="version">Select Minecraft Bedrock Version:</label>
+                <input list="versions" name="version" id="version" placeholder="Select/Search version...">
+                <datalist id="versions">
+                    {% for version in fullBedrockVersionList %}
+                    <option value="{{ version }}">
+                        {% endfor %}
+                </datalist>
+                <button class="btnPlay" id="createInstance">Create</button>
+            </form>
+
+
+
+
+
+            <div id="creating" class="promptCreating">
+
+                <h2 style="color:white;">Creating</h2>
+                <p style="color: white;">This may take a few minutes</p>
+                <p style="color: white;">When finished, this popup will close</p>
+
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+
+            </div>
+
+
+
+            <script>
+                function create() {
+                    const version = document.getElementById("version").value;
+                    if (version) {
+                        const createPopup = document.getElementById("creating");
+                        const bg = document.getElementById("video");
+                        createPopup.style.opacity = "100%";
+                        bg.style.filter = "brightness(40%)";
+                        document.getElementById("createForm").remove();
+                        async function waitForOK(url) {
+                            try {
+                                const res = await fetch(url, { timeout: 0 });
+                                const text = (await res.text()).trim();
+
+                                if (text === "OK") {
+                                    location.href = "/launcher/library";
+                                } else {
+                                    alert("Error: " + text);
+                                    location.href = "/launcher/library";
+                                }
+                            } catch (err) {
+                                alert("Request failed: " + err);
+                            }
+                        }
+
+
+                        waitForOK(`/launcher/api/create/${version}`);
+
+
+                    } else {
+                        alert("Please select a version");
+                    }
+                }
+            </script>
+
+
+        </div>
+
+    </div>
+
+    <div class="sideBar">
+        <button onclick="location.href = '/'" class="btnInactiveTab">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </button>
+        <button onclick="location.href = '/launcher/library'" class="btnActiveTab">
+            <i class="fas fa-book"></i>
+            <span>Library</span>
+        </button>
+        <button onclick="location.href = '/launcher/settings'" class="btnInactiveTab">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+        </button>
+    </div>
+
+
+
+
+
+
+</body>
+
+</html>
