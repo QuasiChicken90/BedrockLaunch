@@ -1,6 +1,6 @@
 {
     "wv_frameless_window": true,
-    "wv_easy_drag": "true",
+    "wv_easy_drag": false,
     "wv_confirm_close": true,
     "win_dpi_awareness": true,
     "win_dpi_awareness_level": 2,
