@@ -1,6 +1,6 @@
 import webview
 import threading
-from flask import Flask, render_template, send_from_directory, request
+from flask import Flask, render_template, send_from_directory, request, make_response
 import json
 import os 
 import ctypes
@@ -9,7 +9,6 @@ from App.LauncherApi import libraryManager
 from App.LauncherApi import launchver
 from App.LauncherApi import web
 import sys
-
 def is_admin():
     try:
         return ctypes.windll.shell32.IsUserAnAdmin()
@@ -70,6 +69,9 @@ def launcherApp():
     def launch():
         with open("App/selected.txt", "r") as file:
             selected_value = file.read().strip()
+            if selected_value == "":
+                versionList = [{"id": v, "name": v} for v in libraryManager.getInstances()]
+                return render_template('Library.html', themePath=getSetting("app_themeBG"), versionList=versionList)
             
         launchver.launch(selected_value)
         return render_template('Launching.html', themePath=getSetting("app_themeBG"))
