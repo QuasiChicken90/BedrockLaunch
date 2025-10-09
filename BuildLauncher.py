@@ -1,12 +1,27 @@
 import os
 import shutil
+
+def log(text):
+    print(f"LOG: {text}")
+
 def run(command):
     os.system(command)
+    log(f"Ran command: {command}")
 
 def mkdir(path):
     os.makedirs(path, exist_ok=True)
+    log(f"Created directory: {path}")
 def copydir(src, dest):
     shutil.copytree(src, dest, dirs_exist_ok=True)
+    log(f"Copied directory: {src} -> {dest}")
+
+def deletefile(path):
+    os.remove(path)
+    log(f"Deleted file: {path}")
+
+def deletedir(path):
+    shutil.rmtree(path)
+    log(f"Deleted directory: {path}")
 
 if os.path.isdir("buildexec"):
     shutil.rmtree("buildexec")
@@ -15,7 +30,9 @@ run("pip install -r requirements.txt")
 
 run("mkdir buildexec")
 
-run("pyinstaller Launcher.py --clean --workpath buildexec/temp --distpath buildexec/exe --specpath buildexec/temp --noconfirm --noconsole")
+icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "Resources", "BedrockLaunch.ico")
+
+run("pyinstaller Launcher.py --clean --workpath buildexec/temp --distpath buildexec/exe --specpath buildexec/temp --noconfirm --noconsole --icon " + icon_path)
 
 mkdir("buildexec/exe/Launcher/launches")
 
@@ -25,3 +42,12 @@ copydir("App", "buildexec/exe/Launcher/App")
 
 mkdir("buildexec/exe/Launcher/Library/Installations")
 mkdir("buildexec/exe/Launcher/_internal/UAC")
+
+deletedir("buildexec/exe/Launcher/App/Themes/")
+
+deletedir("buildexec/exe/Launcher/_internal/App/Resources/")
+
+deletefile("buildexec/exe/Launcher/_internal/App/selected.txt")
+
+
+log("Complete.")
