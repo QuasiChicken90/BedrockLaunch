@@ -38,6 +38,16 @@
         min-width: 100%;
         min-height: 100%;
         z-index: -1;
+
+       
+        opacity: 0;              
+        animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+        to {
+            opacity: 1;
+        }
     }
 
 .windowControls {
@@ -172,9 +182,10 @@ button:active {
     width: 100%;
     height: 150px;
     background: linear-gradient(180deg, rgb(0, 0, 0) 0%, rgba(30, 30, 30, 0) 100%);
-    pointer-events: none;
     z-index: 512;
     backdrop-filter: blur(0px);
+    opacity: 0;              
+    animation: fadeIn 1s ease forwards;
 }
 
 .Create {
@@ -207,6 +218,14 @@ input[list="versions"] {
   input[list="versions"]::placeholder {
     color: white;
     opacity: 1; 
+}
+
+input[list="versions"]:active {
+    color: rgb(37, 95, 255, 1);
+}
+
+input[list="versions"]:focus {
+    outline: none;
 }
 
 .promptCreating {
@@ -266,7 +285,7 @@ input[list="versions"] {
 <body>
 
     <h3 class="Create">Create</h3>
-    <div class="UpperDepthEffect"></div>
+    <div class="UpperDepthEffect pywebview-drag-region"></div>
 
     <div class="LauncherContainer">
 
@@ -277,9 +296,10 @@ input[list="versions"] {
         </div>
 
 
-        <video id="video" autoplay muted loop class="LauncherVideo">
-            <source src="{{ themePath }}" type="video/mp4"> Failed to load theme. Video not supported.
-        </video>
+    <video autoplay muted loop preload="metadata" id="video" class="LauncherVideo">
+        <source src="{{ themePath }}" type="video/mp4">
+        Failed to load theme. Video not supported.
+    </video>
 
         <div>
 
