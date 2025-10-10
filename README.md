@@ -9,25 +9,25 @@ A fully functional (prototype) Minecraft Bedrock launcher
 
 <img width="1484" height="961" alt="image" src="https://github.com/user-attachments/assets/73e5fb87-4390-49b3-b55c-de76cfd94aa8" />
 
-# ✅ What you can do with it
+## ✅ What you can do with BedrockLaunch
 - Play most versions from the first few Bedrock versions to the latest
 - Avoid the Microsoft Store, and use the launcher instead to download Bedrock Edition (You still need a valid Microsoft account with Bedrock Edition purchased!)
 - Test resource packs/behavior packs on older/newer versions for development purposes
 - Switch between installed versions easily
 
-# 🚀 Installation
+## 🚀 Installation
 - Enable developer mode in settings
 - Download release from [releases](https://github.com/QuasiChicken90/BedrockLaunch/releases/)
 
-# ⚠️ Warning
+## ⚠️ Warning
 - When installing a new version and starting it for the first time, all resource packs, worlds, and other content will be deleted!
 
-# 🔨 Building
+## 🔨 Building
 - Create a python virtual environment
 - clone/download the code into the venv
 - Go into the venv and run BuildLauncher.py
 
-# 📃 Credits
+## 📃 Credits
 - Some installer/launching code used from [here](github.com/CrystalVortex/Minecraft-Bedrock-Version-Manager/tree/TestVersion-9)
 - Theme backgrounds from [Qklid](https://pixabay.com/users/qkild-35912031/)
 - Version lists from [ddf8196, mc-w10-versiondb-auto-update](https://github.com/ddf8196/mc-w10-versiondb-auto-update)
