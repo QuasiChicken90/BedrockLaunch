@@ -9,6 +9,12 @@ A fully functional (prototype) Minecraft Bedrock launcher
 
 <img width="1484" height="961" alt="image" src="https://github.com/user-attachments/assets/73e5fb87-4390-49b3-b55c-de76cfd94aa8" />
 
+# ✅ What you can do with it
+- Play most versions from the first few Bedrock versions to the latest
+- Avoid the Microsoft Store, and use the launcher instead to download Bedrock Edition (You still need a valid Microsoft account with Bedrock Edition purchased!)
+- Test resource packs/behavior packs on older/newer versions for development purposes
+- Switch between installed versions easily
+
 # 🚀 Installation
 - Enable developer mode in settings
 - Download release from [releases](https://github.com/QuasiChicken90/BedrockLaunch/releases/)
