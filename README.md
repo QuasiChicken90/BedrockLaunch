@@ -1,11 +1,13 @@
 # BedrockLaunch
 A fully functional (prototype) minecraft Bedrock launcher
 
-<img width="1490" height="962" alt="image" src="https://github.com/user-attachments/assets/d74d4b24-80d3-4382-b01b-d472661b3eb6" />
+<img width="1480" height="967" alt="image" src="https://github.com/user-attachments/assets/645013b2-74a8-4a05-aa18-29f23777dbab" />
 
-<img width="1482" height="966" alt="image" src="https://github.com/user-attachments/assets/ab65055c-5d8d-495f-949c-3ba270f6854e" />
+<img width="1477" height="950" alt="image" src="https://github.com/user-attachments/assets/c27483b7-8529-4794-8f9d-3f5eeeaeddd1" />
 
-<img width="1487" height="960" alt="image" src="https://github.com/user-attachments/assets/bc085385-1831-47c3-8959-0e5d3995a296" />
+<img width="1482" height="957" alt="image" src="https://github.com/user-attachments/assets/660e206f-bc1f-475d-8589-6dfaaebf3f85" />
+
+<img width="1484" height="961" alt="image" src="https://github.com/user-attachments/assets/73e5fb87-4390-49b3-b55c-de76cfd94aa8" />
 
 # 🚀 Installation
 - Enable developer mode in settings
