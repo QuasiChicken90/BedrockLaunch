@@ -1,5 +1,8 @@
 import os
 import shutil
+from time import sleep
+
+version = "Beta_1"
 
 def log(text):
     print(f"LOG: {text}")
@@ -22,9 +25,21 @@ def deletefile(path):
 def deletedir(path):
     shutil.rmtree(path)
     log(f"Deleted directory: {path}")
+    
+def renameFile(old, new):
+    os.rename(old, new)
+    log(f"Renamed file: {old} -> {new}")
 
 if os.path.isdir("buildexec"):
     shutil.rmtree("buildexec")
+
+def removePycache(pathtree):
+    for root, dirs, _ in os.walk(pathtree):
+        for dirname in dirs:
+            if dirname == "__pycache__":
+                full_path = os.path.join(root, dirname)
+                print(f"Removed pycache: {full_path}")
+                shutil.rmtree(full_path)
 
 run("pip install -r requirements.txt")
 
@@ -49,5 +64,11 @@ deletedir("buildexec/exe/Launcher/_internal/App/Resources/")
 
 deletefile("buildexec/exe/Launcher/_internal/App/selected.txt")
 
+# delay renaming so it wont give a "file in use" error randomly
+sleep(3)
+
+renameFile("buildexec/exe/Launcher/Launcher.exe", f"buildexec/exe/Launcher/BedrockLaunch-{version}.exe")
+
+removePycache("buildexec/exe/Launcher")
 
 log("Complete.")
