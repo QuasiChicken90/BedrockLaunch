@@ -5,6 +5,8 @@ A fully functional (prototype) minecraft Bedrock launcher
 
 <img width="1482" height="966" alt="image" src="https://github.com/user-attachments/assets/ab65055c-5d8d-495f-949c-3ba270f6854e" />
 
+<img width="1487" height="960" alt="image" src="https://github.com/user-attachments/assets/bc085385-1831-47c3-8959-0e5d3995a296" />
+
 # 🚀 Installation
 - Enable developer mode in settings
 - Download release from [releases](https://github.com/QuasiChicken90/BedrockLaunch/releases/)
