@@ -102,6 +102,10 @@ def launcherApp():
             return "OK"
         except Exception as e:
             return "Error: " + str(e) + "\nTroubleshoot:\nVersions too old may not download\nCheck your internet connection\nCheck if you have enough storage"
+        
+    @app.route("/launcher/articles")
+    def articles():
+        return render_template("articles.html", themePath=getSetting("app_themeBG"))
 
 
     app.run(host="localhost", port=21934, debug=False)
