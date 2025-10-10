@@ -1,5 +1,5 @@
 # BedrockLaunch
-A fully functional (prototype) minecraft Bedrock launcher
+A fully functional (prototype) Minecraft Bedrock launcher
 
 <img width="1480" height="967" alt="image" src="https://github.com/user-attachments/assets/645013b2-74a8-4a05-aa18-29f23777dbab" />
 
