@@ -233,12 +233,13 @@ button:active {
     filter: brightness(1.5);
 }
 
-.dropdown {
+.inptbox {
     top: 80%;
     left: 30%;
-    width: 10%;
+    width: 40%;
     height: 60px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
+    box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(87, 87, 87, 0.5);
     color: white;
     font-weight: 500;
     border: none;
@@ -250,7 +251,17 @@ button:active {
     appearance: none;           
     line-height: 60px;            
 }
+.h3Update a {
+    color: white;
+    font-size: 25px;
+    font-weight: 700;
+    text-align: center;
+    cursor: default;
+}
 
+.h3Update a:active {
+    filter: brightness(50%);
+}
 
 </style>
 
@@ -285,6 +296,10 @@ button:active {
         <i class="fas fa-book"></i>
         <span>Library</span>
     </button>
+        <button onclick="location.href = '/launcher/articles'" class="btnInactiveTab">
+        <i class="fas fa-newspaper"></i>
+        <span>Articles</span>
+    </button>
     <button class="btnActiveTab">
         <i class="fas fa-cog"></i>
         <span>Settings</span>
@@ -295,14 +310,34 @@ button:active {
     <div class="UpperDepthEffect pywebview-drag-region"></div>
 
     <div class="SettingsOptions">
-        <h4>App Theme</h4>
-        <p>Theme Numbers: 1, 2 (enter a number in the input box)</p>
         <form id="themeForm" action="/launcher/settings/theme" method="get">
-            <input type="text" name="number" class="dropdown" id="themeSelect">
-            <button class="btnSaveAll" type="submit">Set</button>
-        </form>
+            <input placeholder="Theme: (Use '1' or '2')" type="text" name="number" class="inptbox" id="themeSelect">
+            <button class="btnSaveAll" type="submit">Set Theme</button>
+            <script>
+                document.addEventListener('DOMContentLoaded', async () => {
+                    let latestVersion = await (await fetch('https://raw.githubusercontent.com/QuasiChicken90/BedrockLaunch/refs/heads/main/latestversion.txt')).text();
+                    if (latestVersion != 'beta-1') {
+                        const h3 = document.createElement('h3');
+                        h3.style.color = 'white';
+                        h3.classList.add("h3Update");
 
+                        const a = document.createElement('a');
+                        a.href = "https://github.com/QuasiChicken90/BedrockLaunch/releases/";
+                        a.target = "_blank"; 
+                        a.rel = "noopener noreferrer"; 
+                        a.textContent = "An update is available. Click here to download";
+
+                        h3.appendChild(a);
+
+
+                        document.querySelector('.SettingsOptions').prepend(h3);
+                    }
+                });
+            </script>
+
+        </form>
     </div>
+
 
 
 </div>
