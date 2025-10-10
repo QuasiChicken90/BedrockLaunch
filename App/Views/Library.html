@@ -306,6 +306,10 @@ button:active {
         <i class="fas fa-book"></i>
         <span>Library</span>
     </button>
+    <button onclick="location.href = '/launcher/articles'" class="btnInactiveTab">
+        <i class="fas fa-newspaper"></i>
+        <span>Articles</span>
+    </button>
     <button onclick="location.href = '/launcher/settings'" class="btnInactiveTab">
         <i class="fas fa-cog"></i>
         <span>Settings</span>
@@ -315,7 +319,7 @@ button:active {
     <h3 class="Library">Library</h3>
     <div class="UpperDepthEffect pywebview-drag-region"></div>
 
-    <button onclick="location.href = '/launcher/create'" class="btnCreate">Create New</button>
+    <button onclick="location.href = '/launcher/create'" class="btnCreate">Create</button>
 
  <div class="VersionList">
         {% for version in versionList %}
