@@ -16,6 +16,7 @@ A fully functional (prototype) minecraft Bedrock launcher
 
 # 🔨 Building
 - Create a python virtual environment
+- clone/download the code into the venv
 - Go into the venv and run BuildLauncher.py
 
 # 📃 Credits
