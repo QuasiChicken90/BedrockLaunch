@@ -9,6 +9,8 @@ from App.LauncherApi import libraryManager
 from App.LauncherApi import launchver
 from App.LauncherApi import web
 import sys
+
+
 def is_admin():
     try:
         return ctypes.windll.shell32.IsUserAnAdmin()
@@ -113,6 +115,6 @@ def launcherApp():
 flaskAppThread = threading.Thread(target=launcherApp)
 flaskAppThread.start()
 
-webview.create_window('BedrockLaunch', 'localhost:21934', frameless=getSetting("wv_frameless_window"), easy_drag=getSetting("wv_easy_drag"), confirm_close=getSetting("wv_confirm_close"), transparent=True, width=int(base_width * scale_factor), height=int(base_height * scale_factor))
+webview.create_window('BedrockLaunch', 'localhost:21934', frameless=getSetting("wv_frameless_window"), easy_drag=getSetting("wv_easy_drag"), confirm_close=getSetting("wv_confirm_close"), transparent=False, width=int(base_width * scale_factor), height=int(base_height * scale_factor))
 webview.start()
 
