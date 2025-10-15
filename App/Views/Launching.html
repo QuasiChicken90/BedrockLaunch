@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Launcher | Home</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="/launcherfiles/resources/CSS/global.css">
 </head>
 
 <style>
@@ -29,108 +30,8 @@
         height: 100vh;
     }
 
-    .LauncherVideo {
-        position: fixed;
-        right: 0;
-        bottom: 0;
-        min-width: 100%;
-        min-height: 100%;
-        z-index: -1;
-        filter: brightness(0.6);
-    }
-
-.windowControls {
-    position: fixed;
-    top: 32px;
-    right: 32px;
-    z-index: 999;
-    width: 40px;              
-    height: 40px;             
-    display: flex;            
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(8px);
-    border-radius: 100%;      
-}
-    .windowControls svg.closeButton:active {
-        filter: brightness(0.4)
-    }
-
-.sideBar {
-    position: fixed; 
-    top: 50%;        
-    left: 50%;     
-    transform: translate(-190%, -50%);
-    filter: brightness(0.5);
-    width: 372px;
-    height: 900px;
-    
-    background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
-    box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25),
-                inset 1px 1px 2px rgba(255, 255, 255, 0.3),
-                inset -1px -1px 2px rgba(87, 87, 87, 0.5);
-    backdrop-filter: blur(15px);
-    border-radius: 37px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;    
-    justify-content: flex-start; 
-    padding-top: 30px;      
-    gap: 20px;              
-}
-
-.btnActiveTab {
-    width: 90%;
-    height: 60px;
-    padding: 15px 20px;
-    background-color: rgb(37, 95, 255);
-    color: white;
-    font-weight: 500;
-    border: none;
-    border-radius: 15px;
-}
-
-.btnInactiveTab {
-    width: 90%;
-    height: 60px;
-    padding: 15px 20px;
-    background-color: rgba(0, 0, 0, 0);
-    color: white;
-    font-weight: 500;
-    border: none;
-    border-radius: 15px;
-}
-
-.btnInactiveTab:active {
-    filter: opacity(0.5) !important;
-}
-
 button:active {
     filter: brightness(1.5);
-}
-
-.sideBar button {
-    width: 90%;
-    height: 60px;
-    padding: 0 20px;         
-    color: white;
-    font-weight: 500;
-    border: none;
-    border-radius: 15px;
-
-    display: flex;           
-    align-items: center;  
-    gap: 15px;               
-    font-size: 18px;       
-}
-
-.sideBar button i {
-    font-size: 22px;         
-    width: 30px;              
-    text-align: center;       
 }
 
 .btnPlay {
@@ -154,6 +55,7 @@ button:active {
     
 
 }
+
 .btnPlay i {
     font-size: 32px; 
     color: white;   
