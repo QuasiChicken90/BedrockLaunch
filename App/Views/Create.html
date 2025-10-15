@@ -7,6 +7,7 @@
     <title>Launcher | Create</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/launcherfiles/resources/CSS/global.css">
 </head>
 
 <style>
@@ -31,119 +32,6 @@
         height: 100vh;
     }
 
-    .LauncherVideo {
-        position: fixed;
-        right: 0;
-        bottom: 0;
-        min-width: 100%;
-        min-height: 100%;
-        z-index: -1;
-
-       
-        opacity: 0;              
-        animation: fadeIn 1s ease forwards;
-    }
-
-    @keyframes fadeIn {
-        to {
-            opacity: 1;
-        }
-    }
-
-.windowControls {
-    position: fixed;
-    top: 32px;
-    right: 32px;
-    z-index: 999;
-    width: 40px;              
-    height: 40px;             
-    display: flex;            
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(8px);
-    border-radius: 100%;      
-}
-    .windowControls svg.closeButton:active {
-        filter: brightness(0.4)
-    }
-
-.sideBar {
-    position: fixed; 
-    top: 50%;        
-    left: 50%;     
-    transform: translate(-190%, -50%);
-    
-    width: 372px;
-    height: 900px;
-    
-    background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
-    box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25),
-                inset 1px 1px 2px rgba(255, 255, 255, 0.3),
-                inset -1px -1px 2px rgba(87, 87, 87, 0.5);
-    backdrop-filter: blur(15px);
-    border-radius: 37px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;    
-    justify-content: flex-start; 
-    padding-top: 30px;      
-    gap: 20px;         
-    z-index: 99999;     
-}
-
-.btnActiveTab {
-    width: 90%;
-    height: 60px;
-    padding: 15px 20px;
-    background-color: rgb(37, 95, 255);
-    color: white;
-    font-weight: 500;
-    border: none;
-    border-radius: 15px;
-}
-
-.btnInactiveTab {
-    width: 90%;
-    height: 60px;
-    padding: 15px 20px;
-    background-color: rgba(0, 0, 0, 0);
-    color: white;
-    font-weight: 500;
-    border: none;
-    border-radius: 15px;
-}
-
-.btnInactiveTab:active {
-    filter: opacity(0.5) !important;
-}
-
-button:active {
-    filter: brightness(1.5);
-}
-
-.sideBar button {
-    width: 90%;
-    height: 60px;
-    padding: 0 20px;         
-    color: white;
-    font-weight: 500;
-    border: none;
-    border-radius: 15px;
-
-    display: flex;           
-    align-items: center;  
-    gap: 15px;               
-    font-size: 18px;       
-}
-
-.sideBar button i {
-    font-size: 22px;         
-    width: 30px;              
-    text-align: center;       
-}
 
 .btnPlay {
     position: absolute;
@@ -175,19 +63,6 @@ button:active {
     background-color: rgb(37, 95, 255, 0.5);
 }
 
-.UpperDepthEffect {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 150px;
-    background: linear-gradient(180deg, rgb(0, 0, 0) 0%, rgba(30, 30, 30, 0) 100%);
-    z-index: 512;
-    backdrop-filter: blur(0px);
-    opacity: 0;              
-    animation: fadeIn 1s ease forwards;
-}
-
 .Create {
     position: fixed;
     top: 1%;
@@ -202,7 +77,7 @@ input[list="versions"] {
     position: absolute;
     width: 50%;
     padding: 10px;
-    border-radius: 8px;
+    border-radius: 256px;
     background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
     box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(87, 87, 87, 0.5);
     backdrop-filter: blur(4px);
@@ -330,43 +205,6 @@ input[list="versions"]:focus {
             </div>
 
 
-
-            <script>
-                function create() {
-                    const version = document.getElementById("version").value;
-                    if (version) {
-                        const createPopup = document.getElementById("creating");
-                        const bg = document.getElementById("video");
-                        createPopup.style.opacity = "100%";
-                        bg.style.filter = "brightness(40%)";
-                        document.getElementById("createForm").remove();
-                        async function waitForOK(url) {
-                            try {
-                                const res = await fetch(url, { timeout: 0 });
-                                const text = (await res.text()).trim();
-
-                                if (text === "OK") {
-                                    location.href = "/launcher/library";
-                                } else {
-                                    alert("Error: " + text);
-                                    location.href = "/launcher/library";
-                                }
-                            } catch (err) {
-                                alert("Request failed: " + err);
-                            }
-                        }
-
-
-                        waitForOK(`/launcher/api/create/${version}`);
-
-
-                    } else {
-                        alert("Please select a version");
-                    }
-                }
-            </script>
-
-
         </div>
 
     </div>
@@ -393,7 +231,7 @@ input[list="versions"]:focus {
 
 
 
-
+<script src="/launcherfiles/LauncherApi/JS/Create.js"></script>
 
 </body>
 
