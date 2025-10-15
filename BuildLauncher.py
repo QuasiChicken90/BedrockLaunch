@@ -2,7 +2,7 @@ import os
 import shutil
 from time import sleep
 
-version = "Beta_1"
+version = "Beta_2"
 
 def log(text):
     print(f"LOG: {text}")
@@ -59,8 +59,6 @@ mkdir("buildexec/exe/Launcher/Library/Installations")
 mkdir("buildexec/exe/Launcher/_internal/UAC")
 
 deletedir("buildexec/exe/Launcher/App/Themes/")
-
-deletedir("buildexec/exe/Launcher/_internal/App/Resources/")
 
 deletefile("buildexec/exe/Launcher/_internal/App/selected.txt")
 
