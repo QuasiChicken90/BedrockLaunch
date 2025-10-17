@@ -2,7 +2,7 @@ import os
 import shutil
 from time import sleep
 
-version = "Beta_2"
+version = "Beta_3"
 
 def log(text):
     print(f"LOG: {text}")
