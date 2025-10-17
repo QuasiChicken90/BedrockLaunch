@@ -1,6 +1,6 @@
 import webview
 import threading
-from flask import Flask, render_template, send_from_directory, request, make_response
+from flask import Flask, render_template, send_from_directory, request, jsonify
 import json
 import os 
 import ctypes
@@ -8,8 +8,8 @@ import signal
 from App.LauncherApi import libraryManager
 from App.LauncherApi import launchver
 from App.LauncherApi import web
+from App.LauncherApi import game
 import sys
-
 
 def is_admin():
     try:
@@ -105,9 +105,29 @@ def launcherApp():
         except Exception as e:
             return "Error: " + str(e) + "\nTroubleshoot:\nVersions too old may not download\nCheck your internet connection\nCheck if you have enough storage"
         
+    @app.route("/launcher/api/servers/getlist")
+    def apiGetServers():
+        servers = game.getServers()
+        for s in servers:
+            status = game.getServerStatus(s["ip"], s["port"])
+            s.update(status)
+        return jsonify(servers)
+
+            
     @app.route("/launcher/articles")
     def articles():
         return render_template("articles.html", themePath=getSetting("app_themeBG"))
+    
+    @app.route("/launcher/servers/")
+    def servers():
+        return render_template("servers.html", themePath=getSetting("app_themeBG"))
+
+    @app.route("/launcher/api/opendatafolder")
+    def opendatafolder():
+        username = os.getlogin()
+        path = rf"C:\Users\{username}\AppData\Local\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang"
+        os.system(f"explorer.exe {path}")
+        return render_template("Settings.html", themePath=getSetting("app_themeBG"))
 
 
     app.run(host="localhost", port=21934, debug=False)
