@@ -94,16 +94,21 @@
     left: 30%;
     width: 10%;
     height: 60px;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
+    background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
+    box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(87, 87, 87, 0.5);
     font-weight: 500;
+    color: white;
     border: none;
     border-radius: 256px;
     font-size: 20px;
+    transition: 0.3s;
 }
 
 .btnSaveAll:active {
-    filter: brightness(1.5);
+    transition: 0.0s !important;
+    background: rgb(37, 95, 255);
+    transform: scale(1.05);
+    filter: brightness(140%) blur(1px);
 }
 
 .inptbox {
@@ -169,6 +174,10 @@
         <i class="fas fa-book"></i>
         <span>Library</span>
     </button>
+         <button onclick="location.href = '/launcher/servers'" class="btnInactiveTab">
+        <i class="fas fa-server"></i>
+        <span>Servers</span>
+    </button>
         <button onclick="location.href = '/launcher/articles'" class="btnInactiveTab">
         <i class="fas fa-newspaper"></i>
         <span>Articles</span>
@@ -190,7 +199,7 @@
                 document.addEventListener('DOMContentLoaded', async () => {
                     let latestVersion = await (await fetch('https://raw.githubusercontent.com/QuasiChicken90/BedrockLaunch/refs/heads/main/latestversion.txt')).text();
                     latestVersion = latestVersion.trim();
-                    if (latestVersion != 'Beta-2') {
+                    if (latestVersion != 'Beta-3') {
                         
                         const h3 = document.createElement('h3');
                         h3.style.color = 'white';
@@ -210,6 +219,7 @@
             </script>
 
         </form>
+        <button class="btnSaveAll" style="width: 40% !important;" onclick="location.href = '/launcher/api/opendatafolder';">Open Minecraft BE Folder (For backups & viewing)</button>
     </div>
 
 
