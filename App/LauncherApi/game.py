@@ -1,0 +1,53 @@
+import os
+import requests
+
+def getServers():
+    username = os.getlogin()
+    path = rf"C:\Users\{username}\AppData\Local\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang\minecraftpe\external_servers.txt"
+    
+    servers = []
+    
+    if not os.path.exists(path):
+        print("external_servers.txt not found.")
+        return servers
+    
+    with open(path, "r") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            parts = line.split(":")
+            if len(parts) == 4:
+                index, name, ip, port = parts
+                servers.append({
+                    "index": int(index),
+                    "name": name,
+                    "ip": ip,
+                    "port": int(port)
+                })
+            else:
+                print(f"malformed line >  {line}")
+    return servers
+
+def getServerStatus(ip, port):
+    try:
+        response = requests.get(f"https://api.mcsrvstat.us/bedrock/2/{ip}:{port}", timeout=5)
+        response.raise_for_status()
+        data = response.json()
+    except requests.RequestException as e:
+        return {
+            "online": False,
+            "error": str(e)
+        }
+    
+    version = data.get("version", "Unknown")
+    online = data.get("online", False)
+    players = data.get("players", {}).get("online", 0)
+    motd = data.get("motd", {}).get("clean", ["Unknown MOTD"])[0]
+    
+    return {
+        "version": version,
+        "online": online,
+        "players_online": players,
+        "motd": motd
+    }
