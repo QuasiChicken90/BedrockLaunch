@@ -1,13 +1,15 @@
 # BedrockLaunch
-A fully functional (prototype) Minecraft Bedrock launcher
+A fully functional Minecraft Bedrock launcher
 
-<img width="1480" height="967" alt="image" src="https://github.com/user-attachments/assets/645013b2-74a8-4a05-aa18-29f23777dbab" />
+<img width="1482" height="961" alt="image" src="https://github.com/user-attachments/assets/408e8b66-888b-457b-9bc4-d2cbeb35389c" />
 
-<img width="1477" height="950" alt="image" src="https://github.com/user-attachments/assets/c27483b7-8529-4794-8f9d-3f5eeeaeddd1" />
+<img width="1484" height="961" alt="image" src="https://github.com/user-attachments/assets/a6a52d6e-5947-4951-9a90-817b53580991" />
 
-<img width="1482" height="957" alt="image" src="https://github.com/user-attachments/assets/660e206f-bc1f-475d-8589-6dfaaebf3f85" />
+<img width="1482" height="959" alt="image" src="https://github.com/user-attachments/assets/e06b2905-5ea7-4ad5-876c-0be18790837b" />
 
-<img width="1484" height="961" alt="image" src="https://github.com/user-attachments/assets/73e5fb87-4390-49b3-b55c-de76cfd94aa8" />
+<img width="1480" height="963" alt="image" src="https://github.com/user-attachments/assets/d2b91841-7915-446c-b43b-b4e6cb37e8ff" />
+
+<img width="1483" height="949" alt="image" src="https://github.com/user-attachments/assets/97ba3450-5303-4073-b78e-443e1de939c3" />
 
 ## ✅ What you can do with BedrockLaunch
 - Play most versions from the first few Bedrock versions to the latest.
