@@ -16,6 +16,7 @@ A fully functional Minecraft Bedrock launcher
 - Avoid the Microsoft Store, and use the launcher instead to download Bedrock Edition (You still need a valid Microsoft account with Bedrock Edition purchased!).
 - Test resource packs/behavior packs on older/newer versions for development purposes.
 - Switch between installed versions easily.
+- Explore any version
 
 ## 🚀 Installation
 - Enable developer mode in settings
