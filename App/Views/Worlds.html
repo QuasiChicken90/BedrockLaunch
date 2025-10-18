@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launcher | Worlds</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="/launcherfiles/resources/CSS/global.css">
+</head>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    * {
+        font-family: 'Inter', sans-serif;
+        -ms-user-select: none;
+        -webkit-user-drag: none;
+        -khtml-user-drag: none;
+        -moz-user-drag: none;
+        -ms-user-drag: none;
+        -webkit-user-drag: none;
+        -moz-user-drag: none;    
+        -ms-user-drag: none;   
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background: #1e1e1e;
+        overflow-y: scroll;
+        -ms-overflow-style: none;
+        user-select: none;
+        -ms-user-select: none;
+        -webkit-user-drag: none;
+        -khtml-user-drag: none;
+        -moz-user-drag: none;
+        -ms-user-drag: none;
+        -webkit-user-drag: none;
+        -moz-user-drag: none;    
+        -ms-user-drag: none;   
+    }
+
+
+
+    body::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+    }
+    
+
+    html, body {
+        background: transparent;
+    }
+    
+    .LauncherContainer {
+        width: 100%;
+        height: 100vh;
+    }
+
+
+
+button:active {
+    filter: brightness(1.5);
+}
+
+.Worlds {
+    position: fixed;
+    top: 1%;
+    left: 30%;
+    color: white;
+    font-size: 30px;
+    font-weight: 700;
+    z-index: 9999;
+}
+</style>
+
+<script>
+
+</script>
+
+<body>
+
+<h3 class="Worlds">Worlds</h3>
+<div class="UpperDepthEffect pywebview-drag-region">
+</div>
+
+<div class="LauncherContainer">
+
+    <div onclick="location.href = '/launcher/quit'" class="windowControls">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="white" class="closeButton">
+            <path d="M18 6L6 18M6 6l12 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </div>
+
+
+    <video autoplay muted loop preload="metadata" class="LauncherVideo">
+        <source src="{{ themePath }}" type="video/mp4">
+        Failed to load theme. Video not supported.
+    </video>
+
+<div class="sideBar">
+    <button onclick="location.href = '/'" class="btnInactiveTab">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </button>
+    <button onclick="location.href = '/launcher/library'" class="btnInactiveTab">
+        <i class="fas fa-book"></i>
+        <span>Library</span>
+    </button>
+        <button class="btnActiveTab">
+        <i class="fas fa-map"></i>
+        <span>Worlds</span>
+    </button>
+     <button onclick="location.href = '/launcher/servers'" class="btnInactiveTab">
+        <i class="fas fa-server"></i>
+        <span>Servers</span>
+    </button>
+        <button onclick="location.href = '/launcher/articles'" class="btnInactiveTab">
+        <i class="fas fa-newspaper"></i>
+        <span>Articles</span>
+    </button>
+    <button onclick="location.href = '/launcher/settings'" class="btnInactiveTab">
+        <i class="fas fa-cog"></i>
+        <span>Settings</span>
+    </button>
+</div>
+
+
+<style>
+    .WorldContainter {
+        position: absolute;
+        top: 10%;
+        left: 30%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px 25px;
+        width: 50%; 
+    }
+
+    .WorldCard {
+        width: 100%;
+        height: 260px;
+        background: linear-gradient(135deg, rgba(228, 228, 228, 0.05) 0%, rgba(206, 206, 206, 0.1) 100%);
+        box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25),
+                    inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+                    inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+        backdrop-filter: blur(15px);
+        border-radius: 25px;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+        box-sizing: border-box;
+        overflow: hidden;
+        transition: 0.3s;
+    }
+
+    .WorldCard:active {
+        transition: 0s !important;
+        transform: scale(1.05);
+        filter: brightness(140%) blur(1px);
+        backdrop-filter: blur(7px);
+    }
+
+    .WorldCard img {
+        width: 100%;
+        height: 60%;
+        border-radius: 16px;
+        object-fit: cover;
+        margin-bottom: 10px;
+    }
+
+    .WorldCard h2 {
+        font-size: 1.4rem;
+        margin: 4px 0;
+        margin-left: 8px;
+    }
+
+    .WorldCard h3 {
+        font-size: 1rem;
+        font-weight: 400;
+        color: #ffffff;
+        margin: 4px 0 8px 0;
+        margin-left: 8px;
+    }
+
+    .WorldCard h4 {
+        font-size: 0.9rem;
+        font-weight: 300;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent; 
+        margin: 0;
+        margin-left: 8px;
+    }
+
+    
+</style>
+
+
+<div id="WorldContainter" class="WorldContainter">
+<script>
+async function loadWorlds() {
+    try {
+        const res = await fetch("/launcher/api/worlds/getlist");
+        const worlds = await res.json();
+        const container = document.getElementById("WorldContainter");
+        container.innerHTML = "";
+
+        worlds.forEach(worldName => {
+            const card = document.createElement("div");
+            card.className = "WorldCard";
+
+            card.innerHTML = `
+                <img src="/launcher/api/worlds/getimage/${encodeURIComponent(worldName)}" alt="${worldName}">
+                <h2>${worldName}</h2>
+                <h3>Size: Loading</h3>
+            `;
+
+            fetch(`/launcher/api/worlds/getsize/${encodeURIComponent(worldName)}`)
+                .then(r => r.json())
+                .then(data => {
+                    card.querySelector("h3").textContent = `Size: ${data.size}`;
+                });
+
+            container.appendChild(card);
+        });
+    } catch (err) {
+        console.error("Failed to load worlds");
+    }
+}
+
+window.onload = loadWorlds;
+</script>
+
+
+</body>
+</html>
