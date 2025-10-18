@@ -51,3 +51,48 @@ def getServerStatus(ip, port):
         "players_online": players,
         "motd": motd
     }
+
+def getWorlds():
+    username = os.getlogin()
+    worldnames = []
+    path = rf"C:\Users\{username}\AppData\Local\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang\minecraftWorlds"
+    for world in os.listdir(path):
+        world_path = os.path.join(path, world)
+        if os.path.isfile(f"{world_path}/levelname.txt"):
+            with open(f"{world_path}/levelname.txt", "r") as f:
+                worldnames.append(f.read())
+    return worldnames
+
+def getWorldImage(world):
+    username = os.getlogin()
+    path = rf"C:\Users\{username}\AppData\Local\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang\minecraftWorlds\{world}\world_icon.jpeg"
+    return path
+    
+def getWorldSize(world_folder_name):
+    import os
+    username = os.getlogin()
+    base_path = rf"C:\Users\{username}\AppData\Local\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang\minecraftWorlds"
+    total_size = 0
+    world_path = None
+
+    for folder in os.listdir(base_path):
+        folder_path = os.path.join(base_path, folder)
+        if os.path.isdir(folder_path):
+            levelname_file = os.path.join(folder_path, "levelname.txt")
+            if os.path.exists(levelname_file):
+                with open(levelname_file, "r") as f:
+                    name = f.read().strip()
+                    if name == world_folder_name:
+                        world_path = folder_path
+                        break
+
+    if world_path is None:
+        return 0
+
+    for dirpath, dirnames, filenames in os.walk(world_path):
+        for f in filenames:
+            fp = os.path.join(dirpath, f)
+            if os.path.isfile(fp):
+                total_size += os.path.getsize(fp)
+
+    return total_size
