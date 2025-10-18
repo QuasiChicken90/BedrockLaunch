@@ -1,22 +1,26 @@
 # BedrockLaunch
 A fully functional Minecraft Bedrock launcher
 
-<img width="1482" height="961" alt="image" src="https://github.com/user-attachments/assets/408e8b66-888b-457b-9bc4-d2cbeb35389c" />
+<img width="2646" height="1769" alt="launcherthemes" src="https://github.com/user-attachments/assets/153588f3-019a-4f33-81c7-f2f69621423b" />
 
-<img width="1484" height="961" alt="image" src="https://github.com/user-attachments/assets/a6a52d6e-5947-4951-9a90-817b53580991" />
+<img width="1484" height="961" alt="image" src="https://github.com/user-attachments/assets/7e682eb5-ceb4-4b85-9cf1-c052d538d82b" />
 
-<img width="1482" height="959" alt="image" src="https://github.com/user-attachments/assets/e06b2905-5ea7-4ad5-876c-0be18790837b" />
+<img width="1484" height="961" alt="image" src="https://github.com/user-attachments/assets/cfaf7fa8-1b2f-4417-8318-307b00295feb" />
 
-<img width="1480" height="963" alt="image" src="https://github.com/user-attachments/assets/d2b91841-7915-446c-b43b-b4e6cb37e8ff" />
+<img width="1484" height="961" alt="image" src="https://github.com/user-attachments/assets/5dfe4e37-2902-413b-ae3f-30b4d02e96fb" />
 
-<img width="1483" height="949" alt="image" src="https://github.com/user-attachments/assets/97ba3450-5303-4073-b78e-443e1de939c3" />
+<img width="1484" height="961" alt="image" src="https://github.com/user-attachments/assets/00cc5738-d787-4463-92e4-78eb5b770a59" />
+
+<img width="1484" height="961" alt="image" src="https://github.com/user-attachments/assets/3397f588-1da7-4cde-b62b-3f63d56b05d0" />
+
+<img width="1484" height="961" alt="image" src="https://github.com/user-attachments/assets/f6f61e7f-4190-4147-aa93-a84ac5f0b95d" />
 
 ## ✅ What you can do with BedrockLaunch
 - Play most versions from the first few Bedrock versions to the latest.
 - Avoid the Microsoft Store, and use the launcher instead to download Bedrock Edition (You still need a valid Microsoft account with Bedrock Edition purchased!).
 - Test resource packs/behavior packs on older/newer versions for development purposes.
 - Switch between installed versions easily.
-- Explore any version
+- Explore most versions
 
 ## 🚀 Installation
 - Enable developer mode in settings
