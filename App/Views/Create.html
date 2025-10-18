@@ -196,7 +196,7 @@ input[list="versions"]:focus {
 
             <div id="creating" class="promptCreating">
 
-                <h2 style="color:white;">Creating</h2>
+                <h2 style="color:white;">Downloading {{ version }}</h2>
                 <p style="color: white; text-align: center;">This may take a few minutes. When finished, this popup will close.</p>
                 <div class="progress-bar">
                     <div class="progress-fill"></div>
@@ -218,6 +218,10 @@ input[list="versions"]:focus {
             <i class="fas fa-book"></i>
             <span>Library</span>
         </button>
+            <button onclick="location.href = '/launcher/worlds'" class="btnInactiveTab">
+        <i class="fas fa-map"></i>
+        <span>Worlds</span>
+    </button>
              <button onclick="location.href = '/launcher/servers'" class="btnInactiveTab">
         <i class="fas fa-server"></i>
         <span>Servers</span>
