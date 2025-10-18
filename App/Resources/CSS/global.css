@@ -1,4 +1,9 @@
 
+
+body {
+    background-color: black !important;
+}
+
 .sideBar {
     position: fixed; 
     top: 50%;        
