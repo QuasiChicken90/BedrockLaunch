@@ -1,6 +1,6 @@
 import webview
 import threading
-from flask import Flask, render_template, send_from_directory, request, jsonify
+from flask import Flask, render_template, send_from_directory, request, jsonify, send_file
 import json
 import os 
 import ctypes
@@ -10,6 +10,7 @@ from App.LauncherApi import launchver
 from App.LauncherApi import web
 from App.LauncherApi import game
 import sys
+import shutil
 
 def is_admin():
     try:
@@ -25,6 +26,9 @@ if os.path.isdir(uac_path):
             None, "runas", sys.executable, " ".join(sys.argv), None, 1
         )
         sys.exit()
+else:
+    if os.path.exists("App/welcome.txt"):
+        os.remove("App/welcome.txt")
 
 def getSetting(setting):
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "Config", "settings.json")) as f:
@@ -48,6 +52,11 @@ def launcherApp():
     app = Flask(__name__, template_folder=os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "Views"))
     @app.route('/')
     def index():
+        if not os.path.exists("App/welcome.txt"):
+            with open("App/welcome.txt", "w") as f:
+                f.write("")
+                f.close()
+            return render_template('Welcome.html', themePath=getSetting("app_themeBG"))
         return render_template('Home.html', themePath=getSetting("app_themeBG"))
     
     @app.route('/launcher/settings')
@@ -128,7 +137,53 @@ def launcherApp():
         path = rf"C:\Users\{username}\AppData\Local\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang"
         os.system(f"explorer.exe {path}")
         return render_template("Settings.html", themePath=getSetting("app_themeBG"))
+    
+    @app.route("/launcher/worlds")
+    def worlds():
+        return render_template("worlds.html", themePath=getSetting("app_themeBG"))
+    
+    @app.route("/launcher/api/worlds/getlist")
+    def apiGetWorlds():
+        return jsonify(game.getWorlds())
+    
+    @app.route("/launcher/api/worlds/getimage/<world>")
+    def apiGetWorldImage(world):
+        import os, shutil
+        username = os.getlogin()
+        base_path = rf"C:\Users\{username}\AppData\Local\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang\minecraftWorlds"
 
+        world_path = None
+        for folder in os.listdir(base_path):
+            folder_path = os.path.join(base_path, folder)
+            if os.path.isdir(folder_path):
+                levelname_file = os.path.join(folder_path, "levelname.txt")
+                if os.path.exists(levelname_file):
+                    with open(levelname_file, "r") as f:
+                        name = f.read().strip()
+                        if name == world:
+                            world_path = folder_path
+                            break
+
+        if world_path is None:
+            return "World not found", 404
+
+        icon_path = os.path.join(world_path, "world_icon.jpeg")
+        if not os.path.exists(icon_path):
+            return "Icon not found", 404
+
+        return send_file(icon_path, mimetype="image/jpeg")
+    
+    @app.route("/launcher/api/worlds/getsize/<world>")
+    def apiGetWorldSize(world):
+        size_bytes = game.getWorldSize(world)
+        size_mb = round(size_bytes / (1024*1024), 2)
+        return jsonify({"size": f"{size_mb} MB"})
+
+
+    
+    @app.route("/launcher/welcome")
+    def welcome():
+        return render_template("Welcome.html", themePath=getSetting("app_themeBG"))
 
     app.run(host="localhost", port=21934, debug=False)
 
