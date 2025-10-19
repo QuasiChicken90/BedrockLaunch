@@ -2,7 +2,7 @@ import os
 import shutil
 from time import sleep
 
-version = "Beta_4"
+version = "Beta_5"
 
 def log(text):
     print(f"LOG: {text}")
@@ -41,13 +41,20 @@ def removePycache(pathtree):
                 print(f"Removed pycache: {full_path}")
                 shutil.rmtree(full_path)
 
+def copyFile(src, dest):
+    shutil.copyfile(src, dest)
+    log(f"Copied file: {src} -> {dest}")
+
 run("pip install -r requirements.txt")
+
+if os.path.isfile("App/welcome.txt"):
+    os.remove("App/welcome.txt")
 
 run("mkdir buildexec")
 
 icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "Resources", "BedrockLaunch.ico")
 
-run("pyinstaller Launcher.py --clean --workpath buildexec/temp --distpath buildexec/exe --specpath buildexec/temp --noconfirm --noconsole --icon " + icon_path)
+run("pyinstaller Launcher.py --clean --workpath buildexec/temp --distpath buildexec/exe --specpath buildexec/temp --noconsole --noconfirm --icon " + icon_path)
 
 mkdir("buildexec/exe/Launcher/launches")
 
@@ -64,9 +71,7 @@ deletefile("buildexec/exe/Launcher/_internal/App/selected.txt")
 
 # delay renaming so it wont give a "file in use" error randomly
 sleep(3)
-
-renameFile("buildexec/exe/Launcher/Launcher.exe", f"buildexec/exe/Launcher/BedrockLaunch-{version}.exe")
-
+copyFile("launcher_restart.bat", "buildexec/exe/Launcher/launcher_restart.bat")
 removePycache("buildexec/exe/Launcher")
 
 log("Complete.")
