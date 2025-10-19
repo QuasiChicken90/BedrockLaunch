@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launcher | Updating</title>
+    <link rel="stylesheet" href="/launcherfiles/resources/CSS/global.css">
+</head>
+<body>
+    <style>
+        body {
+            background-color: black;
+        }
+
+        img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .progressbar {
+            position: absolute;
+            top: 90%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 25%;
+            height: 10px;
+            background-color: rgb(44, 44, 44);
+            border-radius: 1024px;
+        }
+
+        .progress {
+            background-color: white;
+            width: 0%;
+            height: 100%;
+            border-radius: 1024px;
+        }
+
+        .windowControls {
+    background-color: rgb(26, 26, 26) !important;
+}
+    </style>
+
+    <div class="UpperDepthEffect pywebview-drag-region"></div>
+    <img src="/launcherfiles/resources/IMG/icon.png" alt="">
+
+    </div>
+
+    <div class="progressbar">
+        <div class="progress"></div>
+    </div>
+
+<script>
+const progressBar = document.querySelector('.progress');
+
+fetch('/launcher/api/update');
+
+let interval = setInterval(async () => {
+    try {
+        const response = await fetch('/launcher/api/getupdateprogress');
+        const data = await response.json();
+
+        const width = Number(data.progress ?? data);
+
+        progressBar.style.width = width + '%';
+
+        if (width >= 100) {
+            clearInterval(interval);
+            fetch('/launcher/api/restart'); 
+        }
+    } catch (err) {
+        console.error("Error fetching progress:", err);
+    }
+}, 100);
+</script>
+
+    <div onclick="location.href = '/launcher/quit'" class="windowControls">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="white" class="closeButton">
+            <path d="M18 6L6 18M6 6l12 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </div>
+
+</body>
+</html>
