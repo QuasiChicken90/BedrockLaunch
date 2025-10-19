@@ -143,13 +143,7 @@
 
 </style>
 
-<script>
-
-</script>
-
 <body>
-
-
 
 <div class="LauncherContainer">
 
@@ -203,20 +197,17 @@
                 document.addEventListener('DOMContentLoaded', async () => {
                     let latestVersion = await (await fetch('https://raw.githubusercontent.com/QuasiChicken90/BedrockLaunch/refs/heads/main/latestversion.txt')).text();
                     latestVersion = latestVersion.trim();
-                    if (latestVersion != 'Beta-4') {
+                    if (latestVersion != 'Beta_5') {
                         
                         const h3 = document.createElement('h3');
                         h3.style.color = 'white';
                         h3.classList.add("h3Update");
 
                         const a = document.createElement('a');
-                        a.href = "https://github.com/QuasiChicken90/BedrockLaunch/releases/";
-                        a.target = "_blank"; 
+                        a.href = "http://localhost:21934/launcher/update"; 
                         a.rel = "noopener noreferrer"; 
-                        a.textContent = "An update is available. Click here to download";
-
+                        a.textContent = "An update is available. Click here to install!";
                         h3.appendChild(a);
-
                         document.querySelector('.SettingsOptions').prepend(h3);
                     }
                 });
@@ -224,10 +215,8 @@
 
         </form>
         <button class="btnSaveAll" style="width: 40% !important;" onclick="location.href = '/launcher/api/opendatafolder';">Open Minecraft BE Folder (For backups & viewing)</button>
+        <button class="btnSaveAll" style="width:40% !important;" onclick="location.href = '/launcher/update';">Reinstall Launcher (latest version)</button>
     </div>
-
-
-
 </div>
 
 </body>
