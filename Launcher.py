@@ -9,8 +9,10 @@ from App.LauncherApi import libraryManager
 from App.LauncherApi import launchver
 from App.LauncherApi import web
 from App.LauncherApi import game
+from App.LauncherApi import launcher
+import requests
+import subprocess
 import sys
-import shutil
 
 def is_admin():
     try:
@@ -42,7 +44,6 @@ if getSetting("win_dpi_awareness") == True:
     dpi_x = ctypes.windll.gdi32.GetDeviceCaps(hDC, LOGPIXELSX)
     ctypes.windll.user32.ReleaseDC(0, hDC)
 
-    # Scale factor relative to 96 DPI
     scale_factor = dpi_x / 96
 
     base_width, base_height = 1500, 1000
@@ -179,11 +180,32 @@ def launcherApp():
         size_mb = round(size_bytes / (1024*1024), 2)
         return jsonify({"size": f"{size_mb} MB"})
 
-
-    
     @app.route("/launcher/welcome")
     def welcome():
         return render_template("Welcome.html", themePath=getSetting("app_themeBG"))
+    
+    @app.route("/launcher/update")
+    def update():
+        return render_template("Updating.html")
+    
+    @app.route("/launcher/api/update")
+    def apiUpdate():
+        version = requests.get(
+        "https://raw.githubusercontent.com/QuasiChicken90/BedrockLaunch/refs/heads/main/latestversion.txt"
+        ).text.strip()
+
+        launcher.fetchUpdate(f"https://github.com/QuasiChicken90/BedrockLaunch/releases/download/{version}/BedrockLaunch-{version}.zip")
+        return "OK"
+    
+    @app.route("/launcher/api/getupdateprogress")
+    def apiGetUpdateProgress():
+        return jsonify(launcher.getUpdateProgress())
+    
+    @app.route("/launcher/api/restart")
+    def apiRestart():
+        subprocess.run(["cmd", "/c", "launcher_restart.bat"], shell=True)
+        os.kill(os.getpid(), signal.SIGTERM)
+        return "lol"
 
     app.run(host="localhost", port=21934, debug=False)
 
