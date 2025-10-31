@@ -1,7 +1,7 @@
 # BedrockLaunch
 A fully functional Minecraft Bedrock launcher
 
-![SourceForge](https://img.shields.io/sourceforge/dm/bedrocklaunch.svg)
+SourceForge ![SourceForge](https://img.shields.io/sourceforge/dm/bedrocklaunch.svg)
 
 <img width="2646" height="1769" alt="launcherthemes" src="https://github.com/user-attachments/assets/153588f3-019a-4f33-81c7-f2f69621423b" />
 
