@@ -4,7 +4,7 @@ A fully functional Minecraft Bedrock launcher
 SourceForge Downloads:
 ![SourceForge](https://img.shields.io/sourceforge/dm/bedrocklaunch.svg)
 
-<img width="1940" height="1527" alt="gh2frame2" src="https://github.com/user-attachments/assets/0d34b1eb-185d-4e99-be8c-98c0048bc0c0" />
+<img width="1940" height="1527" alt="gh3frame2" src="https://github.com/user-attachments/assets/fa8b3c8d-3cc2-4b5e-b4af-f8dbc753d7b3" />
 
 <img width="1484" height="961" alt="image" src="https://github.com/user-attachments/assets/7e682eb5-ceb4-4b85-9cf1-c052d538d82b" />
 
