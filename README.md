@@ -3,7 +3,7 @@ A fully functional Minecraft Bedrock launcher
 
 SourceForge ![SourceForge](https://img.shields.io/sourceforge/dm/bedrocklaunch.svg)
 
-<img width="1940" height="1527" alt="Frame 2gh" src="https://github.com/user-attachments/assets/fccc8525-a12a-4e6d-8c85-c5019b05a619" />
+<img width="1940" height="1527" alt="gh2frame2" src="https://github.com/user-attachments/assets/0d34b1eb-185d-4e99-be8c-98c0048bc0c0" />
 
 <img width="1484" height="961" alt="image" src="https://github.com/user-attachments/assets/7e682eb5-ceb4-4b85-9cf1-c052d538d82b" />
 
@@ -27,6 +27,7 @@ SourceForge ![SourceForge](https://img.shields.io/sourceforge/dm/bedrocklaunch.s
 ## 🚀 Installation
 - Enable developer mode in settings
 - Download release from [releases](https://github.com/QuasiChicken90/BedrockLaunch/releases/)
+- Open launcher.exe
 
 ## ⚠️ Warning
 - When installing a new version and starting it for the first time, all resource packs, worlds, and other content will be deleted!
