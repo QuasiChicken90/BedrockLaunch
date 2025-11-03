@@ -36,29 +36,13 @@ def getSetting(setting):
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "Config", "settings.json")) as f:
         data = json.load(f)
         return data[setting]
-    
-if getSetting("win_dpi_awareness") == True:
-    ctypes.windll.shcore.SetProcessDpiAwareness(getSetting("win_dpi_awareness_level"))
-    LOGPIXELSX = 88
-    hDC = ctypes.windll.user32.GetDC(0)
-    dpi_x = ctypes.windll.gdi32.GetDeviceCaps(hDC, LOGPIXELSX)
-    ctypes.windll.user32.ReleaseDC(0, hDC)
-
-    scale_factor = dpi_x / 96
-
-    base_width, base_height = 1500, 1000
 
 def launcherApp():
 
     app = Flask(__name__, template_folder=os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "Views"))
-    @app.route('/')
-    def index():
-        if not os.path.exists("App/welcome.txt"):
-            with open("App/welcome.txt", "w") as f:
-                f.write("")
-                f.close()
-            return render_template('Welcome.html', themePath=getSetting("app_themeBG"))
-        return render_template('Home.html', themePath=getSetting("app_themeBG"))
+    @app.route('/launcher/home')
+    def home():
+        return render_template('home.html', themePath=getSetting("app_themeBG"))
     
     @app.route('/launcher/settings')
     def settings():
@@ -72,10 +56,6 @@ def launcherApp():
     @app.route("/launcherfiles/<path:filename>")
     def launcherfiles(filename):
         return send_from_directory(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App"), filename)
-    
-    @app.route("/launcher/quit")
-    def quit():
-        os.kill(os.getpid(), signal.SIGTERM)
 
     @app.route("/launcher/launch")
     def launch():
@@ -83,7 +63,7 @@ def launcherApp():
             selected_value = file.read().strip()
             if selected_value == "":
                 versionList = [{"id": v, "name": v} for v in libraryManager.getInstances()]
-                return render_template('Library.html', themePath=getSetting("app_themeBG"), versionList=versionList)
+                return render_template('Base.html', themePath=getSetting("app_themeBG"), versionList=versionList)
             
         launchver.launch(selected_value)
         return render_template('Launching.html', themePath=getSetting("app_themeBG"))
@@ -96,12 +76,12 @@ def launcherApp():
         data["app_themeBG"] = f"http://localhost:21934/launcherfiles/Themes/{number}.mp4"
         with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "Config", "settings.json"), "w") as f:
             json.dump(data, f, indent=4)
-        return render_template('Settings.html', themePath=getSetting("app_themeBG"))
+        return render_template('Base.html', themePath=getSetting("app_themeBG"))
 
     @app.route("/launcher/set/<version_id>")
     def set_version(version_id):
         libraryManager.setInstance(version_id)
-        return render_template("Home.html", themePath=getSetting("app_themeBG"))
+        return render_template("Base.html", themePath=getSetting("app_themeBG"))
     
     @app.route("/launcher/create")
     def create_instance():
@@ -137,11 +117,11 @@ def launcherApp():
         username = os.getlogin()
         path = rf"C:\Users\{username}\AppData\Local\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang"
         os.system(f"explorer.exe {path}")
-        return render_template("Settings.html", themePath=getSetting("app_themeBG"))
+        return render_template("Base.html", themePath=getSetting("app_themeBG"))
     
     @app.route("/launcher/worlds")
     def worlds():
-        return render_template("worlds.html", themePath=getSetting("app_themeBG"))
+        return render_template("Worlds.html", themePath=getSetting("app_themeBG"))
     
     @app.route("/launcher/api/worlds/getlist")
     def apiGetWorlds():
@@ -203,15 +183,44 @@ def launcherApp():
     
     @app.route("/launcher/api/restart")
     def apiRestart():
-        subprocess.run(["cmd", "/c", "launcher_restart.bat"], shell=True)
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+
+        parent_dir = os.path.abspath(os.path.join(base_dir, os.pardir))
+
+        bat_path = os.path.join(parent_dir, "launcher_restart.bat")
+
+        subprocess.Popen(
+            ["cmd", "/c", "start", "", bat_path],
+            shell=True,
+            cwd=parent_dir, 
+            creationflags=subprocess.CREATE_NEW_CONSOLE
+        )
+
         os.kill(os.getpid(), signal.SIGTERM)
-        return "lol"
+        return "lollllllllllllllllll"
+    
+    @app.route("/launcher/base")
+    def base():
+        if not os.path.isfile(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "welcome.txt")):
+            with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "welcome.txt"), "w") as f:
+                f.write("")
+                f.close()
+            return render_template("Welcome.html", themePath=getSetting("app_themeBG"))
+        return render_template("Base.html", themePath=getSetting("app_themeBG"))
 
     app.run(host="localhost", port=21934, debug=False)
 
 flaskAppThread = threading.Thread(target=launcherApp)
 flaskAppThread.start()
 
-webview.create_window('BedrockLaunch', 'localhost:21934', frameless=getSetting("wv_frameless_window"), easy_drag=getSetting("wv_easy_drag"), confirm_close=getSetting("wv_confirm_close"), transparent=False, width=int(base_width * scale_factor), height=int(base_height * scale_factor))
-webview.start()
-
+if os.path.isdir(uac_path):
+    exe_path = os.path.join("App", "neu_wv.exe")
+    if os.path.isfile(exe_path):
+        app_dir = os.path.abspath("App")
+        exe_full_path = os.path.abspath(exe_path)
+        
+        subprocess.run([exe_full_path], cwd=app_dir)
+else:
+    if os.path.isfile("App/welcome.txt"):
+        os.remove("App/welcome.txt")
+    os.system("cd BedrockLaunch && neu run")
