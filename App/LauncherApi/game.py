@@ -16,9 +16,10 @@ def getServers():
             line = line.strip()
             if not line:
                 continue
+
             parts = line.split(":")
-            if len(parts) == 4:
-                index, name, ip, port = parts
+            if len(parts) >= 4:
+                index, name, ip, port = parts[:4]
                 servers.append({
                     "index": int(index),
                     "name": name,
@@ -26,7 +27,8 @@ def getServers():
                     "port": int(port)
                 })
             else:
-                print(f"malformed line >  {line}")
+                print(f"malformed line > {line}")
+
     return servers
 
 def getServerStatus(ip, port):
@@ -68,8 +70,7 @@ def getWorldImage(world):
     path = rf"C:\Users\{username}\AppData\Local\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang\minecraftWorlds\{world}\world_icon.jpeg"
     return path
     
-def getWorldSize(world_folder_name):
-    import os
+def getWorldSize(world_display_name):
     username = os.getlogin()
     base_path = rf"C:\Users\{username}\AppData\Local\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang\minecraftWorlds"
     total_size = 0
@@ -80,16 +81,16 @@ def getWorldSize(world_folder_name):
         if os.path.isdir(folder_path):
             levelname_file = os.path.join(folder_path, "levelname.txt")
             if os.path.exists(levelname_file):
-                with open(levelname_file, "r") as f:
+                with open(levelname_file, "r", encoding="utf-8") as f:
                     name = f.read().strip()
-                    if name == world_folder_name:
+                    if name == world_display_name:
                         world_path = folder_path
                         break
 
-    if world_path is None:
-        return 0
+    if not world_path:
+        return 0 
 
-    for dirpath, dirnames, filenames in os.walk(world_path):
+    for dirpath, _, filenames in os.walk(world_path):
         for f in filenames:
             fp = os.path.join(dirpath, f)
             if os.path.isfile(fp):
