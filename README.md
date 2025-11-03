@@ -3,7 +3,7 @@ A fully functional Minecraft Bedrock launcher
 
 SourceForge ![SourceForge](https://img.shields.io/sourceforge/dm/bedrocklaunch.svg)
 
-<img width="2646" height="1769" alt="launcherthemes" src="https://github.com/user-attachments/assets/153588f3-019a-4f33-81c7-f2f69621423b" />
+<img width="1940" height="1527" alt="Frame 2gh" src="https://github.com/user-attachments/assets/fccc8525-a12a-4e6d-8c85-c5019b05a619" />
 
 <img width="1484" height="961" alt="image" src="https://github.com/user-attachments/assets/7e682eb5-ceb4-4b85-9cf1-c052d538d82b" />
 
@@ -39,6 +39,6 @@ SourceForge ![SourceForge](https://img.shields.io/sourceforge/dm/bedrocklaunch.s
 
 ## 📃 Credits
 - Some installer/launching code used from [here](github.com/CrystalVortex/Minecraft-Bedrock-Version-Manager/tree/TestVersion-9)
-- Theme backgrounds from [Qklid](https://pixabay.com/users/qkild-35912031/)
+- Theme backgrounds from [Qklid](https://pixabay.com/users/qkild-35912031/) and [Exceptional_3D](https://pixabay.com/users/exceptional_3d-16154516/)
 - Version lists from [ddf8196, mc-w10-versiondb-auto-update](https://github.com/ddf8196/mc-w10-versiondb-auto-update)
 - Appx downloader from [tinytengu](https://github.com/tinytengu/python-bedrock-appx) (user is no longer active)
