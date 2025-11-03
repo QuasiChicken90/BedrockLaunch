@@ -33,9 +33,11 @@ SourceForge ![SourceForge](https://img.shields.io/sourceforge/dm/bedrocklaunch.s
 - You must own a legitimate copy of Minecraft Bedrock Edition.
 
 ## 🔨 Building
+- Install Python and NodeJS
+- Install NeutralinoJS with the command ```npm install -g @neutralinojs/neu```
 - Create a python virtual environment
 - clone/download the code into the venv
-- Go into the venv and run BuildLauncher.py
+- Activate the venv and run BuildLauncher.py
 
 ## 📃 Credits
 - Some installer/launching code used from [here](github.com/CrystalVortex/Minecraft-Bedrock-Version-Manager/tree/TestVersion-9)
