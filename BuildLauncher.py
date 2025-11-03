@@ -1,8 +1,9 @@
 import os
 import shutil
 from time import sleep
+import subprocess
 
-version = "Beta_5"
+version = "Beta_6"
 
 def log(text):
     print(f"LOG: {text}")
@@ -53,8 +54,20 @@ if os.path.isfile("App/welcome.txt"):
 run("mkdir buildexec")
 
 icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "Resources", "BedrockLaunch.ico")
+icon_path_quoted = f'"{icon_path}"' 
 
-run("pyinstaller Launcher.py --clean --workpath buildexec/temp --distpath buildexec/exe --specpath buildexec/temp --noconsole --noconfirm --icon " + icon_path)
+icon_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "Resources", "BedrockLaunch.ico")
+
+subprocess.run([
+    "pyinstaller",
+    "Launcher.py",
+    "--clean",
+    "--workpath", "buildexec/temp",
+    "--distpath", "buildexec/exe",
+    "--specpath", "buildexec/temp",
+    "--noconfirm",
+    "--icon", icon_path 
+], check=True)
 
 mkdir("buildexec/exe/Launcher/launches")
 
@@ -73,5 +86,17 @@ deletefile("buildexec/exe/Launcher/_internal/App/selected.txt")
 sleep(3)
 copyFile("launcher_restart.bat", "buildexec/exe/Launcher/launcher_restart.bat")
 removePycache("buildexec/exe/Launcher")
+
+log("building neutralino")
+
+import subprocess
+
+subprocess.run(["neu", "build"], cwd="BedrockLaunch", check=True, shell=True)
+
+copyFile("BedrockLaunch/dist/BedrockLaunch/BedrockLaunch-win_x64.exe", "buildexec/exe/Launcher/App/neu_wv.exe")
+
+copyFile("BedrockLaunch/dist/BedrockLaunch/resources.neu", "buildexec/exe/Launcher/App/resources.neu")
+
+copyFile("BedrockLaunch/neutralino.config.json", "buildexec/exe/Launcher/App/neutralino.config.json")
 
 log("Complete.")
