@@ -1,6 +1,4 @@
 flask
-pywebview
-
 requests
 
 pyinstaller
