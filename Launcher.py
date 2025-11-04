@@ -121,6 +121,7 @@ def launcherApp():
     
     @app.route("/launcher/worlds")
     def worlds():
+        
         return render_template("Worlds.html", themePath=getSetting("app_themeBG"))
     
     @app.route("/launcher/api/worlds/getlist")
@@ -208,7 +209,7 @@ def launcherApp():
             return render_template("Welcome.html", themePath=getSetting("app_themeBG"))
         return render_template("Base.html", themePath=getSetting("app_themeBG"))
 
-    app.run(host="localhost", port=21934, debug=False)
+    app.run(host="localhost", port=21934)
 
 flaskAppThread = threading.Thread(target=launcherApp)
 flaskAppThread.start()
