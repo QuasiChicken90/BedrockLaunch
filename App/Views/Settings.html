@@ -156,7 +156,7 @@
                 document.addEventListener('DOMContentLoaded', async () => {
                     let latestVersion = await (await fetch('https://raw.githubusercontent.com/QuasiChicken90/BedrockLaunch/refs/heads/main/latestversion.txt')).text();
                     latestVersion = latestVersion.trim();
-                    if (latestVersion != 'Beta_6a') {
+                    if (latestVersion != 'Beta_7') {
                         
                         const h3 = document.createElement('h3');
                         h3.style.color = 'white';
@@ -174,10 +174,10 @@
 
         </form>
         <button class="btnSaveAll" style="width: 40% !important;" onclick="location.href = '/launcher/api/opendatafolder';">Open Minecraft BE Folder (For backups & viewing)</button>
+        <button class="btnSaveAll" style="width: 40% !important;" onclick="location.href = '/launcher/api/opendatafolder/mcbgdk';">Open Minecraft BE Folder (For backups & viewing 1.21.120+)</button>
         <button class="btnSaveAll" style="width:40% !important;" onclick="location.href = '/launcher/update';">Reinstall Launcher (latest version)</button>
     </div>
 </div>
 
 </body>
-
 </html>
