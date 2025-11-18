@@ -3,7 +3,7 @@ import shutil
 from time import sleep
 import subprocess
 
-version = "Beta_6"
+version = "Beta_7"
 
 def log(text):
     print(f"LOG: {text}")
