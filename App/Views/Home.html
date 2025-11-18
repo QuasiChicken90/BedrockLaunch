@@ -88,6 +88,7 @@
 
 <button onclick="
     if (confirm('All Minecraft content will be deleted (worlds, packs, servers & more) if this is your first launch of a new version! Continue?')) {
+        alert('If you are trying to launch a version above 1.21.120, it may take a few minutes. Do not close the launcher even if nothing is happening');
         location.href = '/launcher/launch';
     } else {
         // meh
