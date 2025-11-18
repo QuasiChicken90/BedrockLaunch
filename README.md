@@ -42,7 +42,7 @@ A fully functional Minecraft Bedrock launcher
 - Activate the venv and run BuildLauncher.py
 
 ## 📃 Credits
-- Some installer/launching code used from [here](github.com/CrystalVortex/Minecraft-Bedrock-Version-Manager/tree/TestVersion-9)
+- Some installer/launching code used from [here](https://github.com/CrystalVortex/Minecraft-Bedrock-Version-Manager/tree/TestVersion-9)
 - Theme backgrounds from [Qklid](https://pixabay.com/users/qkild-35912031/) and [Exceptional_3D](https://pixabay.com/users/exceptional_3d-16154516/)
 - Version lists from [ddf8196, mc-w10-versiondb-auto-update](https://github.com/ddf8196/mc-w10-versiondb-auto-update)
 - Additional version list for 1.21.120+ from [LukasPAH, minecraft-windows-gdk-version-db](https://github.com/LukasPAH/minecraft-windows-gdk-version-db)
