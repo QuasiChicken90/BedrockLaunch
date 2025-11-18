@@ -146,7 +146,7 @@
     padding: 32px 28px;
     width: 340px;
     max-height: 80vh;
-    overflow-y: auto; /* vertical scroll */
+    overflow-y: auto;
     position: relative;
     transform: translateY(100px);
     filter: blur(15px);
@@ -154,8 +154,6 @@
     border: 2px solid black;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgb(53, 53, 53);
 }
-
-
 
     .whats-new-overlay.show .whats-new-container {
         animation: slideUpBlur 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -280,19 +278,19 @@
         
         <div class="feature-item">
             <div class="feature-icon">
-                <i class="fa-solid fa-bolt"></i>
+                <i class="fa-solid fa-download"></i>
             </div>
             <div class="feature-text">
-                Gigantic performance improvements (no longer uses PyWebView).
+                Now partially supports 1.21.120+ versions (Download/Installations only)
             </div>
         </div>
 
         <div class="feature-item">
             <div class="feature-icon">
-                <i class="fa-solid fa-palette"></i>
+                <i class="fa-solid fa-hand-pointer"></i>
             </div>
             <div class="feature-text">
-                New 4th, 5th launcher themes by @Qkild and @Exceptional_3D.
+                Added button to open data folder for 1.21.120+ versions.
             </div>
         </div>
 
@@ -301,36 +299,9 @@
                 <i class="fa-solid fa-gear"></i>
             </div>
             <div class="feature-text">
-                Fixed servers page to support newer versions that have an ID for each server. (malformed error)
+                Known Issue: Launcher updates sometimes dont reopen the app when the update is complete or wont complete an update properly.
             </div>
         </div>
-
-        <div class="feature-item">
-            <div class="feature-icon">
-                <i class="fa-solid fa-window-maximize"></i>
-            </div>
-            <div class="feature-text">
-                Removed custom window controls. Now uses native OS window controls.
-            </div>
-        </div>
-
-<div class="feature-item">
-    <div class="feature-icon">
-        <i class="fa-solid fa-newspaper"></i>
-    </div>
-    <div class="feature-text">
-        Inbuilt popup for reading articles without opening a browser.
-    </div>
-</div>
-
-<div class="feature-item">
-    <div class="feature-icon">
-        <i class="fa-solid fa-terminal"></i>
-    </div>
-    <div class="feature-text">
-        Added console for debugging issues. (will be removed later)
-    </div>
-</div>
 
         <button class="whats-new-continue-btn" onclick="fadeOutToLauncher();">Continue</button>
     </div>
