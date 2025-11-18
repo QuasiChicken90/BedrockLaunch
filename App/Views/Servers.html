@@ -155,6 +155,7 @@
 
 </style>
 
+
 <script>
 
 </script>
@@ -169,7 +170,6 @@
     <button onclick="loadPage('servers')" class="btnReload">Refresh</button>
 
  <div class="ServerList">
-    
   </div>
 
   <script>
@@ -207,6 +207,201 @@
 loadServers();
 </script>
 
+<!-- TODO: remove all  -->
+
+
+<style>
+    .welcomeBox {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: white;
+        z-index: 9999;
+        transition: opacity 0.5s ease-in;
+    }
+    
+    .welcomeBox.hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
+    
+    .welcomeBox h1 {
+        opacity: 0;
+        animation: slideUpBlur 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        animation-delay: 0.2s;
+        margin: 0 0 20px 0;
+    }
+    
+    .welcomeBox h3 {
+        opacity: 0;
+        animation: slideUpBlur 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        animation-delay: 0.6s;
+        margin: 0 0 40px 0;
+        font-weight: 400;
+    }
+    
+    .ContinueBtn {
+        position: relative;
+        width: 352px;
+        height: 91px;
+        border: none;
+        background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
+        box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+        backdrop-filter: blur(12px);
+        border-radius: 256px;
+        font-weight: 900;
+        font-size: 27px;
+        color: white;
+        transition: transform 0.3s, filter 0.3s, box-shadow 0.3s;
+        opacity: 0;
+        animation: slideUpBlur 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        animation-delay: 1s;
+    }
+
+    .ContinueBtn:active {
+        background-color: rgb(37, 95, 255, 1);
+    }
+
+    .fadeOut {
+        animation: fadeOut 0.5s ease-in forwards;
+    }
+
+.whats-new-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+    .whats-new-overlay.show {
+        display: flex;
+    }
+
+    .whats-new-overlay.fadeOut {
+        display: none;
+    }
+
+.whats-new-container {
+    background: rgba(28, 28, 30, 0.4);
+    border-radius: 20px;
+    padding: 32px 28px;
+    width: 340px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(53, 53, 53, 0.3);
+    backdrop-filter: blur(20px);
+}
+
+    .whats-new-container.fadeOut {
+        display: none;
+    }
+
+    .whats-new-container h1 {
+        color: #ffffff;
+        font-size: 24px;
+        font-weight: 700;
+        margin: 0 0 24px 0;
+        opacity: 1;
+        animation: none;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 16px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+    }
+
+    .feature-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .feature-icon i {
+        font-size: 20px;
+        color: #FFA500;
+    }
+
+    .feature-text {
+        color: #e5e5e7;
+        font-size: 15px;
+        line-height: 1.5;
+    }
+
+    .whats-new-continue-btn {
+        width: 100%;
+        background: #007AFF;
+        color: #ffffff;
+        border: none;
+        padding: 16px;
+        border-radius: 256px;
+        font-size: 17px;
+        font-weight: 600;
+        margin-top: 20px;
+        transition: background 0.2s ease;
+    }
+
+    .whats-new-continue-btn:active {
+        background: #002e77 !important;
+        filter: brightness(100%) !important;
+        transition: 0.0s !important;
+    }
+
+</style>
+
+<div class="whats-new-overlay" id="whatsNewOverlay">
+    <div class="whats-new-container" id="whatsNewPane">
+        <h1>Warning</h1>
+        
+        <div class="feature-item">
+            <div class="feature-icon">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div class="feature-text">
+                Does not support 1.21.120+ versions yet
+            </div>
+        </div>
+        <button class="whats-new-continue-btn" onclick="closePrompt();">Continue</button>
+    </div>
+</div>
+
+<!-- quick fix (warning msg) -->
+<script>
+    function showWhatsNew() {
+        setTimeout(() => {
+            const overlay = document.getElementById('whatsNewOverlay');
+            overlay.classList.add('show');
+        }, 300);
+    }
+
+    showWhatsNew()
+
+    function closePrompt() {
+        const overlay = document.getElementById('whatsNewOverlay');
+        overlay.classList.add('fadeOut');
+        
+        setTimeout(() => {
+            overlay.classList.remove('show');
+        }, 500);
+    }
+</script>
 
 </body>
 </html>
