@@ -1,18 +1,20 @@
-import webview
 import threading
 from flask import Flask, render_template, send_from_directory, request, jsonify, send_file
 import json
 import os 
 import ctypes
 import signal
+import requests
+import subprocess
+import sys
+import re
+
 from App.LauncherApi import libraryManager
 from App.LauncherApi import launchver
 from App.LauncherApi import web
 from App.LauncherApi import game
 from App.LauncherApi import launcher
-import requests
-import subprocess
-import sys
+from App.LauncherApi import versions_mcbgdk
 
 def is_admin():
     try:
@@ -89,8 +91,24 @@ def launcherApp():
     
     @app.route("/launcher/api/create/<version>")
     def apiCreate_instance(version):
-        try :
-            libraryManager.createInstance(version)
+        try:
+            match = re.search(r"(\d+\.\d+\.\d+)", version)
+            if not match:
+                print("Invalid version format.")
+                return
+            numeric_version = match.group(1)
+
+            def parse_version(ver_str):
+                parts = ver_str.split(".")
+                return tuple(int(p) for p in parts)
+
+            version_tuple = parse_version(numeric_version)
+            threshold = parse_version("1.21.120")
+            if version_tuple >= threshold:
+                print(version)
+                versions_mcbgdk.createMCBGDKInstance(version)
+            else:
+                libraryManager.createInstance(version)
             return "OK"
         except Exception as e:
             return "Error: " + str(e) + "\nTroubleshoot:\nVersions too old may not download\nCheck your internet connection\nCheck if you have enough storage"
@@ -116,6 +134,13 @@ def launcherApp():
     def opendatafolder():
         username = os.getlogin()
         path = rf"C:\Users\{username}\AppData\Local\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang"
+        os.system(f"explorer.exe {path}")
+        return render_template("Base.html", themePath=getSetting("app_themeBG"))
+    
+    @app.route("/launcher/api/opendatafolder/mcbgdk")
+    def opendatafolder_mcbgdk():
+        username = os.getlogin()
+        path = rf"C:\Users\pc\AppData\Roaming\Minecraft Bedrock\Users"
         os.system(f"explorer.exe {path}")
         return render_template("Base.html", themePath=getSetting("app_themeBG"))
     
