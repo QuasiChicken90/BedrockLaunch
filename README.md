@@ -37,13 +37,14 @@ A fully functional Minecraft Bedrock launcher
 ## 🔨 Building
 - Install Python and NodeJS
 - Install NeutralinoJS with the command ```npm install -g @neutralinojs/neu```
+- Install pyinstaller with the command ```pip install pyinstaller```
 - Create a python virtual environment
 - clone/download the code into the venv
 - Activate the venv and run BuildLauncher.py
 
 ## 📃 Credits
 - Some installer/launching code used from [here](https://github.com/CrystalVortex/Minecraft-Bedrock-Version-Manager/tree/TestVersion-9)
-- Theme backgrounds from [Qklid](https://pixabay.com/users/qkild-35912031/) and [Exceptional_3D](https://pixabay.com/users/exceptional_3d-16154516/)
+- Theme backgrounds from [Qklid](https://pixabay.com/users/qkild-35912031/) and [Exceptional_3D](https://pixabay.com/users/exceptional_3d-16154516/) and [tommyvideo](https://pixabay.com/users/tommyvideo-3092371/)
 - Version lists from [ddf8196, mc-w10-versiondb-auto-update](https://github.com/ddf8196/mc-w10-versiondb-auto-update)
 - Additional version list for 1.21.120+ from [LukasPAH, minecraft-windows-gdk-version-db](https://github.com/LukasPAH/minecraft-windows-gdk-version-db)
 - Appx downloader from [tinytengu](https://github.com/tinytengu/python-bedrock-appx) (user is no longer active)
