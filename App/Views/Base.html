@@ -1,251 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Launcher</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="http://localhost:21934/launcherfiles/resources/CSS/global.css">
-</head>
-
-<style>
+  </head>
+  <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
     * {
-        font-family: 'Inter', sans-serif;
+      font-family: 'Inter', sans-serif;
     }
 
     body {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background: #1e1e1e;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #1e1e1e;
     }
 
-    html, body {
-        background: transparent;
+    html,
+    body {
+      background: transparent;
     }
-    
+
     .LauncherContainer {
-        width: 100%;
-        height: 100vh;
+      width: 100%;
+      height: 100vh;
     }
 
     @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.6);
-    filter: blur(8px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-    filter: blur(0);
-  }
+      from {
+        opacity: 0;
+        transform: scale(0.6);
+        filter: blur(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+      }
     }
 
-.PageTitle {
-    position: fixed;
-    top: 1%;
-    left: 30%;
-    color: white;
-    font-size: 30px;
-    font-weight: 700;
-    z-index: 9999;
-}
-</style>
-
-<script>
-
-</script>
-
-<body>
-
-<h3 class="PageTitle">Home</h3>
-<div class="UpperDepthEffect pywebview-drag-region">
-</div>
-
-<div class="LauncherContainer">
-        <video autoplay muted loop preload="metadata" id="video" class="LauncherVideo">
-        <source src="{{ themePath }}" type="video/mp4">
-        Failed to load theme. Video not supported.
-    </video>
-    
-<div id="contentArea" style="opacity: 0; animation: fadeInExpand 0.8s ease-out forwards;">
-    <!-- Dynamic pages will be injected here -->
-</div>
-
-</div>
-
-    <div class="contentArea">
-      
+    .PageTitle {
+      position: fixed;
+      top: 1%;
+      left: 30%;
+      color: white;
+      font-size: 30px;
+      font-weight: 700;
+      z-index: 9999;
+    }
+  </style>
+  <script></script>
+  <body>
+    <h3 class="PageTitle">Home</h3>
+    <div class="UpperDepthEffect pywebview-drag-region"></div>
+    <div class="LauncherContainer">
+      <video autoplay muted loop preload="metadata" id="video" class="LauncherVideo">
+        <source src="{{ themePath }}" type="video/mp4"> Failed to load theme. Video not supported.
+      </video>
+      <div id="contentArea" style="opacity: 0; animation: fadeInExpand 0.8s ease-out forwards;">
+        <!-- Dynamic pages will be injected here -->
+      </div>
     </div>
-
-<div class="sideBar">
-    <button class="btnActiveTab" data-page="Home">
+    <div class="contentArea"></div>
+    <div class="sideBar">
+      <button class="btnActiveTab" data-page="Home">
         <i class="fas fa-home"></i>
         <span>Home</span>
-    </button>
-    <button class="btnInactiveTab" data-page="Library">
-        <i class="fas fa-book"></i>
+      </button>
+      <button class="btnInactiveTab" data-page="Library">
+        <i class="fas fa-bars"></i>
         <span>Library</span>
-    </button>
-    <button class="btnInactiveTab" data-page="Worlds">
+      </button>
+      <button class="btnInactiveTab" data-page="Addons">
+        <i class="fas fa-plug"></i>
+        <span>Addons</span>
+      </button>
+      <button class="btnInactiveTab" data-page="Worlds">
         <i class="fas fa-map"></i>
         <span>Worlds</span>
-    </button>
-    <button class="btnInactiveTab" data-page="Servers">
+      </button>
+      <button class="btnInactiveTab" data-page="Servers">
         <i class="fas fa-server"></i>
         <span>Servers</span>
-    </button>
-    <button class="btnInactiveTab" data-page="Articles">
+      </button>
+      <button class="btnInactiveTab" data-page="Articles">
         <i class="fas fa-newspaper"></i>
         <span>Articles</span>
-    </button>
-    <button class="btnInactiveTab" data-page="Settings">
+      </button>
+      <button class="btnInactiveTab" data-page="Settings">
         <i class="fas fa-cog"></i>
         <span>Settings</span>
-    </button>
-</div>
+      </button>
+    </div>
+    <script>
+      let isMouseDown = false;
+      let dragMode = false;
+      let holdTimeout = null;
+      window.addEventListener('pywebviewready', () => {
+        bridgeReady = true;
+      });
 
+      function minimize() {
+        if (bridgeReady && window.pywebview && window.pywebview.api) {
+          window.pywebview.api.minimize();
+        }
+      }
+      const buttons = document.querySelectorAll('.sideBar button');
+      buttons.forEach(button => {
+        button.addEventListener('mousedown', e => {
+          isMouseDown = true;
+          dragMode = false;
+          holdTimeout = setTimeout(() => {
+            if (isMouseDown) dragMode = true;
+          }, 500);
+        });
+        button.addEventListener('mouseup', e => {
+          clearTimeout(holdTimeout);
+          if (!dragMode) {
+            const page = button.dataset.page;
+            setActiveTab(button);
+            loadPage(page);
+          }
+          isMouseDown = false;
+          dragMode = false;
+        });
+        button.addEventListener('mouseenter', e => {
+          if (isMouseDown && dragMode) {
+            const page = button.dataset.page;
+            setActiveTab(button);
+            loadPage(page);
+          }
+        });
+        button.addEventListener('mouseleave', () => {
+          if (!event.buttons) {
+            isMouseDown = false;
+            dragMode = false;
+            clearTimeout(holdTimeout);
+          }
+        });
+      });
 
+      function setActiveTab(activeButton) {
+        buttons.forEach(btn => {
+          btn.classList.remove('btnActiveTab');
+          btn.classList.add('btnInactiveTab');
+        });
+        activeButton.classList.remove('btnInactiveTab');
+        activeButton.classList.add('btnActiveTab');
+        const pageTitle = document.querySelector('.PageTitle');
+        if (pageTitle) {
+          pageTitle.innerText = activeButton.innerText.trim();
+        }
+      }
 
-<script>
-let isMouseDown = false;
-let dragMode = false;
-let holdTimeout = null;
-
-window.addEventListener('pywebviewready', () => {
-  bridgeReady = true;
-});
-
-function minimize() {
-  if (bridgeReady && window.pywebview && window.pywebview.api) {
-    window.pywebview.api.minimize();
-  }
-}
-
-const buttons = document.querySelectorAll('.sideBar button');
-
-buttons.forEach(button => {
-  button.addEventListener('mousedown', e => {
-    isMouseDown = true;
-    dragMode = false;
-
-    holdTimeout = setTimeout(() => {
-      if (isMouseDown) dragMode = true;
-    }, 500);
-  });
-
-  button.addEventListener('mouseup', e => {
-    clearTimeout(holdTimeout);
-
-    if (!dragMode) {
-      const page = button.dataset.page;
-      setActiveTab(button);
-      loadPage(page);
-    }
-
-    isMouseDown = false;
-    dragMode = false;
-  });
-
-  button.addEventListener('mouseenter', e => {
-    if (isMouseDown && dragMode) {
-      const page = button.dataset.page;
-      setActiveTab(button);
-      loadPage(page);
-    }
-  });
-
-  button.addEventListener('mouseleave', () => {
-    if (!event.buttons) {
-      isMouseDown = false;
-      dragMode = false;
-      clearTimeout(holdTimeout);
-    }
-  });
-});
-
-function setActiveTab(activeButton) {
-  buttons.forEach(btn => {
-    btn.classList.remove('btnActiveTab');
-    btn.classList.add('btnInactiveTab');
-  });
-
-  activeButton.classList.remove('btnInactiveTab');
-  activeButton.classList.add('btnActiveTab');
-
-  const pageTitle = document.querySelector('.PageTitle');
-  if (pageTitle) {
-    pageTitle.innerText = activeButton.innerText.trim();
-  }
-}
-
-function runInjectedScripts(container) {
-  const scripts = container.querySelectorAll('script');
-  scripts.forEach(oldScript => {
-    const newScript = document.createElement('script');
-    for (const attr of oldScript.attributes) {
-      newScript.setAttribute(attr.name, attr.value);
-    }
-    if (oldScript.src) {
-      newScript.src = oldScript.src;
-    } else {
-      newScript.textContent = oldScript.textContent;
-    }
-    document.body.appendChild(newScript);
-    oldScript.remove();
-  });
-}
-
-const pageCache = {};
-
-async function loadPage(pageName) {
-  const contentArea = document.getElementById('contentArea');
-  if (!contentArea) return;
-
-  const lowerPage = pageName.toLowerCase();
-
-  contentArea.style.opacity = 0;
-
-  if (pageCache[lowerPage]) {
-    setTimeout(() => {
-      contentArea.innerHTML = pageCache[lowerPage];
-      runInjectedScripts(contentArea);
-      contentArea.style.opacity = 1;
-    }, 150);
-    return;
-  }
-
-  try {
-    const response = await fetch(`http://localhost:21934/launcher/${lowerPage}`);
-    if (!response.ok) throw new Error('Failed to load page');
-
-    const html = await response.text();
-
-    contentArea.innerHTML = html;
-    runInjectedScripts(contentArea);
-    contentArea.style.opacity = 1;
-
-    pageCache[lowerPage] = html;
-
-  } catch (error) {
-    console.error(error);
-    contentArea.innerHTML = `<p style="color:red;">Failed to load ${pageName}</p>`;
-    contentArea.style.opacity = 1;
-  }
-}
-
-window.addEventListener('DOMContentLoaded', () => {
-  loadPage('Home');
-});
-
-
-</script>
-
-
-
-</div>
-
-</body>
+      function runInjectedScripts(container) {
+        const scripts = container.querySelectorAll('script');
+        scripts.forEach(oldScript => {
+          const newScript = document.createElement('script');
+          for (const attr of oldScript.attributes) {
+            newScript.setAttribute(attr.name, attr.value);
+          }
+          if (oldScript.src) {
+            newScript.src = oldScript.src;
+          } else {
+            newScript.textContent = oldScript.textContent;
+          }
+          document.body.appendChild(newScript);
+          oldScript.remove();
+        });
+      }
+      const pageCache = {};
+      async function loadPage(pageName) {
+        const contentArea = document.getElementById('contentArea');
+        if (!contentArea) return;
+        const lowerPage = pageName.toLowerCase();
+        contentArea.style.opacity = 0;
+        if (pageCache[lowerPage]) {
+          setTimeout(() => {
+            contentArea.innerHTML = pageCache[lowerPage];
+            runInjectedScripts(contentArea);
+            contentArea.style.opacity = 1;
+          }, 150);
+          return;
+        }
+        try {
+          const response = await fetch(`http://localhost:21934/launcher/${lowerPage}`);
+          if (!response.ok) throw new Error('Failed to load page');
+          const html = await response.text();
+          contentArea.innerHTML = html;
+          runInjectedScripts(contentArea);
+          contentArea.style.opacity = 1;
+          pageCache[lowerPage] = html;
+        } catch (error) {
+          console.error(error);
+          contentArea.innerHTML = `
+								<p style="color:red;">Failed to load ${pageName}</p>`;
+          contentArea.style.opacity = 1;
+        }
+      }
+      window.addEventListener('DOMContentLoaded', () => {
+        loadPage('Home');
+      });
+    </script>
+    </div>
+  </body>
 </html>
