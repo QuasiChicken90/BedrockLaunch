@@ -1,92 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Launcher | Home</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="/launcherfiles/resources/CSS/global.css">
-</head>
-
-<style>
+  </head>
+  <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
     * {
-        font-family: 'Inter', sans-serif;
+      font-family: 'Inter', sans-serif;
     }
 
     body {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background: #1e1e1e;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #1e1e1e;
     }
 
-    html, body {
-        background: transparent;
+    html,
+    body {
+      background: transparent;
     }
-    
+
     .LauncherContainer {
-        width: 100%;
-        height: 100vh;
+      width: 100%;
+      height: 100vh;
     }
 
     @keyframes fadeIn {
-        to {
-            opacity: 1;
-        }
+      to {
+        opacity: 1;
+      }
     }
 
-.btnPlay {
-    position: absolute;
-    width: 352px;
-    height: 91px;
-    border: none;
-    background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
-    box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(87, 87, 87, 0.5);
-    backdrop-filter: blur(12px);
-    border-radius: 256px;
-    font-weight: 900;
-    font-size: 27px;
-    color: white;
+    .btnPlay {
+      position: absolute;
+      width: 352px;
+      height: 91px;
+      border: none;
+      background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
+      box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+      backdrop-filter: blur(12px);
+      border-radius: 256px;
+      font-weight: 900;
+      font-size: 27px;
+      color: white;
+      /* positioning 😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭 */
+      bottom: 10%;
+      left: 62%;
+      transform: translate(-50%, 0);
+    }
 
-    /* positioning 😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭 */
-    bottom: 10%;
-    left: 62%;
-    transform: translate(-50%, 0);
+    .btnPlay i {
+      font-size: 32px;
+      color: white;
+    }
 
-}
-.btnPlay i {
-    font-size: 32px; 
-    color: white;   
-}
+    .btnPlay:active {
+        backdrop-filter: blur(12px) saturate(150%);
+    }
 
-.btnPlay:active {
-    background-color: rgb(37, 95, 255, 0.5);
-}
-
-.Home {
-    position: fixed;
-    top: 1%;
-    left: 30%;
-    color: white;
-    font-size: 30px;
-    font-weight: 700;
-    z-index: 9999;
-}
-</style>
-
-<script>
-
-</script>
-
-<body>
-
-
-</div>
-
-<div class="LauncherContainer">
-
-<button onclick="
+    .Home {
+      position: fixed;
+      top: 1%;
+      left: 30%;
+      color: white;
+      font-size: 30px;
+      font-weight: 700;
+      z-index: 9999;
+    }
+  </style>
+  <script></script>
+  <body>
+    </div>
+    <div class="LauncherContainer">
+      <button onclick="
     if (confirm('All Minecraft content will be deleted (worlds, packs, servers & more) if this is your first launch of a new version! Continue?')) {
         alert('If you are trying to launch a version above 1.21.120, it may take a few minutes. Do not close the launcher even if nothing is happening');
         location.href = '/launcher/launch';
@@ -94,13 +86,7 @@
         // meh
     }
 " class="btnPlay">
-    <i class="fas fa-play"></i>
-    Play
-</button>
-
-
-
-</div>
-
-</body>
+        <i class="fas fa-play"></i> Play </button>
+    </div>
+  </body>
 </html>
