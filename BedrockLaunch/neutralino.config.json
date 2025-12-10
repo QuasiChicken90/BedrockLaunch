@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/neutralinojs/neutralinojs/main/schemas/neutralino.config.schema.json",
   "applicationId": "BedrockLaunch",
-  "version": "1.0.0-Beta_6",
+  "version": "1.0.0-Beta_8",
   "defaultMode": "window",
   "port": 0,
   "documentRoot": "/resources/",
@@ -41,7 +41,7 @@
       "fullScreen": false,
       "alwaysOnTop": false,
       "icon": "/resources/icons/appIcon.png",
-      "enableInspector": false,
+      "enableInspector": false, 
       "borderless": false,
       "maximize": false,
       "hidden": false,
