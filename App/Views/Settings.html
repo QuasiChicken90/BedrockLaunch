@@ -1,183 +1,382 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Launcher | Settings</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="/launcherfiles/resources/CSS/global.css">
-</head>
-
-<style>
+  </head>
+  <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
     * {
-        font-family: 'Inter', sans-serif;
+      font-family: 'Inter', sans-serif;
     }
 
     body {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background: #1e1e1e;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #1e1e1e;
     }
 
-    html, body {
-        background: transparent;
+    html,
+    body {
+      background: transparent;
     }
-    
+
     .LauncherContainer {
-        width: 100%;
-        height: 100vh;
+      width: 100%;
+      height: 100vh;
     }
 
-.btnPlay {
-    position: absolute;
-    width: 352px;
-    height: 91px;
-    border: none;
-    background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
-    box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(87, 87, 87, 0.5);
-    backdrop-filter: blur(4px);
-    border-radius: 256px;
-    font-weight: 900;
-    font-size: 27px;
-    color: white;
+    .btnPlay {
+      position: absolute;
+      width: 352px;
+      height: 91px;
+      border: none;
+      background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
+      box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+      backdrop-filter: blur(4px);
+      border-radius: 256px;
+      font-weight: 900;
+      font-size: 27px;
+      color: white;
+      /* positioning 😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭 */
+      bottom: 10%;
+      left: 62%;
+      transform: translate(-50%, 0);
+    }
 
-    /* positioning 😭😭😭😭😭😭😭😭😭😭😭😭😭😭😭 */
-    bottom: 10%;
-    left: 62%;
-    transform: translate(-50%, 0);
-}
+    .btnPlay i {
+      font-size: 32px;
+      color: white;
+    }
 
-.btnPlay i {
-    font-size: 32px; 
-    color: white;   
-}
+    .btnPlay:active {
+      background-color: rgb(37, 95, 255, 0.5);
+    }
 
-.btnPlay:active {
-    background-color: rgb(37, 95, 255, 0.5);
-}
+    .Settings {
+      position: fixed;
+      top: 1%;
+      left: 30%;
+      color: white;
+      font-size: 30px;
+      font-weight: 700;
+      z-index: 10000;
+    }
 
-.Settings {
-    position: fixed;
-    top: 1%;
-    left: 30%;
-    color: white;
-    font-size: 30px;
-    font-weight: 700;
-    z-index: 10000;
-}
+    .SettingsOptions {
+      position: fixed;
+      top: 10%;
+      left: 30%;
+      width: 90%;
+      height: 150%;
+      background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
+      box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+        inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+      backdrop-filter: blur(15px);
+      border-radius: 37px;
+      padding: 30px;
+      color: white;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
 
-.SettingsOptions {
-    position: fixed;
-    top: 10%;
-    left: 30%;
-    width: 90%;
-    height: 150%;
-    background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
-    box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25),
-                inset 1px 1px 2px rgba(255, 255, 255, 0.3),
-                inset -1px -1px 2px rgba(87, 87, 87, 0.5);
-    backdrop-filter: blur(15px);
-    border-radius: 37px;
-    padding: 30px;
-    color: white;
-    z-index: 999;
+    .btnSaveAll {
+      top: 80%;
+      left: 30%;
+      width: 10%;
+      height: 60px;
+      background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
+      box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+      font-weight: 500;
+      color: white;
+      border: none;
+      border-radius: 256px;
+      font-size: 20px;
+      transition: 0.3s;
+    }
 
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
+    .btnSaveAll:active {
+      transition: 0.0s !important;
+      background: rgb(37, 95, 255);
+      filter: brightness(140%) blur(1px);
+    }
 
-.btnSaveAll {
-    top: 80%;
-    left: 30%;
-    width: 10%;
-    height: 60px;
-    background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
-    box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(87, 87, 87, 0.5);
-    font-weight: 500;
-    color: white;
-    border: none;
-    border-radius: 256px;
-    font-size: 20px;
-    transition: 0.3s;
-}
+    .inptbox {
+      top: 80%;
+      left: 30%;
+      width: 40%;
+      height: 60px;
+      background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
+      box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+      color: white;
+      font-weight: 500;
+      border: none;
+      border-radius: 256px;
+      font-size: 20px;
+      text-align: center;
+      text-align-last: center;
+      padding: 0;
+      appearance: none;
+      line-height: 60px;
+    }
 
-.btnSaveAll:active {
-    transition: 0.0s !important;
-    background: rgb(37, 95, 255);
-    transform: scale(1.05);
-    filter: brightness(140%) blur(1px);
-}
+    .h3Update a {
+      color: white;
+      font-size: 25px;
+      font-weight: 700;
+      text-align: center;
+      cursor: default;
+    }
 
-.inptbox {
-    top: 80%;
-    left: 30%;
-    width: 40%;
-    height: 60px;
-    background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
-    box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(87, 87, 87, 0.5);
-    color: white;
-    font-weight: 500;
-    border: none;
-    border-radius: 256px;
-    font-size: 20px;
-    text-align: center;         
-    text-align-last: center;   
-    padding: 0;              
-    appearance: none;           
-    line-height: 60px;            
-}
-.h3Update a {
-    color: white;
-    font-size: 25px;
-    font-weight: 700;
-    text-align: center;
-    cursor: default;
-}
+    .h3Update a:active {
+      filter: brightness(50%);
+    }
 
-.h3Update a:active {
-    filter: brightness(50%);
-}
+        @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
 
-</style>
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+      }
+    }
 
-<body>
+    @keyframes slideUpBlur {
+      0% {
+        transform: translateY(100px);
+        filter: blur(15px);
+        opacity: 0;
+      }
 
-<div class="LauncherContainer">
+      100% {
+        transform: translateY(0);
+        filter: blur(0px);
+        opacity: 1;
+      }
+    }
+
+        .theme-selector-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0);
+      z-index: 10001;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-selector-overlay.show {
+      display: flex;
+      animation: fadeInOverlay 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .theme-selector-overlay.fadeOut {
+      animation: fadeOutOverlay 0.8s cubic-bezier(0.4, 0, 1, 1) forwards;
+    }
+
+    .theme-selector-container {
+      background: #1c1c1e;
+      border-radius: 20px;
+      padding: 32px 28px;
+      width: 420px;
+      position: relative;
+      transform: translateY(100px);
+      filter: blur(15px);
+      opacity: 0;
+      border: 2px solid black;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgb(53, 53, 53);
+    }
+
+    .theme-selector-overlay.show .theme-selector-container {
+      animation: slideUpBlur 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .theme-selector-container.fadeOut {
+      animation: slideDownBlur 0.8s cubic-bezier(0.4, 0, 0.6, 1) forwards !important;
+    }
+
+    .theme-selector-container h1 {
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0 0 24px 0;
+      opacity: 1;
+      animation: none;
+    }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .theme-option {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/10;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 3px solid transparent;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+      background: #2c2c2e;
+    }
+
+    .theme-option.selected {
+      border-color: #007AFF;
+      box-shadow: 0 0 0 2px #007AFF;
+    }
+
+    .theme-option video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .theme-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .theme-skip-btn {
+      flex: 1;
+      background: transparent;
+      color: #007AFF;
+      border: none;
+      padding: 16px;
+      border-radius: 256px;
+      font-size: 17px;
+      font-weight: 600;
+      transition: background 0.2s ease;
+    }
+
+    .theme-continue-btn {
+      flex: 1;
+      background: #007AFF;
+      color: #ffffff;
+      border: none;
+      padding: 16px;
+      border-radius: 256px;
+      font-size: 17px;
+      font-weight: 600;
+      transition: background 0.2s ease;
+    }
+
+    .theme-continue-btn:active {
+      background: #002e77 !important;
+      filter: brightness(100%) !important;
+      transition: 0.0s !important;
+    }
+
     
-
-    <div class="SettingsOptions">
-        <form id="themeForm" action="http://localhost:21934/launcher/settings/theme" method="get">
-            <input placeholder="Theme: (Use '1' through '5')" type="text" name="number" class="inptbox" id="themeSelect">
-            <button class="btnSaveAll" type="submit">Set Theme</button>
-            <script>
-                document.addEventListener('DOMContentLoaded', async () => {
-                    let latestVersion = await (await fetch('https://raw.githubusercontent.com/QuasiChicken90/BedrockLaunch/refs/heads/main/latestversion.txt')).text();
-                    latestVersion = latestVersion.trim();
-                    if (latestVersion != 'Beta_7') {
-                        
-                        const h3 = document.createElement('h3');
-                        h3.style.color = 'white';
-                        h3.classList.add("h3Update");
-
-                        const a = document.createElement('a');
-                        a.href = "http://localhost:21934/launcher/update"; 
-                        a.rel = "noopener noreferrer"; 
-                        a.textContent = "An update is available. Click here to install!";
-                        h3.appendChild(a);
-                        document.querySelector('.SettingsOptions').prepend(h3);
-                    }
-                });
-            </script>
-
-        </form>
-        <button class="btnSaveAll" style="width: 40% !important;" onclick="location.href = '/launcher/api/opendatafolder';">Open Minecraft BE Folder (For backups & viewing)</button>
-        <button class="btnSaveAll" style="width: 40% !important;" onclick="location.href = '/launcher/api/opendatafolder/mcbgdk';">Open Minecraft BE Folder (For backups & viewing 1.21.120+)</button>
-        <button class="btnSaveAll" style="width:40% !important;" onclick="location.href = '/launcher/update';">Reinstall Launcher (latest version)</button>
+  </style>
+  <body>
+    <div class="LauncherContainer">
+       <div class="theme-selector-overlay" id="themeSelectorOverlay">
+      <div class="theme-selector-container" id="themeSelectorPane">
+        <h1>Select Theme</h1>
+        <div class="theme-grid">
+          <div class="theme-option" data-theme="1" onclick="selectTheme(1)">
+            <video autoplay muted loop>
+              <source src="http://localhost:21934/launcherfiles/Themes/1.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="theme-option" data-theme="2" onclick="selectTheme(2)">
+            <video autoplay muted loop>
+              <source src="http://localhost:21934/launcherfiles/Themes/2.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="theme-option" data-theme="3" onclick="selectTheme(3)">
+            <video autoplay muted loop>
+              <source src="http://localhost:21934/launcherfiles/Themes/3.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="theme-option" data-theme="4" onclick="selectTheme(4)">
+            <video autoplay muted loop>
+              <source src="http://localhost:21934/launcherfiles/Themes/4.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="theme-option" data-theme="5" onclick="selectTheme(5)">
+            <video autoplay muted loop>
+              <source src="http://localhost:21934/launcherfiles/Themes/5.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="theme-option" data-theme="6" onclick="selectTheme(6)">
+            <video autoplay muted loop>
+              <source src="http://localhost:21934/launcherfiles/Themes/6.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+        <div class="theme-buttons">
+          <button class="theme-skip-btn" onclick="skipThemeSelection();">Skip</button>
+          <button class="theme-continue-btn" onclick="continueWithTheme();">Continue</button>
+        </div>
+      </div>
     </div>
-</div>
 
-</body>
+      <div class="SettingsOptions">
+      <button class="btnSaveAll" onclick="showThemeSelector()">Choose Theme</button>
+        <button class="btnSaveAll" style="width: 40% !important;" onclick="location.href = '/launcher/api/opendatafolder/mcbgdk';">Open Minecraft BE Folder (For backups & viewing 1.21.120+)</button>
+        <button class="btnSaveAll" style="width: 40% !important;" onclick="location.href = '/launcher/api/opendatafolder';">Open Minecraft BE Folder (For backups & viewing)</button>
+        <button class="btnSaveAll" style="width:40% !important;" onclick="location.href = '/launcher/update';">Reinstall/Update Launcher</button>
+
+    <script>
+      function showThemeSelector() {
+        
+        setTimeout(() => {
+          
+          const themeOverlay = document.getElementById('themeSelectorOverlay');
+          themeOverlay.classList.add('show');
+        }, 500);
+      }
+
+      function selectTheme(themeNumber) {
+        selectedTheme = themeNumber;
+        
+        document.querySelectorAll('.theme-option').forEach(option => {
+          option.classList.remove('selected');
+        });
+        
+        document.querySelector(`[data-theme="${themeNumber}"]`).classList.add('selected');
+      }
+
+      function skipThemeSelection() {
+        continueToLauncher();
+      }
+
+      function continueWithTheme() {
+        if (selectedTheme) {
+          location.href = 'http://localhost:21934/launcher/settings/theme?number=' + selectedTheme;
+        }
+      }
+
+            function continueToLauncher() {
+        const pane = document.getElementById('themeSelectorPane');
+        const overlay = document.getElementById('themeSelectorOverlay');
+        pane.classList.add('fadeOut');
+        overlay.classList.add('fadeOut');
+        
+        setTimeout(() => {
+          location.href = '/launcher/base';
+        }, 500);
+      }
+    </script>
+      </div>
+    </div>
+  </body>
 </html>
