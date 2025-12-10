@@ -1,105 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Launcher | Worlds</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="/launcherfiles/resources/CSS/global.css">
-</head>
-
-<style>
+  </head>
+  <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
     * {
-        font-family: 'Inter', sans-serif;
-        -ms-user-select: none;
-        -webkit-user-drag: none;
-        -khtml-user-drag: none;
-        -moz-user-drag: none;
-        -ms-user-drag: none;
-        -webkit-user-drag: none;
-        -moz-user-drag: none;    
-        -ms-user-drag: none;   
+      font-family: 'Inter', sans-serif;
+      -ms-user-select: none;
+      -webkit-user-drag: none;
+      -khtml-user-drag: none;
+      -moz-user-drag: none;
+      -ms-user-drag: none;
+      -webkit-user-drag: none;
+      -moz-user-drag: none;
+      -ms-user-drag: none;
     }
 
     body {
-        margin: 0;
-        padding: 0;
-        background: #1e1e1e;
-        overflow-y: scroll;
-        -ms-overflow-style: none;
-        user-select: none;
-        -ms-user-select: none;
-        -webkit-user-drag: none;
-        -khtml-user-drag: none;
-        -moz-user-drag: none;
-        -ms-user-drag: none;
-        -webkit-user-drag: none;
-        -moz-user-drag: none;    
-        -ms-user-drag: none;   
+      margin: 0;
+      padding: 0;
+      background: #1e1e1e;
+      overflow-y: scroll;
+      -ms-overflow-style: none;
+      user-select: none;
+      -ms-user-select: none;
+      -webkit-user-drag: none;
+      -khtml-user-drag: none;
+      -moz-user-drag: none;
+      -ms-user-drag: none;
+      -webkit-user-drag: none;
+      -moz-user-drag: none;
+      -ms-user-drag: none;
     }
-
-
 
     body::-webkit-scrollbar {
-        width: 0;
-        height: 0;
+      width: 0;
+      height: 0;
     }
-    
 
-    html, body {
-        background: transparent;
+    html,
+    body {
+      background: transparent;
     }
-    
+
     .LauncherContainer {
-        width: 100%;
-        height: 100vh;
+      width: 100%;
+      height: 100vh;
     }
 
+    button:active {
+      filter: brightness(1.5);
+    }
 
-
-button:active {
-    filter: brightness(1.5);
-}
-
-.Worlds {
-    position: fixed;
-    top: 1%;
-    left: 30%;
-    color: white;
-    font-size: 30px;
-    font-weight: 700;
-    z-index: 9999;
-}
-</style>
-
-<script>
-
-</script>
-
-<body>
-
-
-</div>
-
-<style>
-    .WorldContainter {
+    .Worlds {
+      position: fixed;
+      top: 1%;
+      left: 30%;
+      color: white;
+      font-size: 30px;
+      font-weight: 700;
+      z-index: 9999;
+    }
+  </style>
+  <script></script>
+  <body>
+    </div>
+    <style>
+      .WorldContainter {
         position: absolute;
         top: 10%;
         left: 30%;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 20px 25px;
-        width: 50%; 
-    }
+        width: 50%;
+      }
 
-    .WorldCard {
+      .WorldCard {
         width: 100%;
         height: 260px;
         background: linear-gradient(135deg, rgba(228, 228, 228, 0.05) 0%, rgba(206, 206, 206, 0.1) 100%);
         box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25),
-                    inset 1px 1px 2px rgba(255, 255, 255, 0.3),
-                    inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+          inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+          inset -1px -1px 2px rgba(87, 87, 87, 0.5);
         backdrop-filter: blur(15px);
         border-radius: 25px;
         color: white;
@@ -110,285 +99,74 @@ button:active {
         box-sizing: border-box;
         overflow: hidden;
         transition: 0.3s;
-    }
+      }
 
-    .WorldCard:active {
+      .WorldCard:active {
         transition: 0s !important;
         transform: scale(1.05);
         filter: brightness(140%) blur(1px);
         backdrop-filter: blur(7px);
-    }
+      }
 
-    .WorldCard img {
+      .WorldCard img {
         width: 100%;
         height: 60%;
         border-radius: 16px;
         object-fit: cover;
         margin-bottom: 10px;
-    }
+      }
 
-    .WorldCard h2 {
+      .WorldCard h2 {
         font-size: 1.4rem;
         margin: 4px 0;
         margin-left: 8px;
-    }
+      }
 
-    .WorldCard h3 {
+      .WorldCard h3 {
         font-size: 1rem;
         font-weight: 400;
         color: #ffffff;
         margin: 4px 0 8px 0;
         margin-left: 8px;
-    }
+      }
 
-    .WorldCard h4 {
+      .WorldCard h4 {
         font-size: 0.9rem;
         font-weight: 300;
         background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
         -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent; 
+        -webkit-text-fill-color: transparent;
         margin: 0;
         margin-left: 8px;
-    }
-
-    
-</style>
-
-
-<div id="WorldContainter" class="WorldContainter">
-</div>
-
-<script>
-    async function loadWorlds() {
-    try {
-        const res = await fetch("/launcher/api/worlds/getlist");
-        const worlds = await res.json();
-        const container = document.getElementById("WorldContainter");
-        container.innerHTML = "";
-
-        worlds.forEach(worldName => {
+      }
+    </style>
+    <div id="WorldContainter" class="WorldContainter"></div>
+    <script>
+      async function loadWorlds() {
+        try {
+          const res = await fetch("/launcher/api/worlds/getlist");
+          const worlds = await res.json();
+          const container = document.getElementById("WorldContainter");
+          container.innerHTML = "";
+          worlds.forEach(worldName => {
             const card = document.createElement("div");
             card.className = "WorldCard";
-
             card.innerHTML = `
-                <img src="/launcher/api/worlds/getimage/${encodeURIComponent(worldName)}" alt="${worldName}">
-                <h2>${worldName}</h2>
-                <h3>Size: Loading</h3>
+                
+						<img src="/launcher/api/worlds/getimage/${encodeURIComponent(worldName)}" alt="${worldName}">
+							<h2>${worldName}</h2>
+							<h3>Size: Loading</h3>
             `;
-
-            fetch(`/launcher/api/worlds/getsize/${encodeURIComponent(worldName)}`)
-                .then(r => r.json())
-                .then(data => {
-                    card.querySelector("h3").textContent = `Size: ${data.size}`;
-                });
-
+            fetch(`/launcher/api/worlds/getsize/${encodeURIComponent(worldName)}`).then(r => r.json()).then(data => {
+              card.querySelector("h3").textContent = `Size: ${data.size}`;
+            });
             container.appendChild(card);
-        });
-    } catch (err) {
-        console.error("Failed to load worlds");
-    }
-}
-
-loadWorlds();
-</script>
-
-
-
-<!-- TODO: remove all  -->
-
-
-<style>
-    .welcomeBox {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-        color: white;
-        z-index: 9999;
-        transition: opacity 0.5s ease-in;
-    }
-    
-    .welcomeBox.hidden {
-        opacity: 0;
-        pointer-events: none;
-    }
-    
-    .welcomeBox h1 {
-        opacity: 0;
-        animation: slideUpBlur 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-        animation-delay: 0.2s;
-        margin: 0 0 20px 0;
-    }
-    
-    .welcomeBox h3 {
-        opacity: 0;
-        animation: slideUpBlur 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-        animation-delay: 0.6s;
-        margin: 0 0 40px 0;
-        font-weight: 400;
-    }
-    
-    .ContinueBtn {
-        position: relative;
-        width: 352px;
-        height: 91px;
-        border: none;
-        background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
-        box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(87, 87, 87, 0.5);
-        backdrop-filter: blur(12px);
-        border-radius: 256px;
-        font-weight: 900;
-        font-size: 27px;
-        color: white;
-        transition: transform 0.3s, filter 0.3s, box-shadow 0.3s;
-        opacity: 0;
-        animation: slideUpBlur 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-        animation-delay: 1s;
-    }
-
-    .ContinueBtn:active {
-        background-color: rgb(37, 95, 255, 1);
-    }
-
-    .fadeOut {
-        animation: fadeOut 0.5s ease-in forwards;
-    }
-
-.whats-new-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: 10000;
-    display: none;
-    align-items: center;
-    justify-content: center;
-}
-
-    .whats-new-overlay.show {
-        display: flex;
-    }
-
-    .whats-new-overlay.fadeOut {
-        display: none;
-    }
-
-.whats-new-container {
-    background: rgba(28, 28, 30, 0.4);
-    border-radius: 20px;
-    padding: 32px 28px;
-    width: 340px;
-    max-height: 80vh;
-    overflow-y: auto;
-    position: relative;
-    border: 2px solid rgba(0, 0, 0, 0.5);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(53, 53, 53, 0.3);
-    backdrop-filter: blur(20px);
-}
-
-    .whats-new-container.fadeOut {
-        display: none;
-    }
-
-    .whats-new-container h1 {
-        color: #ffffff;
-        font-size: 24px;
-        font-weight: 700;
-        margin: 0 0 24px 0;
-        opacity: 1;
-        animation: none;
-    }
-
-    .feature-item {
-        display: flex;
-        align-items: flex-start;
-        gap: 16px;
-        padding: 16px;
-        border-radius: 12px;
-        margin-bottom: 12px;
-    }
-
-    .feature-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-    }
-
-    .feature-icon i {
-        font-size: 20px;
-        color: #FFA500;
-    }
-
-    .feature-text {
-        color: #e5e5e7;
-        font-size: 15px;
-        line-height: 1.5;
-    }
-
-    .whats-new-continue-btn {
-        width: 100%;
-        background: #007AFF;
-        color: #ffffff;
-        border: none;
-        padding: 16px;
-        border-radius: 256px;
-        font-size: 17px;
-        font-weight: 600;
-        margin-top: 20px;
-        transition: background 0.2s ease;
-    }
-
-    .whats-new-continue-btn:active {
-        background: #002e77 !important;
-        filter: brightness(100%) !important;
-        transition: 0.0s !important;
-    }
-
-</style>
-
-<div class="whats-new-overlay" id="whatsNewOverlay">
-    <div class="whats-new-container" id="whatsNewPane">
-        <h1>Warning</h1>
-        
-        <div class="feature-item">
-            <div class="feature-icon">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-            </div>
-            <div class="feature-text">
-                Does not support 1.21.120+ versions yet
-            </div>
-        </div>
-        <button class="whats-new-continue-btn" onclick="closePrompt();">Continue</button>
-    </div>
-</div>
-
-<!-- quick fix (warning msg) -->
-<script>
-    function showWhatsNew() {
-        setTimeout(() => {
-            const overlay = document.getElementById('whatsNewOverlay');
-            overlay.classList.add('show');
-        }, 300);
-    }
-
-    showWhatsNew()
-
-    function closePrompt() {
-        const overlay = document.getElementById('whatsNewOverlay');
-        overlay.classList.add('fadeOut');
-        
-        setTimeout(() => {
-            overlay.classList.remove('show');
-        }, 500);
-    }
-</script>
-
-</body>
+          });
+        } catch (err) {
+          console.error("Failed to load worlds");
+        }
+      }
+      loadWorlds();
+    </script>
+  </body>
 </html>
