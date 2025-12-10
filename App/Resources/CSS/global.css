@@ -131,12 +131,3 @@ button:active {
     opacity: 0;              
     animation: fadeIn 0.4s ease forwards;
 }
-
-
-
-/* quick fix for drag region : */
-
-pywebview-drag-region {
-    -webkit-app-region: drag;
-    pointer-events: drag !important;
-}
