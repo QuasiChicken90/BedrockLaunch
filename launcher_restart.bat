@@ -1,16 +1,11 @@
 @echo off
-setlocal
+title BedrockLaunch Updating...
 
-taskkill /IM neu_wv.exe /F /T >nul 2>&1
-taskkill /IM Launcher.exe /F /T >nul
+taskkill /F /IM Launcher.exe 2>nul
+taskkill /F /IM neu_wv.exe 2>nul
 
 timeout /t 2 /nobreak >nul
 
-tar -xf update.zip
-
-del /f /q "update.zip"
-del /f /q "%~dp0\App\welcome.txt"
-
-start "Launcher.exe"
+powershell -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -Command "Expand-Archive -Path 'update.zip' -DestinationPath '.' -Force; if (Test-Path 'App\welcome.txt') { Remove-Item 'App\welcome.txt' -Force }; Add-Type -AssemblyName PresentationFramework; [System.Windows.MessageBox]::Show('Update complete! Please open Launcher.exe to continue.', 'Update Installed', 'OK', 'Information')"
 
 exit
