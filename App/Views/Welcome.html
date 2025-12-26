@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launcher | Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="/launcherfiles/resources/CSS/global.css">
+  </head>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    * {
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #1e1e1e;
+    }
+
+    html,
+    body {
+      background: transparent;
+    }
+
+    .LauncherContainer {
+      width: 100%;
+      height: 100vh;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+      }
+    }
+
+    @keyframes slideUpBlur {
+      0% {
+        transform: translateY(100px);
+        filter: blur(15px);
+        opacity: 0;
+      }
+
+      100% {
+        transform: translateY(0);
+        filter: blur(0px);
+        opacity: 1;
+      }
+    }
+
+    .Home {
+      position: fixed;
+      top: 1%;
+      left: 30%;
+      color: white;
+      font-size: 30px;
+      font-weight: 700;
+      z-index: 9999;
+    }
+
+    .welcomeBox {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: white;
+      z-index: 9999;
+      transition: opacity 0.5s ease-in;
+    }
+
+    .welcomeBox.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .welcomeBox h1 {
+      opacity: 0;
+      animation: slideUpBlur 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+      animation-delay: 0.2s;
+      margin: 0 0 20px 0;
+    }
+
+    .welcomeBox h3 {
+      opacity: 0;
+      animation: slideUpBlur 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+      animation-delay: 0.6s;
+      margin: 0 0 40px 0;
+      font-weight: 400;
+    }
+
+    .ContinueBtn {
+      position: relative;
+      width: 352px;
+      height: 91px;
+      border: none;
+      background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
+      box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+      backdrop-filter: blur(12px);
+      border-radius: 256px;
+      font-weight: 900;
+      font-size: 27px;
+      color: white;
+      transition: transform 0.3s, filter 0.3s, box-shadow 0.3s;
+      opacity: 0;
+      animation: slideUpBlur 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+      animation-delay: 1s;
+    }
+
+    .ContinueBtn:active {
+      background-color: rgb(37, 95, 255, 1);
+    }
+
+    .fadeOut {
+      animation: fadeOut 0.5s ease-in forwards;
+    }
+
+    .whats-new-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0);
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .whats-new-overlay.show {
+      display: flex;
+      animation: fadeInOverlay 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .whats-new-overlay.fadeOut {
+      animation: fadeOutOverlay 0.8s cubic-bezier(0.4, 0, 1, 1) forwards;
+    }
+
+    .whats-new-container {
+      background: #1c1c1e;
+      border-radius: 20px;
+      padding: 32px 28px;
+      width: 340px;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      transform: translateY(100px);
+      filter: blur(15px);
+      opacity: 0;
+      border: 2px solid black;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgb(53, 53, 53);
+    }
+
+    .whats-new-overlay.show .whats-new-container {
+      animation: slideUpBlur 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .whats-new-container.fadeOut {
+      animation: slideDownBlur 0.8s cubic-bezier(0.4, 0, 0.6, 1) forwards !important;
+    }
+
+    .whats-new-container h1 {
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0 0 24px 0;
+      opacity: 1;
+      animation: none;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .feature-icon i {
+      font-size: 20px;
+      color: #007AFF;
+    }
+
+    .feature-text {
+      color: #e5e5e7;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .whats-new-continue-btn {
+      width: 100%;
+      background: #007AFF;
+      color: #ffffff;
+      border: none;
+      padding: 16px;
+      border-radius: 256px;
+      font-size: 17px;
+      font-weight: 600;
+      margin-top: 20px;
+      transition: background 0.2s ease;
+    }
+
+    .whats-new-continue-btn:active {
+      background: #002e77 !important;
+      filter: brightness(100%) !important;
+      transition: 0.0s !important;
+    }
+
+    .theme-selector-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0);
+      z-index: 10001;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .theme-selector-overlay.show {
+      display: flex;
+      animation: fadeInOverlay 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .theme-selector-overlay.fadeOut {
+      animation: fadeOutOverlay 0.8s cubic-bezier(0.4, 0, 1, 1) forwards;
+    }
+
+    .theme-selector-container {
+      background: #1c1c1e;
+      border-radius: 20px;
+      padding: 32px 28px;
+      width: 420px;
+      position: relative;
+      transform: translateY(100px);
+      filter: blur(15px);
+      opacity: 0;
+      border: 2px solid black;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgb(53, 53, 53);
+    }
+
+    .theme-selector-overlay.show .theme-selector-container {
+      animation: slideUpBlur 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .theme-selector-container.fadeOut {
+      animation: slideDownBlur 0.8s cubic-bezier(0.4, 0, 0.6, 1) forwards !important;
+    }
+
+    .theme-selector-container h1 {
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0 0 24px 0;
+      opacity: 1;
+      animation: none;
+    }
+
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .theme-option {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/10;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 3px solid transparent;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+      background: #2c2c2e;
+    }
+
+    .theme-option.selected {
+      border-color: #007AFF;
+      box-shadow: 0 0 0 2px #007AFF;
+    }
+
+    .theme-option video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .theme-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .theme-skip-btn {
+      flex: 1;
+      background: transparent;
+      color: #007AFF;
+      border: none;
+      padding: 16px;
+      border-radius: 256px;
+      font-size: 17px;
+      font-weight: 600;
+      transition: background 0.2s ease;
+    }
+
+    .theme-continue-btn {
+      flex: 1;
+      background: #007AFF;
+      color: #ffffff;
+      border: none;
+      padding: 16px;
+      border-radius: 256px;
+      font-size: 17px;
+      font-weight: 600;
+      transition: background 0.2s ease;
+    }
+
+    .theme-continue-btn:active {
+      background: #002e77 !important;
+      filter: brightness(100%) !important;
+      transition: 0.0s !important;
+    }
+
+    @keyframes slideDownBlur {
+      0% {
+        transform: translateY(0);
+        filter: blur(0px);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(150vh);
+        filter: blur(15px);
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeInOverlay {
+      0% {
+        background: rgba(0, 0, 0, 0);
+      }
+
+      100% {
+        background: rgba(0, 0, 0, 0.7);
+      }
+    }
+
+    @keyframes fadeOutOverlay {
+      0% {
+        background: rgba(0, 0, 0, 0.7);
+      }
+
+      100% {
+        background: rgba(0, 0, 0, 0);
+      }
+    }
+  </style>
+  <body>
+    <div class="LauncherContainer">
+      <div class="welcomeBox">
+        <h1>Welcome</h1>
+        <h3> Please backup your Minecraft data as it's deleted automatically when using a new version for the first time! <strong>Enable Developer Mode in settings to use the launcher!</strong> Note: 4K/1440p monitors are not fully supported. </h3>
+        <button class="ContinueBtn" onclick="showWhatsNew();">Continue</button>
+      </div>
+      <video autoplay muted loop preload="metadata" class="LauncherVideo">
+        <source src="{{ themePath }}" type="video/mp4"> Failed to load theme. Video not supported.
+      </video>
+    </div>
+    
+    <div class="whats-new-overlay" id="whatsNewOverlay">
+      <div class="whats-new-container" id="whatsNewPane">
+        <h1>What's New</h1>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fa-solid fa-paint-roller"></i>
+          </div>
+          <div class="feature-text"> Modified settings page. Removed background blur and extended button lengths. </div>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fa-solid fa-arrows-rotate"></i>
+          </div>
+          <div class="feature-text"> Fixed updater. No longer opens an empty terminal window. </div>
+        </div>
+      <button class="whats-new-continue-btn" onclick="showThemeSelector();">Continue</button>
+      </div>
+    </div>
+
+    <div class="theme-selector-overlay" id="themeSelectorOverlay">
+      <div class="theme-selector-container" id="themeSelectorPane">
+        <h1>Select Theme</h1>
+        <div class="theme-grid">
+          <div class="theme-option" data-theme="1" onclick="selectTheme(1)">
+            <video autoplay muted loop>
+              <source src="http://localhost:21934/launcherfiles/Themes/1.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="theme-option" data-theme="2" onclick="selectTheme(2)">
+            <video autoplay muted loop>
+              <source src="http://localhost:21934/launcherfiles/Themes/2.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="theme-option" data-theme="3" onclick="selectTheme(3)">
+            <video autoplay muted loop>
+              <source src="http://localhost:21934/launcherfiles/Themes/3.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="theme-option" data-theme="4" onclick="selectTheme(4)">
+            <video autoplay muted loop>
+              <source src="http://localhost:21934/launcherfiles/Themes/4.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="theme-option" data-theme="5" onclick="selectTheme(5)">
+            <video autoplay muted loop>
+              <source src="http://localhost:21934/launcherfiles/Themes/5.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="theme-option" data-theme="6" onclick="selectTheme(6)">
+            <video autoplay muted loop>
+              <source src="http://localhost:21934/launcherfiles/Themes/6.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+        <div class="theme-buttons">
+          <button class="theme-skip-btn" onclick="skipThemeSelection();">Skip</button>
+          <button class="theme-continue-btn" onclick="continueWithTheme();">Continue</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let selectedTheme = null;
+
+      function showWhatsNew() {
+        const welcomeBox = document.querySelector('.welcomeBox');
+        welcomeBox.classList.add('hidden');
+        setTimeout(() => {
+          const overlay = document.getElementById('whatsNewOverlay');
+          overlay.classList.add('show');
+        }, 300);
+      }
+
+      function showThemeSelector() {
+        const pane = document.getElementById('whatsNewPane');
+        const overlay = document.getElementById('whatsNewOverlay');
+        pane.classList.add('fadeOut');
+        overlay.classList.add('fadeOut');
+        
+        setTimeout(() => {
+          overlay.classList.remove('show', 'fadeOut');
+          overlay.style.display = 'none';
+          
+          const themeOverlay = document.getElementById('themeSelectorOverlay');
+          themeOverlay.classList.add('show');
+        }, 500);
+      }
+
+      function selectTheme(themeNumber) {
+        selectedTheme = themeNumber;
+        
+        document.querySelectorAll('.theme-option').forEach(option => {
+          option.classList.remove('selected');
+        });
+        
+        document.querySelector(`[data-theme="${themeNumber}"]`).classList.add('selected');
+      }
+
+      function skipThemeSelection() {
+        continueToLauncher();
+      }
+
+      function continueWithTheme() {
+        if (selectedTheme) {
+          location.href = 'http://localhost:21934/launcher/settings/theme?number=' + selectedTheme;
+        }
+      }
+
+      function continueToLauncher() {
+        const pane = document.getElementById('themeSelectorPane');
+        const overlay = document.getElementById('themeSelectorOverlay');
+        pane.classList.add('fadeOut');
+        overlay.classList.add('fadeOut');
+        
+        setTimeout(() => {
+          location.href = '/launcher/base';
+        }, 500);
+      }
+    </script>
+  </body>
+</html>
