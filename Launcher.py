@@ -264,8 +264,7 @@ def launcherApp():
                          shell=True,
                          cwd=parent_dir,
                          creationflags=subprocess.CREATE_NEW_CONSOLE)
-
-        os.kill(os.getpid(), signal.SIGTERM)
+        
         return "lollllllllllllllllll"
     
     @app.route("/launcher/addons")
@@ -290,9 +289,7 @@ def launcherApp():
         return render_template("Base.html",
                                themePath=getSetting("app_themeBG"))
     
-
     app.run(host="localhost", port=21934)
-
 
 flaskAppThread = threading.Thread(target=launcherApp)
 flaskAppThread.start()
