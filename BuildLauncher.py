@@ -3,7 +3,7 @@ import shutil
 from time import sleep
 import subprocess
 
-version = "Beta_8"
+version = "Beta_9"
 
 def log(text):
     print(f"LOG: {text}")
@@ -15,11 +15,12 @@ def run(command):
 def mkdir(path):
     os.makedirs(path, exist_ok=True)
     log(f"Created directory: {path}")
-def copydir(src, dest):
+def copydir(src, dest):    
     shutil.copytree(src, dest, dirs_exist_ok=True)
     log(f"Copied directory: {src} -> {dest}")
 
 def deletefile(path):
+    
     os.remove(path)
     log(f"Deleted file: {path}")
 
