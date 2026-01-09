@@ -8,9 +8,9 @@ body {
     position: fixed; 
     top: 50%;        
     left: 50%;     
-    transform: translate(-190%, -50%);
+    transform: translate(-220%, -50%);
     
-    width: 372px;
+    width: 320px;
     height: 900px;
     
     background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
