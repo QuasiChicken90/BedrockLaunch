@@ -3,7 +3,6 @@ from flask import Flask, render_template, send_from_directory, request, jsonify,
 import json
 import os
 import ctypes
-import signal
 import requests
 import subprocess
 import sys
@@ -32,6 +31,11 @@ if os.path.isdir(uac_path):
 else:
     if os.path.exists("App/welcome.txt"):
         os.remove("App/welcome.txt")
+
+if os.path.isdir("Library/Addons"):
+    pass
+else:
+    os.mkdir("Library/Addons")
 
 
 def getSetting(setting):
@@ -289,7 +293,7 @@ def launcherApp():
         return render_template("Base.html",
                                themePath=getSetting("app_themeBG"))
     
-    app.run(host="localhost", port=21934)
+    app.run(host="localhost", port=21934, threaded=True)
 
 flaskAppThread = threading.Thread(target=launcherApp)
 flaskAppThread.start()
