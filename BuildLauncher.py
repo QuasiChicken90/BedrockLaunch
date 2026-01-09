@@ -3,7 +3,7 @@ import shutil
 from time import sleep
 import subprocess
 
-version = "Beta_9"
+version = "Beta_10"
 
 def log(text):
     print(f"LOG: {text}")
@@ -20,7 +20,6 @@ def copydir(src, dest):
     log(f"Copied directory: {src} -> {dest}")
 
 def deletefile(path):
-    
     os.remove(path)
     log(f"Deleted file: {path}")
 
