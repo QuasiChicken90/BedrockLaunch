@@ -1,8 +1,11 @@
 progress = 0
+import requests
+import subprocess
+import os
+import winreg
 
 def fetchUpdate(updateURL):
     global progress
-    import requests
 
     progress = 10
     print("Downloading from:", updateURL)
@@ -25,3 +28,25 @@ def fetchUpdate(updateURL):
 def getUpdateProgress():
     global progress
     return progress
+
+import subprocess
+
+def check_developer_mode():
+    cmd = [
+        "powershell",
+        "-NoProfile",
+        "-Command",
+        'if ((Get-ItemProperty -Path "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AppModelUnlock" '
+        '-Name AllowDevelopmentWithoutDevLicense -ErrorAction SilentlyContinue)'
+        '.AllowDevelopmentWithoutDevLicense -eq 1) { "yes" } else { "no" }'
+    ]
+
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    return result.stdout.strip().lower() == "yes"
+
+def enable_developer_mode():
+    with winreg.CreateKey(
+        winreg.HKEY_LOCAL_MACHINE,
+        r"SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock"
+    ) as key:
+        winreg.SetValueEx(key, "AllowDevelopmentWithoutDevLicense", 0, winreg.REG_DWORD, 1)
