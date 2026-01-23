@@ -88,6 +88,7 @@ def launcherApp():
                     "id": v,
                     "name": v
                 } for v in libraryManager.getInstances()]
+                
                 return render_template('Base.html',
                                        themePath=getSetting("app_themeBG"),
                                        versionList=versionList)
@@ -271,6 +272,12 @@ def launcherApp():
         
         return "lollllllllllllllllll"
     
+    @app.route("/launcher/api/enabledev", methods=["POST"])
+    def apiEnableDev():
+        launcher.enable_developer_mode()
+        return "Ok"
+
+    
     @app.route("/launcher/addons")
     def addons():
         return render_template("addons.html",
@@ -283,6 +290,9 @@ def launcherApp():
 
     @app.route("/launcher/base")
     def base():
+        if launcher.check_developer_mode() == False:
+            return render_template("Setup.html",
+                                    themePath=getSetting("app_themeBG"))
         if not os.path.isfile(
                 os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "welcome.txt")):
             with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "welcome.txt"), "w") as f:
