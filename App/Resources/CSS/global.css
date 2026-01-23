@@ -7,11 +7,11 @@ body {
 .sideBar {
     position: fixed; 
     top: 50%;        
-    left: 50%;     
-    transform: translate(-220%, -50%);
+    left: 20px;
+    transform: translateY(-50%);  
     
-    width: 320px;
-    height: 900px;
+    width: min(320px, 90vw); 
+    height: min(900px, 95vh);  
     
     background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
     box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25),
@@ -19,14 +19,14 @@ body {
                 inset -1px -1px 2px rgba(87, 87, 87, 0.5);
     backdrop-filter: blur(15px);
     border-radius: 45px;
-
     display: flex;
     flex-direction: column;
     align-items: center;    
     justify-content: flex-start; 
-    padding-top: 21px;      
+    padding-top: 21px; 
     gap: 20px;         
-    z-index: 99999;     
+    z-index: 99999;
+    overflow-y: auto;
 }
 
 .btnActiveTab {
