@@ -2,7 +2,6 @@
 A fully functional Minecraft Bedrock launcher
 
 [![Download BedrockLaunch](https://img.shields.io/sourceforge/dt/bedrocklaunch.svg)](https://sourceforge.net/projects/bedrocklaunch/files/latest/download)
-![SourceForge](https://img.shields.io/sourceforge/dm/bedrocklaunch.svg)
 
 <img width="1940" height="1527" alt="gh3frame2" src="https://github.com/user-attachments/assets/fa8b3c8d-3cc2-4b5e-b4af-f8dbc753d7b3" />
 
