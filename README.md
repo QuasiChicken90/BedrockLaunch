@@ -25,9 +25,8 @@ A fully functional Minecraft Bedrock launcher
 - Explore most versions
 
 ## 🚀 Installation
-- Enable developer mode in settings
 - Download release from [releases](https://github.com/QuasiChicken90/BedrockLaunch/releases/)
-- Open launcher.exe
+- Unzip and open launcher.exe
 
 ## ⚠️ Warning
 - When installing a new version and starting it for the first time, all resource packs, worlds, and other content will be deleted!
