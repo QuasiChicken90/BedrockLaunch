@@ -1,5 +1,5 @@
 import threading
-from flask import Flask, render_template, send_from_directory, request, jsonify, send_file
+from flask import Flask, render_template, send_from_directory, request, jsonify, send_file, abort
 import json
 import os
 import ctypes
@@ -7,6 +7,7 @@ import requests
 import subprocess
 import sys
 import re
+import signal
 
 from App.LauncherApi import libraryManager
 from App.LauncherApi import launchver
@@ -14,6 +15,11 @@ from App.LauncherApi import web
 from App.LauncherApi import game
 from App.LauncherApi import launcher
 from App.LauncherApi import versions_mcbgdk
+
+def signal_handler(sig, frame):
+    os.kill(os.getpid(), signal.SIGTERM)
+
+signal.signal(signal.SIGINT, signal_handler)
 
 def is_admin():
     try:
@@ -37,6 +43,8 @@ if os.path.isdir("Library/Addons"):
 else:
     os.mkdir("Library/Addons")
 
+if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "task_download.txt")):
+    os.remove(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "task_download.txt"))
 
 def getSetting(setting):
     with open(
@@ -128,6 +136,8 @@ def launcherApp():
 
     @app.route("/launcher/api/create/<version>")
     def apiCreate_instance(version):
+        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "task_download.txt"), "w") as f:
+            f.write("")
         try:
             match = re.search(r"(\d+\.\d+\.\d+)", version)
             if not match:
@@ -146,11 +156,20 @@ def launcherApp():
                 versions_mcbgdk.createMCBGDKInstance(version)
             else:
                 libraryManager.createInstance(version)
+                os.remove(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "task_download.txt"))
             return "OK"
         except Exception as e:
+            os.remove(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "task_download.txt"))
             return "Error: " + str(
                 e
             ) + "\nTroubleshoot:\nVersions too old may not download\nCheck your internet connection\nCheck if you have enough storage"
+        
+    @app.route("/launcher/api/create/getdownloadstatus")
+    def apiGetDownloadStatus():
+        if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "task_download.txt")):
+            return "Downloading"
+        else:
+            return "NoDownload"
 
     @app.route("/launcher/api/servers/getlist")
     def apiGetServers():
@@ -287,6 +306,35 @@ def launcherApp():
     def install_addon(addon_id):
         game.installAddon(addon_id)
         return "OK"
+    
+    @app.route("/launcher/api/screenshots/getlist")
+    def apiGetScreenshots():
+        return jsonify(game.getScreenshots())
+    
+    @app.route("/launcher/api/screenshots/getimage/<path:screenshot>")
+    def apiGetScreenshotImage(screenshot):
+        base_path = os.path.expandvars(
+            r"C:\Users\%USERNAME%\AppData\Roaming\Minecraft Bedrock\Users"
+        )
+
+        requested_path = os.path.abspath(
+            os.path.join(base_path, screenshot)
+        )
+
+        base_path = os.path.abspath(base_path)
+
+        if not requested_path.startswith(base_path):
+            abort(403)
+
+        if not os.path.isfile(requested_path):
+            abort(404)
+
+        return send_file(requested_path, mimetype="image/png")
+    
+    @app.route("/launcher/screenshots")
+    def screenshots():
+        return render_template("Screenshots.html",
+                               themePath=getSetting("app_themeBG"))
 
     @app.route("/launcher/base")
     def base():
