@@ -1,8 +1,8 @@
+import glob
 import os
 import requests
 import os
 import yaml
-import shutil
 
 def getServers():
     username = os.getlogin()
@@ -73,7 +73,6 @@ def getServerStatus(ip, port):
     }
 
 def get_world_paths():
-    """Return all minecraftWorlds directories from all known locations."""
     username = os.getlogin()
 
     uwp_path = rf"C:\Users\{username}\AppData\Local\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang\minecraftWorlds"
@@ -219,3 +218,31 @@ def installAddon(id):
             raise e
     else:
         print(f"Addon {id} not found.")
+
+
+import os
+import glob
+
+def getScreenshots():
+    base_path = os.path.expandvars(
+        r"C:\Users\%USERNAME%\AppData\Roaming\Minecraft Bedrock\Users"
+    )
+    
+    png_files = []
+    
+    if os.path.exists(base_path):
+        for user_folder in os.listdir(base_path):
+            screenshots_path = os.path.join(
+                base_path,
+                user_folder,
+                "games",
+                "com.mojang",
+                "Screenshots"
+            )
+            
+            if os.path.exists(screenshots_path):
+                png_files.extend(
+                    glob.glob(os.path.join(screenshots_path, "**", "*.jpeg"), recursive=True)
+                )
+    
+    return png_files
