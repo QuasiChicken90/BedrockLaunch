@@ -1,32 +1,20 @@
 function create() {
-        const version = document.getElementById("version").value;
-        if (version) {
-            const createPopup = document.getElementById("creating");
-            const bg = document.getElementById("video");
-            createPopup.style.opacity = "100%";
-            bg.style.filter = "brightness(40%)";
-            document.getElementById("createForm").remove();
-            async function waitForOK(url) {
-                try {
-                    const res = await fetch(url, { timeout: 0 });
-                    const text = (await res.text()).trim();
+const version = document.getElementById("version").value;
 
-                    if (text === "OK") {
-                        location.href = "/launcher/base";
-                    } else {
-                        alert("Error: " + text);
-                        location.href = "/launcher/base";
-                    }
-                } catch (err) {
-                    alert("Request failed: " + err);
-                }
-            }
+if (version) {
+    const createPopup = document.getElementById("creating");
+    const bg = document.getElementById("video");
 
+    createPopup.style.opacity = "100%";
+    bg.style.filter = "brightness(40%)";
 
-            waitForOK(`/launcher/api/create/${version}`);
+    document.getElementById("createForm").remove();
 
+    fetch(`/launcher/api/create/${version}`).catch(err => console.error(err));
 
-        } else {
-            alert("Please select a version");
-        }
-                }
+    location.href = "/launcher/base";
+} else {
+    alert("Please select a version");
+}
+
+}
