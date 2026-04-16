@@ -297,9 +297,9 @@ def launcherApp():
         return "Ok"
 
     
-    @app.route("/launcher/addons")
+    @app.route("/launcher/explore")
     def addons():
-        return render_template("addons.html",
+        return render_template("Explore.html",
                                themePath=getSetting("app_themeBG"))
     
     @app.route("/launcher/api/addons/installaddon/<addon_id>")
