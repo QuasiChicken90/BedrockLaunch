@@ -1,6 +1,6 @@
 Servers:
   "1":
-    Name: "Minecraft Server"
+    Name: "Local Server"
     Address: "127.0.0.1"
     InfoMarkdown: "?"
     Port: 25565
@@ -22,7 +22,7 @@ Addons:
 
 Packs:
   "1":
-    Name: "Example Resource Pack
+    Name: "Example Resource Pack"
     Author: "?"
     Image: "None"
     InfoMarkdown: "?"
