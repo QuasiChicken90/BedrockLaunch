@@ -4,7 +4,6 @@ Servers:
     Address: "127.0.0.1"
     InfoMarkdown: "?"
     Port: 25565
-    Image: "None"
 
 Addons:
   "1":
