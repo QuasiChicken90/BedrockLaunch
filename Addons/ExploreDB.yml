@@ -15,8 +15,8 @@ Addons:
     DownloadURL: "https://api.github.com/repos/SIsilicon/WorldEdit-BE/releases/latest"
   "2":
     Name: "How to add your own packs/servers"
-    Author: ""
-    Image: "None"
+    Author: "BedrockLaunch"
+    Image: "https://github.com/QuasiChicken90/BedrockLaunch/blob/main/Addons/Content/Images/Launcher_AddYourOwnContent.png?raw=true"
     InfoMarkdown: "https://raw.githubusercontent.com/QuasiChicken90/BedrockLaunch/refs/heads/main/Addons/Content/Markdown/HowToAddYourOwn.md"
     DownloadURL: "?"
 
