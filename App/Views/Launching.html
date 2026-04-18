@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launcher | Launching</title>
+    <link rel="stylesheet" href="/launcherfiles/resources/CSS/global.css">
+  </head>
+  <body>
+    <style>
+      body {
+        background-color: black;
+      }
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .progressbar {
+        position: absolute;
+        top: 90%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 25%;
+        height: 10px;
+        background-color: rgba(255, 255, 255, 0.151);
+        border-radius: 1024px;
+      }
+      .progress {
+        background-color: white;
+        width: 0%;
+        height: 100%;
+        border-radius: 1024px;
+      }
+      .windowControls {
+        background-color: rgb(26, 26, 26) !important;
+      }
+      .btnBack {
+        position: absolute;
+        top: 92%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: 150px;
+        height: 40px;
+        background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
+        box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+        backdrop-filter: blur(3.5px) saturate(2);
+        color: white;
+        font-weight: 500;
+        border: none;
+        border-radius: 256px;
+        z-index: 9999;
+      }
+      .btnBack:active {
+        backdrop-filter: blur(3.5px) saturate(3);
+      }
+    </style>
+    <img src="http://localhost:21934/launcherfiles/resources/IMG/icon.png" alt="">
+    </div>
+    <div class="progressbar">
+      <div class="progress"></div>
+    </div>
+    <button id="BackToLauncher" style="display: none;" class="btnBack" onclick="location.href = '/launcher/base';">Back to Launcher</button>
+    <div class="Log">
+      <p style="color: white; font-family:Arial, Helvetica, sans-serif;" id="log"></p>
+    </div>
+    <script>
+      const logContainer = document.querySelector('#log');
+      function fetchLogs() {
+        fetch('/launcher/launch/logs')
+          .then(response => response.text())
+          .then(data => {
+            logContainer.textContent = data;
+            logContainer.scrollTop = logContainer.scrollHeight;
+          })
+          .catch(error => console.error('Error fetching logs:', error));
+      }
+      setInterval(fetchLogs, 1000); 
+    </script>
+    <script>
+      const progressBar = document.querySelector('.progress');
+      let progress = 0;
+      const interval = setInterval(() => {
+        if (progress < 100) {
+          progress += 1; 
+          progressBar.style.width = `${progress}%`; 
+        } else {
+          clearInterval(interval);
+          document.querySelector('#BackToLauncher').style.display = 'block';
+        }
+      }, 100);
+    </script>
+  </body>
+</html>

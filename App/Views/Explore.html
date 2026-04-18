@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launcher | Explore</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  </head>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    * {
+      font-family: 'Inter', sans-serif;
+      -ms-user-select: none;
+      -webkit-user-drag: none;
+      -khtml-user-drag: none;
+      -moz-user-drag: none;
+      -ms-user-drag: none;
+      -webkit-user-drag: none;
+      -moz-user-drag: none;
+      -ms-user-drag: none;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #1e1e1e;
+      overflow-y: scroll;
+      -ms-overflow-style: none;
+      user-select: none;
+      -ms-user-select: none;
+    }
+
+    body::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+
+    html, body {
+      background: transparent;
+    }
+
+    .LauncherContainer {
+      width: 100%;
+      height: 100vh;
+    }
+
+    .ExploreMenu {
+      position: absolute;
+      top: 10%; 
+      left: 27%;
+      width: 50%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 15px;
+      box-sizing: border-box;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+      box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+        inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+      backdrop-filter: blur(15px);
+      border-radius: 200px;
+      z-index: 9000;
+    }
+
+    .tab-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .tab {
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 999px;
+    }
+
+    .tab:active {
+      filter: opacity(60%);
+    }
+
+    .tab.active {
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: saturate(150%);
+      font-weight: 600;
+    }
+
+    .ExploreSearchBar input {
+      background: rgba(0, 0, 0, 0.0);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 256px;
+      padding: 8px 15px;
+      color: white;
+      outline: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+    }
+
+    .ExploreSearchBar input:focus {
+      border: 1px solid rgb(36, 69, 255);
+      background: rgba(0, 0, 0, 0.0);
+    }
+
+    .ExploreSearchBar input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .ContentContainer {
+      position: absolute;
+      top: 17%;
+      left: 27%;
+      width: 50%;
+      padding-bottom: 50px;
+    }
+
+    .GridContainer {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px 25px;
+    }
+
+    .placeholder-text {
+      color: rgba(255, 255, 255, 0.5);
+      text-align: center;
+      margin-top: 50px;
+      font-size: 1.2rem;
+      font-weight: 400;
+    }
+
+    .AddonCard {
+      width: 100%;
+      height: 320px;
+      background: linear-gradient(135deg, rgba(228, 228, 228, 0.05) 0%, rgba(206, 206, 206, 0.1) 100%);
+      box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+        inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+      backdrop-filter: blur(32px);
+      border-radius: 25px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px;
+      box-sizing: border-box;
+      overflow: hidden;
+      transition: 0.2s;
+    }
+
+    .AddonCard:active {
+      transition: 0s !important;
+      transform: scale(1.05);
+      filter: brightness(140%) blur(1px);
+      backdrop-filter: blur(7px);
+    }
+
+    .AddonCard img,
+    .ServerCard img {
+      width: 100%;
+      height: 55%;
+      border-radius: 16px;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+
+    .AddonCard .no-image,
+    .ServerCard .no-image {
+      width: 100%;
+      height: 55%;
+      border-radius: 16px;
+      background: rgba(0, 0, 0, 0.2);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .AddonCard h2,
+    .ServerCard h2 {
+      font-size: 1.4rem;
+      margin: 4px 0;
+      margin-left: 8px;
+    }
+
+    .AddonCard h3,
+    .ServerCard h3 {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #ffffff;
+      margin: 4px 0 8px 0;
+      margin-left: 8px;
+    }
+
+    .ServerCard {
+      width: 100%;
+      height: 320px;
+      background: linear-gradient(135deg, rgba(228, 228, 228, 0.05) 0%, rgba(206, 206, 206, 0.1) 100%);
+      box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+        inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+      backdrop-filter: blur(32px);
+      border-radius: 25px;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px;
+      box-sizing: border-box;
+      overflow: hidden;
+      transition: 0.2s;
+    }
+
+    .ServerCard:active {
+      transition: 0s !important;
+      transform: scale(1.05);
+      filter: brightness(140%) blur(1px);
+      backdrop-filter: blur(7px);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .modal.show {
+      opacity: 1;
+    }
+
+    .modal-content {
+      position: absolute;
+      right: -100%;
+      top: 0;
+      background: linear-gradient(135deg, rgba(228, 228, 228, 0.08) 0%, rgba(206, 206, 206, 0.12) 100%);
+      box-shadow: -4px 0px 50px rgba(0, 0, 0, 0.5),
+        inset 1px 1px 3px rgba(255, 255, 255, 0.3),
+        inset -1px -1px 3px rgba(87, 87, 87, 0.5);
+      padding: 30px;
+      box-sizing: border-box;
+      border-radius: 25px 0 0 25px;
+      width: 45%;
+      min-width: 400px;
+      height: 100vh;
+      overflow-y: auto;
+      color: white;
+      backdrop-filter: blur(20px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .modal.show .modal-content {
+      right: 0;
+      filter: blur(0px);
+    }
+
+    .modal.closing .modal-content {
+      right: -100%;
+      filter: blur(20px);
+    }
+
+    .modal-content::-webkit-scrollbar {
+      width: 0px;
+    }
+
+    .action-btn {
+      width: 100%;
+      height: 60px;
+      margin-bottom: 20px;
+      border: none;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+      box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+        inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+      backdrop-filter: blur(15px);
+      border-radius: 256px;
+      font-weight: 700;
+      font-size: 20px;
+      color: white;
+    }
+
+    .action-btn:active {
+      background-color: rgba(37, 95, 255, 0.8);
+    }
+
+    .markdown-content { margin: 20px 0; line-height: 1.6; }
+    .markdown-content h1, .markdown-content h2, .markdown-content h3 { color: white; margin-top: 20px; }
+    hr { border-radius: 0.60em; opacity: 0.6; background-color: white; border: none; height: 1px; }
+    .markdown-content code { background: rgba(0, 0, 0, 0.3); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; }
+    .markdown-content pre { background: rgba(0, 0, 0, 0.3); padding: 15px; border-radius: 8px; overflow-x: auto; }
+    .markdown-content a { color: #5cb3ff; text-decoration: none; pointer-events: none; cursor: default; }
+
+
+    .server-modal-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .server-modal-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: rgba(255, 255, 255, 0.4);
+      flex-shrink: 0;
+    }
+
+    .server-modal-meta h2 {
+      margin: 0 0 4px 0;
+      font-size: 1.5rem;
+    }
+
+    .server-modal-meta .address-badge {
+      display: inline-block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.5);
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 8px;
+      padding: 3px 10px;
+    }
+
+    .loading-spinner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100px;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.95rem;
+      gap: 10px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .spinner-icon {
+      animation: spin 1s linear infinite;
+    }
+  </style>
+  <body>
+    
+    <div class="ExploreMenu">
+      <div class="tab-group">
+        <div class="tab" data-target="ServersContainer">Servers</div>
+        <div class="tab active" data-target="AddonsContainer">Addons</div>
+        <div class="tab" data-target="PacksContainer">Resource Packs</div>
+      </div>
+      <div class="ExploreSearchBar">
+        <input type="text" id="searchInput" placeholder="Search..." />
+      </div>
+    </div>
+
+    <div id="ServersContainer" class="ContentContainer GridContainer" style="display: none;"></div>
+    <div id="AddonsContainer" class="ContentContainer GridContainer"></div>
+    <div id="PacksContainer" class="ContentContainer" style="display: none;">
+      <h2 class="placeholder-text"><i class="fas fa-box-open"></i> Resource Packs coming soon...</h2>
+    </div>
+
+    <div id="itemModal" class="modal">
+      <div class="modal-content">
+        <button id="actionBtn" class="action-btn"></button>
+        <div id="modalContent" class="markdown-content"></div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script>
+      (function() {
+        let allData = { Servers: {}, Addons: {}, Packs: {} };
+        let currentTab = 'AddonsContainer';
+
+        const tabs = document.querySelectorAll('.tab');
+
+        tabs.forEach(tab => {
+          tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            document.querySelectorAll('.ContentContainer').forEach(c => c.style.display = 'none');
+
+            const targetId = tab.getAttribute('data-target');
+            currentTab = targetId;
+            const target = document.getElementById(targetId);
+            if (target) {
+              target.style.display = (targetId === 'PacksContainer') ? 'block' : 'grid';
+            }
+            filterCards(document.getElementById('searchInput').value);
+          });
+        });
+
+        document.getElementById('searchInput').addEventListener('input', e => {
+          filterCards(e.target.value);
+        });
+
+        function filterCards(query) {
+          const q = query.toLowerCase().trim();
+          const activeContainer = document.getElementById(currentTab);
+          if (!activeContainer) return;
+          activeContainer.querySelectorAll('.AddonCard, .ServerCard').forEach(card => {
+            const name = (card.dataset.name || '').toLowerCase();
+            const author = (card.dataset.author || '').toLowerCase();
+            card.style.display = (!q || name.includes(q) || author.includes(q)) ? '' : 'none';
+          });
+        }
+
+
+        const itemModal   = document.getElementById('itemModal');
+        const modalContent= document.getElementById('modalContent');
+        const actionBtn   = document.getElementById('actionBtn');
+
+        window.addEventListener('click', e => {
+          if (e.target === itemModal) closeModal();
+        });
+
+        function closeModal() {
+          itemModal.classList.add('closing');
+          itemModal.classList.remove('show');
+          setTimeout(() => {
+            itemModal.style.display = 'none';
+            itemModal.classList.remove('closing');
+          }, 300);
+        }
+
+        function openModal() {
+          itemModal.style.display = 'block';
+          itemModal.offsetHeight;
+          requestAnimationFrame(() => itemModal.classList.add('show'));
+        }
+
+
+        async function showAddonInfo(addonId, addonData) {
+          modalContent.innerHTML = `<div class="loading-spinner"><i class="fas fa-circle-notch spinner-icon"></i> Loading...</div>`;
+          actionBtn.innerHTML = `<i class="fas fa-download"></i> Install Addon`;
+          actionBtn.onclick = () => installAddon(addonId, addonData.DownloadURL);
+          openModal();
+
+          try {
+            if (addonData.InfoMarkdown && addonData.InfoMarkdown !== '?') {
+              const resp = await fetch(addonData.InfoMarkdown);
+              const md = await resp.text();
+              modalContent.innerHTML = marked.parse(md);
+            } else {
+              modalContent.innerHTML = `<p style="color:rgba(255,255,255,0.5)">No description available.</p>`;
+            }
+          } catch (err) {
+            modalContent.innerHTML = `<p style="color:rgba(255,255,255,0.5)">Could not load addon information.</p>`;
+          }
+        }
+
+        function installAddon(addonId, downloadURL) {
+          fetch(`/launcher/api/addons/installaddon/${addonId}`)
+            .then(r => r.text())
+            .then(t => { if (t === 'OK') alert('Addon installed!'); })
+            .catch(() => {});
+        }
+
+        function showServerInfo(serverId, serverData) {
+          const port = serverData.Port || 19132;
+          const address = serverData.Address || '';
+          const name = serverData.Name || 'Server';
+
+          actionBtn.innerHTML = `<i class="fas fa-plus-circle"></i> Add to Minecraft`;
+          actionBtn.onclick = () => {
+            const mcUrl = `minecraft://?addExternalServer=${encodeURIComponent(name)}|${address}:${port}`;
+            window.open(mcUrl, '_blank');
+          };
+
+          modalContent.innerHTML = `
+            <div class="server-modal-header">
+              <div class="server-modal-icon"><i class="fas fa-server"></i></div>
+              <div class="server-modal-meta">
+                <h2>${name}</h2>
+                <span class="address-badge">${address}:${port}</span>
+              </div>
+            </div>
+            <hr>
+          `;
+
+          if (serverData.InfoMarkdown && serverData.InfoMarkdown !== '?') {
+            modalContent.innerHTML += `<div class="loading-spinner"><i class="fas fa-circle-notch spinner-icon"></i> Loading...</div>`;
+            openModal();
+            fetch(serverData.InfoMarkdown)
+              .then(r => r.text())
+              .then(md => {
+                const loaderEl = modalContent.querySelector('.loading-spinner');
+                if (loaderEl) loaderEl.remove();
+                const extra = document.createElement('div');
+                extra.innerHTML = marked.parse(md);
+                modalContent.appendChild(extra);
+              })
+              .catch(() => {
+                const loaderEl = modalContent.querySelector('.loading-spinner');
+                if (loaderEl) loaderEl.innerHTML = `<span style="color:rgba(255,255,255,0.4)">No description available.</span>`;
+              });
+          } else {
+            modalContent.innerHTML += `<p style="color:rgba(255,255,255,0.5); margin-top:16px;">No description available.</p>`;
+            openModal();
+          }
+        }
+
+        function renderAddons(addons) {
+          const container = document.getElementById('AddonsContainer');
+          container.innerHTML = '';
+          if (!addons || Object.keys(addons).length === 0) {
+            container.innerHTML = `<h2 class="placeholder-text" style="grid-column:span 2"><i class="fas fa-puzzle-piece"></i> No addons found.</h2>`;
+            return;
+          }
+          Object.keys(addons).forEach(key => {
+            const addon = addons[key];
+            if (!addon.Name) return;
+
+            const card = document.createElement('div');
+            card.classList.add('AddonCard');
+            card.dataset.name = addon.Name;
+            card.dataset.author = addon.Author || '';
+
+            const hasImage = (addon.Image && addon.Image !== 'None');
+            const imageHTML = hasImage
+              ? `<img src="${addon.Image}" alt="${addon.Name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+              : '';
+            const placeholderStyle = hasImage ? 'display:none' : 'display:flex';
+
+            card.innerHTML = `
+              ${imageHTML}
+              <div class="no-image" style="${placeholderStyle}"><i class="fas fa-puzzle-piece"></i></div>
+              <h2>${addon.Name}</h2>
+              <h3>by ${addon.Author || 'Unknown'}</h3>
+            `;
+            card.onclick = () => showAddonInfo(key, addon);
+            container.appendChild(card);
+          });
+        }
+
+        function renderServers(servers) {
+          const container = document.getElementById('ServersContainer');
+          container.innerHTML = '';
+          if (!servers || Object.keys(servers).length === 0) {
+            container.innerHTML = `<h2 class="placeholder-text" style="grid-column:span 2"><i class="fas fa-server"></i> No servers found.</h2>`;
+            return;
+          }
+          Object.keys(servers).forEach(key => {
+            const s = servers[key];
+            if (!s.Name) return;
+
+            const port = s.Port || 19132;
+            const card = document.createElement('div');
+            card.classList.add('ServerCard');
+            card.dataset.name = s.Name;
+            card.dataset.author = '';
+
+            const hasImage = s.Image && s.Image !== 'None';
+            const imageHTML = hasImage
+              ? `<img src="${s.Image}" alt="${s.Name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+              : '';
+            const placeholderStyle = hasImage ? 'display:none' : 'display:flex';
+
+            card.innerHTML = `
+              ${imageHTML}
+              <div class="no-image" style="${placeholderStyle}"><i class="fas fa-server"></i></div>
+              <h2>${s.Name}</h2>
+              <h3>${s.Address}:${port}</h3>
+            `;
+
+            card.onclick = () => showServerInfo(key, s);
+            container.appendChild(card);
+          });
+        }
+
+        function parseYAML(yamlText) {
+          const result = { Servers: {}, Addons: {}, Packs: {} };
+          const lines = yamlText.split('\n');
+
+          let currentSection = null;
+          let currentKey = null;
+          let currentItem = {};
+
+          const sectionNames = ['Servers', 'Addons', 'Packs'];
+
+          lines.forEach(rawLine => {
+            const stripped = rawLine.trimEnd();
+            if (!stripped || stripped.trim().startsWith('#')) return;
+
+            const indent = rawLine.search(/\S/);
+            const line = stripped.trim();
+
+            if (indent === 0 && sectionNames.includes(line.replace(':', ''))) {
+              if (currentSection && currentKey !== null) {
+                result[currentSection][currentKey] = currentItem;
+              }
+              currentSection = line.replace(':', '');
+              currentKey = null;
+              currentItem = {};
+              return;
+            }
+
+            if (indent === 2 && /^"?\w+"?:$/.test(line)) {
+              if (currentSection && currentKey !== null) {
+                result[currentSection][currentKey] = currentItem;
+              }
+              currentKey = line.replace(/[:"]/g, '').trim();
+              currentItem = {};
+              return;
+            }
+
+            if (indent === 4 && line.includes(':')) {
+              const colonIdx = line.indexOf(':');
+              const key = line.substring(0, colonIdx).trim();
+              const value = line.substring(colonIdx + 1).trim().replace(/^["']|["']$/g, '');
+              currentItem[key] = value;
+            }
+          });
+
+          if (currentSection && currentKey !== null) {
+            result[currentSection][currentKey] = currentItem;
+          }
+
+          return result;
+        }
+        async function loadData() {
+          try {
+            const resp = await fetch('https://raw.githubusercontent.com/QuasiChicken90/BedrockLaunch/refs/heads/main/Addons/ExploreDB.yml');
+            const yaml = await resp.text();
+            allData = parseYAML(yaml);
+            renderAddons(allData.Addons);
+            renderServers(allData.Servers);
+          } catch (err) {
+            console.error('Failed to load ExploreDB.yml:', err);
+            document.getElementById('AddonsContainer').innerHTML =
+              `<h2 class="placeholder-text" style="grid-column:span 2"><i class="fas fa-exclamation-triangle"></i> Failed to load data.</h2>`;
+          }
+        }
+
+        loadData();
+
+      })();
+    </script>
+  </body>
+</html>
