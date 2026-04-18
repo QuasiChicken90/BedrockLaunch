@@ -2,7 +2,7 @@ Servers:
   "1":
     Name: "Local Server"
     Address: "127.0.0.1"
-    InfoMarkdown: "?"
+    InfoMarkdown: "https://raw.githubusercontent.com/QuasiChicken90/BedrockLaunch/refs/heads/main/Addons/Content/Markdown/Server_Local.md"
     Port: 25565
     Image: "None"
 
