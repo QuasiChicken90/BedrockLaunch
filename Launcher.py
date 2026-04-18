@@ -16,6 +16,10 @@ from App.LauncherApi import game
 from App.LauncherApi import launcher
 from App.LauncherApi import versions_mcbgdk
 
+# ─────────────────────────────────────────────
+# Signal / Admin / UAC Setup
+# ─────────────────────────────────────────────
+
 def signal_handler(sig, frame):
     os.kill(os.getpid(), signal.SIGTERM)
 
@@ -38,6 +42,10 @@ else:
     if os.path.exists("App/welcome.txt"):
         os.remove("App/welcome.txt")
 
+# ─────────────────────────────────────────────
+# Filesystem / Startup Cleanup
+# ─────────────────────────────────────────────
+
 if os.path.isdir("Library/Addons"):
     pass
 else:
@@ -46,6 +54,10 @@ else:
 if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "task_download.txt")):
     os.remove(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "task_download.txt"))
 
+# ─────────────────────────────────────────────
+# Helpers
+# ─────────────────────────────────────────────
+
 def getSetting(setting):
     with open(
             os.path.join(os.path.dirname(os.path.abspath(__file__)), "Config",
@@ -53,6 +65,9 @@ def getSetting(setting):
         data = json.load(f)
         return data[setting]
 
+# ─────────────────────────────────────────────
+# Flask App
+# ─────────────────────────────────────────────
 
 def launcherApp():
 
@@ -60,6 +75,8 @@ def launcherApp():
                 template_folder=os.path.join(
                     os.path.dirname(os.path.abspath(__file__)), "App",
                     "Views"))
+
+    # ── Static / Base Routes ──────────────────
 
     @app.route('/launcher/home')
     def home():
@@ -71,14 +88,29 @@ def launcherApp():
         return render_template('Settings.html',
                                themePath=getSetting("app_themeBG"))
 
-    @app.route("/launcher/library")
-    def library():
-        versionList = [{
-            "id": v,
-            "name": v
-        } for v in libraryManager.getInstances()]
-        return render_template("library.html",
-                               versionList=versionList,
+    @app.route("/launcher/base")
+    def base():
+        if launcher.check_developer_mode() == False:
+            return render_template("Setup.html",
+                                    themePath=getSetting("app_themeBG"))
+        if not os.path.isfile(
+                os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "welcome.txt")):
+            with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "welcome.txt"), "w") as f:
+                f.write("")
+                f.close()
+            return render_template("Welcome.html",
+                                   themePath=getSetting("app_themeBG"))
+        return render_template("Base.html",
+                               themePath=getSetting("app_themeBG"))
+
+    @app.route("/launcher/welcome")
+    def welcome():
+        return render_template("Welcome.html",
+                               themePath=getSetting("app_themeBG"))
+
+    @app.route("/launcher/articles")
+    def articles():
+        return render_template("articles.html",
                                themePath=getSetting("app_themeBG"))
 
     @app.route("/launcherfiles/<path:filename>")
@@ -87,23 +119,7 @@ def launcherApp():
             os.path.join(os.path.dirname(os.path.abspath(__file__)), "App"),
             filename)
 
-    @app.route("/launcher/launch")
-    def launch():
-        with open("App/selected.txt", "r") as file:
-            selected_value = file.read().strip()
-            if selected_value == "":
-                versionList = [{
-                    "id": v,
-                    "name": v
-                } for v in libraryManager.getInstances()]
-                
-                return render_template('Base.html',
-                                       themePath=getSetting("app_themeBG"),
-                                       versionList=versionList)
-
-        launchver.launch(selected_value)
-        return render_template('Launching.html',
-                               themePath=getSetting("app_themeBG"))
+    # ── Settings Routes ───────────────────────
 
     @app.route("/launcher/settings/theme", methods=["GET"])
     def settings_theme():
@@ -119,6 +135,18 @@ def launcherApp():
                              "Config", "settings.json"), "w") as f:
             json.dump(data, f, indent=4)
         return render_template('Base.html',
+                               themePath=getSetting("app_themeBG"))
+
+    # ── Library Routes ────────────────────────
+
+    @app.route("/launcher/library")
+    def library():
+        versionList = [{
+            "id": v,
+            "name": v
+        } for v in libraryManager.getInstances()]
+        return render_template("library.html",
+                               versionList=versionList,
                                themePath=getSetting("app_themeBG"))
 
     @app.route("/launcher/set/<version_id>")
@@ -163,7 +191,7 @@ def launcherApp():
             return "Error: " + str(
                 e
             ) + "\nTroubleshoot:\nVersions too old may not download\nCheck your internet connection\nCheck if you have enough storage"
-        
+
     @app.route("/launcher/api/create/getdownloadstatus")
     def apiGetDownloadStatus():
         if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "task_download.txt")):
@@ -171,40 +199,36 @@ def launcherApp():
         else:
             return "NoDownload"
 
-    @app.route("/launcher/api/servers/getlist")
-    def apiGetServers():
-        servers = game.getServers()
-        for s in servers:
-            status = game.getServerStatus(s["ip"], s["port"])
-            s.update(status)
-        return jsonify(servers)
+    # ── Launch Routes ─────────────────────────
 
-    @app.route("/launcher/articles")
-    def articles():
-        return render_template("articles.html",
-                               themePath=getSetting("app_themeBG"))
+    @app.route("/launcher/launch")
+    def launch():
+        with open("App/selected.txt", "r") as file:
+            selected_value = file.read().strip()
 
-    @app.route("/launcher/servers/")
-    def servers():
-        return render_template("servers.html",
-                               themePath=getSetting("app_themeBG"))
+            if selected_value == "":
+                versionList = [{
+                    "id": v,
+                    "name": v
+                } for v in libraryManager.getInstances()]
+                
+                return render_template('Base.html',
+                                    themePath=getSetting("app_themeBG"),
+                                    versionList=versionList)
 
-    @app.route("/launcher/api/opendatafolder")
-    def opendatafolder():
-        username = os.getlogin()
-        path = rf"C:\Users\{username}\AppData\Local\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang"
-        os.system(f"explorer.exe {path}")
-        return render_template("Base.html",
-                               themePath=getSetting("app_themeBG"))
+        # Run launch in background
+        threading.Thread(target=launchver.launch, args=(selected_value,)).start()
 
-    @app.route("/launcher/api/opendatafolder/mcbgdk")
-    def opendatafolder_mcbgdk():
-        username = os.getlogin()
-        path = rf"C:\Users\pc\AppData\Roaming\Minecraft Bedrock\Users"
-        os.system(f"explorer.exe {path}")
-        return render_template("Base.html",
-                               themePath=getSetting("app_themeBG"))
-    
+        # Immediately render page
+        return render_template('Launching.html',
+                            themePath=getSetting("app_themeBG"))
+
+    @app.route("/launcher/launch/logs")
+    def launch_logs():
+        return launchver.get_launch_logs()
+
+    # ── Game Data Routes ──────────────────────
+
     @app.route("/launcher/worlds")
     def worlds():
         return render_template("Worlds.html",
@@ -252,10 +276,79 @@ def launcherApp():
         size_mb = round(size_bytes / (1024 * 1024), 2)
         return jsonify({"size": f"{size_mb} MB"})
 
-    @app.route("/launcher/welcome")
-    def welcome():
-        return render_template("Welcome.html",
+    @app.route("/launcher/servers/")
+    def servers():
+        return render_template("servers.html",
                                themePath=getSetting("app_themeBG"))
+
+    @app.route("/launcher/api/servers/getlist")
+    def apiGetServers():
+        servers = game.getServers()
+        for s in servers:
+            status = game.getServerStatus(s["ip"], s["port"])
+            s.update(status)
+        return jsonify(servers)
+
+    @app.route("/launcher/screenshots")
+    def screenshots():
+        return render_template("Screenshots.html",
+                               themePath=getSetting("app_themeBG"))
+
+    @app.route("/launcher/api/screenshots/getlist")
+    def apiGetScreenshots():
+        return jsonify(game.getScreenshots())
+
+    @app.route("/launcher/api/screenshots/getimage/<path:screenshot>")
+    def apiGetScreenshotImage(screenshot):
+        base_path = os.path.expandvars(
+            r"C:\Users\%USERNAME%\AppData\Roaming\Minecraft Bedrock\Users"
+        )
+
+        requested_path = os.path.abspath(
+            os.path.join(base_path, screenshot)
+        )
+
+        base_path = os.path.abspath(base_path)
+
+        if not requested_path.startswith(base_path):
+            abort(403)
+
+        if not os.path.isfile(requested_path):
+            abort(404)
+
+        return send_file(requested_path, mimetype="image/png")
+
+    # ── Addons / Explore Routes ───────────────
+
+    @app.route("/launcher/explore")
+    def addons():
+        return render_template("Explore.html",
+                               themePath=getSetting("app_themeBG"))
+
+    @app.route("/launcher/api/addons/installaddon/<addon_id>")
+    def install_addon(addon_id):
+        game.installAddon(addon_id)
+        return "OK"
+
+    # ── File System / Folder Routes ───────────
+
+    @app.route("/launcher/api/opendatafolder")
+    def opendatafolder():
+        username = os.getlogin()
+        path = rf"C:\Users\{username}\AppData\Local\Packages\Microsoft.MinecraftUWP_8wekyb3d8bbwe\LocalState\games\com.mojang"
+        os.system(f"explorer.exe {path}")
+        return render_template("Base.html",
+                               themePath=getSetting("app_themeBG"))
+
+    @app.route("/launcher/api/opendatafolder/mcbgdk")
+    def opendatafolder_mcbgdk():
+        username = os.getlogin()
+        path = rf"C:\Users\pc\AppData\Roaming\Minecraft Bedrock\Users"
+        os.system(f"explorer.exe {path}")
+        return render_template("Base.html",
+                               themePath=getSetting("app_themeBG"))
+
+    # ── Update Routes ─────────────────────────
 
     @app.route("/launcher/update")
     def update():
@@ -290,68 +383,19 @@ def launcherApp():
                          creationflags=subprocess.CREATE_NEW_CONSOLE)
         
         return "lollllllllllllllllll"
-    
+
+    # ── Developer Routes ──────────────────────
+
     @app.route("/launcher/api/enabledev", methods=["POST"])
     def apiEnableDev():
         launcher.enable_developer_mode()
         return "Ok"
 
-    
-    @app.route("/launcher/explore")
-    def addons():
-        return render_template("Explore.html",
-                               themePath=getSetting("app_themeBG"))
-    
-    @app.route("/launcher/api/addons/installaddon/<addon_id>")
-    def install_addon(addon_id):
-        game.installAddon(addon_id)
-        return "OK"
-    
-    @app.route("/launcher/api/screenshots/getlist")
-    def apiGetScreenshots():
-        return jsonify(game.getScreenshots())
-    
-    @app.route("/launcher/api/screenshots/getimage/<path:screenshot>")
-    def apiGetScreenshotImage(screenshot):
-        base_path = os.path.expandvars(
-            r"C:\Users\%USERNAME%\AppData\Roaming\Minecraft Bedrock\Users"
-        )
-
-        requested_path = os.path.abspath(
-            os.path.join(base_path, screenshot)
-        )
-
-        base_path = os.path.abspath(base_path)
-
-        if not requested_path.startswith(base_path):
-            abort(403)
-
-        if not os.path.isfile(requested_path):
-            abort(404)
-
-        return send_file(requested_path, mimetype="image/png")
-    
-    @app.route("/launcher/screenshots")
-    def screenshots():
-        return render_template("Screenshots.html",
-                               themePath=getSetting("app_themeBG"))
-
-    @app.route("/launcher/base")
-    def base():
-        if launcher.check_developer_mode() == False:
-            return render_template("Setup.html",
-                                    themePath=getSetting("app_themeBG"))
-        if not os.path.isfile(
-                os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "welcome.txt")):
-            with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "welcome.txt"), "w") as f:
-                f.write("")
-                f.close()
-            return render_template("Welcome.html",
-                                   themePath=getSetting("app_themeBG"))
-        return render_template("Base.html",
-                               themePath=getSetting("app_themeBG"))
-    
     app.run(host="localhost", port=21934, threaded=True)
+
+# ─────────────────────────────────────────────
+# Entry Point
+# ─────────────────────────────────────────────
 
 flaskAppThread = threading.Thread(target=launcherApp)
 flaskAppThread.start()
