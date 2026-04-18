@@ -13,6 +13,12 @@ Addons:
     Image: "None"
     InfoMarkdown: "https://raw.githubusercontent.com/SIsilicon/WorldEdit-BE/refs/heads/master/README.md"
     DownloadURL: "https://api.github.com/repos/SIsilicon/WorldEdit-BE/releases/latest"
+  "2":
+    Name: "How to add your own packs/servers"
+    Author: ""
+    Image: "None"
+    InfoMarkdown: "https://raw.githubusercontent.com/QuasiChicken90/BedrockLaunch/refs/heads/main/Addons/Content/Markdown/HowToAddYourOwn.md"
+    DownloadURL: "?"
 
 Packs:
   "1":
