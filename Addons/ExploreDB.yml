@@ -2,9 +2,9 @@ Servers:
   "1":
     Name: "Minecraft Server"
     Address: "127.0.0.1"
-    InfoMarkdown: "https://raw.githubusercontent.com/QuasiChicken90/BedrockLaunch/refs/heads/main/README.md"
+    InfoMarkdown: "?"
     Port: 25565
-    Image: "https://picsum.photos/300/200"
+    Image: "None"
 
 Addons:
   "1":
