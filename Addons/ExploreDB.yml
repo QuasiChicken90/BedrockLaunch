@@ -4,7 +4,7 @@ Servers:
     Address: "127.0.0.1"
     InfoMarkdown: "?"
     Port: 25565
-    Image: "None"
+    Image: "https://picsum.photos/300/200"
 
 Addons:
   "1":
