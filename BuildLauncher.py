@@ -70,31 +70,15 @@ subprocess.run([
 mkdir("buildexec/exe/Launcher/launches")
 
 copydir("Config", "buildexec/exe/Launcher/_internal/Config")
-copydir("App", "buildexec/exe/Launcher/_internal/App")
+copydir("Config", "buildexec/exe/Launcher/Config")
 copydir("App", "buildexec/exe/Launcher/App")
 
 mkdir("buildexec/exe/Launcher/Library/Installations")
-mkdir("buildexec/exe/Launcher/_internal/UAC")
-
-deletedir("buildexec/exe/Launcher/App/Themes/")
-
-deletefile("buildexec/exe/Launcher/_internal/App/selected.txt")
+mkdir("buildexec/exe/Launcher/UAC")
 
 # delay renaming so it wont give a "file in use" error randomly
 sleep(3)
 copyFile("launcher_restart.bat", "buildexec/exe/Launcher/launcher_restart.bat")
 removePycache("buildexec/exe/Launcher")
-
-log("building neutralino")
-
-import subprocess
-
-subprocess.run(["neu", "build"], cwd="BedrockLaunch", check=True, shell=True)
-
-copyFile("BedrockLaunch/dist/BedrockLaunch/BedrockLaunch-win_x64.exe", "buildexec/exe/Launcher/App/neu_wv.exe")
-
-copyFile("BedrockLaunch/dist/BedrockLaunch/resources.neu", "buildexec/exe/Launcher/App/resources.neu")
-
-copyFile("BedrockLaunch/neutralino.config.json", "buildexec/exe/Launcher/App/neutralino.config.json")
 
 log("Complete.")
