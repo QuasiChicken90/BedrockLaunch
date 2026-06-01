@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launcher | Library</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="/launcherfiles/resources/CSS/global.css">
+  </head>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    * {
+      font-family: 'Inter', sans-serif;
+      user-select: none;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #1e1e1e;
+    }
+
+    body {
+      overflow-y: scroll;
+      -ms-overflow-style: none;
+    }
+
+    body::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+
+    .LauncherContainer {
+      width: 100%;
+      height: 100vh;
+    }
+    
+    .Library {
+      position: fixed;
+      top: 1%;
+      left: 30%;
+      color: white;
+      font-size: 30px;
+      font-weight: 700;
+      z-index: 9999;
+    }
+
+    .btnUseVer {
+      margin-left: 20px;
+      padding: 10px 20px;
+      background-color: rgb(255, 255, 255, 0.1);
+      color: white;
+      font-weight: 500;
+      border: none;
+      border-radius: 256px;
+    }
+    
+    .btnUseVer:active {
+      background-color: rgb(37, 95, 255, 1);
+    }
+
+    .VersionList {
+      position: absolute;
+      top: 15%;
+      left: 27%;
+      width: 63.5%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      z-index: 10;
+    }
+
+    .VersionContainer {
+      flex: 1 1 45%;
+      min-width: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
+      box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+      backdrop-filter: blur(7.5px);
+      border-radius: 256px;
+    }
+    .VersionContainer h3 {
+      font-weight: 600;
+      font-size: 20px;
+    }
+    h3 {
+      color: white;
+    }
+    .btnCreate {
+      position: fixed;
+      top: 3.5%;
+      left: 85%;
+      transform: translate(-50%, 0);
+      width: 150px;
+      height: 40px;
+      background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
+      box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25), inset 1px 1px 2px rgba(255, 255, 255, 0.3), inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+      backdrop-filter: blur(3.5px) saturate(2);
+      color: white;
+      font-weight: 500;
+      border: none;
+      border-radius: 256px;
+      z-index: 9999;
+    }
+    .btnCreate:active {
+      backdrop-filter: blur(3.5px) saturate(3);
+    }
+
+    .CreateInstanceContainer {
+      width: 40%;
+      height: 100%;
+      position: fixed;
+      right: -40%;
+      top: 0;
+      corner-shape: squircle;
+      background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
+      box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25),
+                  inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+                  inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+      backdrop-filter: blur(60px);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 60px 40px;
+      gap: 20px;
+      z-index: 10000;
+      transition: right 0.3s ease;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+
+    .CreateInstanceContainer.active {
+      right: 0;
+    }
+
+    .CreateInstanceContainer h1 {
+      color: #ffffff;
+      font-size: 32px;
+      font-weight: 600;
+      margin: 0 0 20px 0;
+    }
+
+    .formElement {
+      background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
+      box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25),
+                  inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+                  inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+      width: 100%;
+      height: 50px;
+      border: none;
+      color: #ffffff;
+      padding: 0 15px;
+      font-size: 14px;
+      border-radius: 999px;
+      box-sizing: border-box;
+    }
+
+    .formElement::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .formElement:focus {
+      outline: none;
+      box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25),
+                  inset 1px 1px 2px rgba(255, 255, 255, 0.4),
+                  inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+    }
+
+.customDropdown {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+    .dropdownSelected {
+      background: linear-gradient(135deg, rgba(228, 228, 228, 0.01) 100%, rgba(206, 206, 206, 0.01) 0%);
+      box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25),
+                  inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+                  inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+      width: 100%;
+      height: 50px;
+      border: none;
+      color: #ffffff;
+      padding: 0 40px 0 15px;
+      font-size: 14px;
+      border-radius: 999px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .dropdownSelected.placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .dropdownSelected:active {
+      filter: brightness(150%);
+    }
+
+    .dropdownSelected::after {
+      content: '\f107';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      right: 15px;
+      color: #ffffff;
+      transition: transform 0.2s ease;
+    }
+
+    .dropdownSelected.active::after {
+      transform: rotate(180deg);
+    }
+
+    
+.dropdownOptions {
+  margin-top: 10px;
+
+  background: rgba(255, 255, 255, 0);
+
+
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+
+  transition:
+    max-height 0.25s ease,
+    opacity 0.2s ease;
+}
+
+.dropdownOptions.active {
+  max-height: 300px;
+  opacity: 1;
+}
+
+.dropdownOptions.active {
+  max-height: 300px;
+  opacity: 1;
+}
+
+.searchBox {
+  width: calc(100% - 20px);
+  margin: 10px;
+
+  background: rgba(0, 0, 0, 0);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 256px;
+
+  padding: 8px 15px;
+
+  color: white;
+  outline: none;
+
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+
+  box-sizing: border-box;
+}
+
+.searchBox::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+  .searchBox:focus {
+    border: 1px solid rgb(36, 69, 255);
+    background: rgba(0, 0, 0, 0.0);
+  }
+  
+    #versionOptionsList {
+      max-height: 230px;
+      overflow-y: auto;
+      border-radius: 0 0 20px 20px;
+    }
+
+    #versionOptionsList::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    #versionOptionsList::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+
+    #versionOptionsList::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+    }
+
+    .dropdownOption {
+      padding: 12px 20px;
+      color: #ffffff;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 256px;
+    }
+
+    .dropdownOption:active {
+      filter: opacity(55%);
+    }
+
+    .dropdownOption.selected {
+      background: rgb(58, 111, 255);
+    }
+
+    .dropdownOption.hidden {
+      display: none !important;
+    }
+
+    .createButton {
+      background: linear-gradient(135deg, rgba(228, 228, 228, 0.1) 100%, rgba(206, 206, 206, 0.05) 0%);
+      box-shadow: 0px 4px 49.7px 1px rgba(0, 0, 0, 0.25),
+                  inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+                  inset -1px -1px 2px rgba(87, 87, 87, 0.5);
+      width: 100%;
+      height: 50px;
+      border: none;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 10px;
+      border-radius: 256px;
+    }
+
+    .createButton:active {
+      background: rgb(37, 95, 255);
+    }
+
+    .btnClose {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .btnClose:active {
+      filter: brightness(40%);
+    }
+
+    .promptCreating {
+      width: calc(100% - 80px);
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      background: rgba(25, 25, 25, 0.1);
+      border: 1px solid #555555;
+      box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.5);
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 20px;
+      opacity: 0%;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      backdrop-filter: blur(25px) !important;
+    }
+
+    .progress-bar {
+      width: 100%;
+      max-width: 400px;
+      height: 6px;
+      background-color: #333;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .progress-fill {
+      width: 30%;
+      height: 100%;
+      background: linear-gradient(90deg, #1e90ff, #007bff);
+      border-radius: 3px;
+      animation: move 1.5s linear infinite;
+    }
+
+    @keyframes move {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(400%); }
+    }
+  </style>
+  <script>
+    function toggleCreatePanel() {
+      const panel = document.querySelector('.CreateInstanceContainer');
+      panel.classList.toggle('active');
+    }
+
+    function toggleVersionDropdown() {
+      const selected = document.querySelector('.versionDropdownSelected');
+      const options = document.querySelector('#versionOptions');
+      selected.classList.toggle('active');
+      options.classList.toggle('active');
+    }
+
+    function filterVersions(searchTerm) {
+      const searchVal = searchTerm.toLowerCase();
+      const options = document.querySelectorAll('.dropdownOption');
+      
+      options.forEach(option => {
+        const text = option.getAttribute('data-value').toLowerCase();
+        if (text.includes(searchVal)) {
+          option.classList.remove('hidden');
+        } else {
+          option.classList.add('hidden');
+        }
+      });
+    }
+
+    function selectVersion(val) {
+      document.getElementById('version').value = val;
+      
+      const dropdown = document.querySelector('.versionDropdownSelected');
+      dropdown.innerText = val;
+      dropdown.classList.remove('placeholder');
+      
+      document.querySelectorAll('.dropdownOption').forEach(opt => opt.classList.remove('selected'));
+      event.currentTarget.classList.add('selected');
+      
+      toggleVersionDropdown();
+    }
+
+    document.addEventListener('click', function(event) {
+      if (!event.target.closest('.customDropdown')) {
+        const selected = document.querySelector('.versionDropdownSelected');
+        const options = document.querySelector('#versionOptions');
+        if (selected && options) {
+          selected.classList.remove('active');
+          options.classList.remove('active');
+        }
+      }
+    });
+  </script>
+  <body>
+    <div class="LauncherContainer"></div>
+    <button onclick="toggleCreatePanel()" class="btnCreate">Create</button>
+    
+    <div class="VersionList"> 
+      {% for version in versionList %} 
+      <div class="VersionContainer">
+        <h3>{{ version.name }}</h3>
+        <button onclick="alert('Set Version to {{ version.id }}');location.href = '/launcher/set/{{ version.id }}'" class="btnUseVer">
+          <i class="fas fa-play"></i> Select 
+        </button>
+      </div> 
+      {% endfor %} 
+    </div>
+
+    <div class="CreateInstanceContainer">
+      <button class="btnClose" onclick="toggleCreatePanel()">
+        <i class="fas fa-times"></i>
+      </button>
+      <h1>Create Instance</h1>
+      
+      <form onsubmit="event.preventDefault(); create();" style="width:100%; display:flex; flex-direction:column; gap:20px;" id="createForm">
+        
+        <input type="hidden" name="version" id="version" value="">
+
+        <div class="customDropdown">
+          <div class="dropdownSelected versionDropdownSelected placeholder" onclick="toggleVersionDropdown()">
+            Select Version
+          </div>
+          <div class="dropdownOptions" id="versionOptions">
+            <input type="text" class="searchBox" placeholder="Search versions..." onkeyup="filterVersions(this.value)">
+            <div id="versionOptionsList">
+              {% for version in fullBedrockVersionList %}
+                <div class="dropdownOption" data-value="{{ version }}" onclick="selectVersion('{{ version }}')">
+                  <span>{{ version }}</span>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        
+        <button type="submit" class="createButton" id="createInstance">Create Instance</button>
+      </form>
+
+      <div id="creating" class="promptCreating">
+        <h2 style="color:white; margin:0; font-size:18px;">Loading...</h2>
+        <p style="color: white; text-align: center; margin:0; font-size:13px;">Download will start soon</p>
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="http://localhost:21934/launcherfiles/LauncherApi/JS/Create.js"></script>
+  </body>
+</html>
