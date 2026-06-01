@@ -15,10 +15,11 @@ from App.LauncherApi import web
 from App.LauncherApi import game
 from App.LauncherApi import launcher
 from App.LauncherApi import versions_mcbgdk
-
+import logging
 # ─────────────────────────────────────────────
 # Signal / Admin / UAC Setup
 # ─────────────────────────────────────────────
+
 
 def signal_handler(sig, frame):
     os.kill(os.getpid(), signal.SIGTERM)
@@ -31,7 +32,7 @@ def is_admin():
     except:
         return False
 
-uac_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "UAC")
+uac_path = os.path.join(os.path.dirname(os.path.abspath(__name__)), "UAC")
 
 if os.path.isdir(uac_path):
     if not is_admin():
@@ -51,8 +52,8 @@ if os.path.isdir("Library/Addons"):
 else:
     os.mkdir("Library/Addons")
 
-if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "task_download.txt")):
-    os.remove(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "task_download.txt"))
+if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__name__)), "App", "task_download.txt")):
+    os.remove(os.path.join(os.path.dirname(os.path.abspath(__name__)), "App", "task_download.txt"))
 
 # ─────────────────────────────────────────────
 # Helpers
@@ -60,7 +61,7 @@ if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App"
 
 def getSetting(setting):
     with open(
-            os.path.join(os.path.dirname(os.path.abspath(__file__)), "Config",
+            os.path.join(os.path.dirname(os.path.abspath(__name__)), "Config",
                          "settings.json")) as f:
         data = json.load(f)
         return data[setting]
@@ -73,8 +74,14 @@ def launcherApp():
 
     app = Flask(__name__,
                 template_folder=os.path.join(
-                    os.path.dirname(os.path.abspath(__file__)), "App",
+                    os.path.dirname(os.path.abspath(__name__)), "App",
                     "Views"))
+    
+    @app.before_request
+    def suppress_polling_logs():
+        if getSetting("debug_flask_minimalLogging") == True:
+            if request.path == "/launcher/api/create/getdownloadstatus":
+                logging.getLogger("werkzeug").setLevel(logging.ERROR)
 
     # ── Static / Base Routes ──────────────────
 
@@ -94,8 +101,8 @@ def launcherApp():
             return render_template("Setup.html",
                                     themePath=getSetting("app_themeBG"))
         if not os.path.isfile(
-                os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "welcome.txt")):
-            with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "welcome.txt"), "w") as f:
+                os.path.join(os.path.dirname(os.path.abspath(__name__)), "App", "welcome.txt")):
+            with open(os.path.join(os.path.dirname(os.path.abspath(__name__)), "App", "welcome.txt"), "w") as f:
                 f.write("")
                 f.close()
             return render_template("Welcome.html",
@@ -116,7 +123,7 @@ def launcherApp():
     @app.route("/launcherfiles/<path:filename>")
     def launcherfiles(filename):
         return send_from_directory(
-            os.path.join(os.path.dirname(os.path.abspath(__file__)), "App"),
+            os.path.join(os.path.dirname(os.path.abspath(__name__)), "App"),
             filename)
 
     # ── Settings Routes ───────────────────────
@@ -125,13 +132,13 @@ def launcherApp():
     def settings_theme():
         number = request.args.get("number")
         with open(
-                os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                os.path.join(os.path.dirname(os.path.abspath(__name__)),
                              "Config", "settings.json"), "r") as f:
             data = json.load(f)
         data[
             "app_themeBG"] = f"http://localhost:21934/launcherfiles/Themes/{number}.mp4"
         with open(
-                os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                os.path.join(os.path.dirname(os.path.abspath(__name__)),
                              "Config", "settings.json"), "w") as f:
             json.dump(data, f, indent=4)
         return render_template('Base.html',
@@ -147,7 +154,7 @@ def launcherApp():
         } for v in libraryManager.getInstances()]
         return render_template("library.html",
                                versionList=versionList,
-                               themePath=getSetting("app_themeBG"))
+                               themePath=getSetting("app_themeBG"),fullBedrockVersionList=web.getFullBedrockVersionList())
 
     @app.route("/launcher/set/<version_id>")
     def set_version(version_id):
@@ -164,7 +171,7 @@ def launcherApp():
 
     @app.route("/launcher/api/create/<version>")
     def apiCreate_instance(version):
-        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "task_download.txt"), "w") as f:
+        with open(os.path.join(os.path.dirname(os.path.abspath(__name__)), "App", "task_download.txt"), "w") as f:
             f.write("")
         try:
             match = re.search(r"(\d+\.\d+\.\d+)", version)
@@ -184,17 +191,17 @@ def launcherApp():
                 versions_mcbgdk.createMCBGDKInstance(version)
             else:
                 libraryManager.createInstance(version)
-                os.remove(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "task_download.txt"))
+                os.remove(os.path.join(os.path.dirname(os.path.abspath(__name__)), "App", "task_download.txt"))
             return "OK"
         except Exception as e:
-            os.remove(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "task_download.txt"))
+            os.remove(os.path.join(os.path.dirname(os.path.abspath(__name__)), "App", "task_download.txt"))
             return "Error: " + str(
                 e
             ) + "\nTroubleshoot:\nVersions too old may not download\nCheck your internet connection\nCheck if you have enough storage"
 
     @app.route("/launcher/api/create/getdownloadstatus")
     def apiGetDownloadStatus():
-        if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), "App", "task_download.txt")):
+        if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__name__)), "App", "task_download.txt")):
             return "Downloading"
         else:
             return "NoDownload"
@@ -216,10 +223,8 @@ def launcherApp():
                                     themePath=getSetting("app_themeBG"),
                                     versionList=versionList)
 
-        # Run launch in background
         threading.Thread(target=launchver.launch, args=(selected_value,)).start()
 
-        # Immediately render page
         return render_template('Launching.html',
                             themePath=getSetting("app_themeBG"))
 
@@ -375,7 +380,7 @@ def launcherApp():
 
         parent_dir = os.path.abspath(os.path.join(base_dir, os.pardir))
 
-        bat_path = os.path.join(parent_dir, "launcher_restart.bat")
+        bat_path = os.path.join("launcher_restart.bat")
 
         subprocess.Popen(["cmd", "/c", "start", "", bat_path],
                          shell=True,
@@ -401,13 +406,13 @@ flaskAppThread = threading.Thread(target=launcherApp)
 flaskAppThread.start()
 
 if os.path.isdir(uac_path):
-    exe_path = os.path.join("App", "neu_wv.exe")
-    if os.path.isfile(exe_path):
-        app_dir = os.path.abspath("App")
-        exe_full_path = os.path.abspath(exe_path)
-
-        subprocess.run([exe_full_path], cwd=app_dir)
+    pass
 else:
     if os.path.isfile("App/welcome.txt"):
         os.remove("App/welcome.txt")
-    os.system("cd BedrockLaunch && neu run")
+
+import webview
+webview.create_window("BedrockLaunch ", url="http://localhost:21934/launcher/base", min_size=(getSetting("app_minsize_w"), getSetting("app_minsize_h")), frameless=getSetting("app_frameless"), easy_drag=getSetting("app_easyDrag"))
+webview.start()
+
+os._exit(0)
