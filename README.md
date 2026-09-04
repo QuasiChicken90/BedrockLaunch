@@ -5,7 +5,7 @@ A fully functional Minecraft Bedrock launcher
 
 <img width="1474" height="951" alt="Screenshot 2026-09-04 164445" src="https://github.com/user-attachments/assets/39abe13e-fa47-4716-b7c6-d13c2b90f1f3" />
 <img width="1458" height="951" alt="Screenshot 2026-09-04 164603" src="https://github.com/user-attachments/assets/503d9839-ec0c-4db8-bf4e-01b098f57162" />
-<img width="1458" height="951" alt="Screenshot 2026-09-04 164720" src="https://github.com/user-attachments/assets/f3ab38e4-4345-4faf-93ac-7d34ddce3f1d" />
+<img width="1458" height="951" alt="image" src="https://github.com/user-attachments/assets/305ffd4d-be15-4e07-b2a4-20e39c89776b" />
 
 
 
