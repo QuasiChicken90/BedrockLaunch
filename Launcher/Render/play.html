@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Document</title>
+  </head>
+  <style>
+    button {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      width: 100%;
+      height: 56px;
+      background: rgba(7, 7, 7, 0.1);
+      border-width: 1px 0px;
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 0.27);
+      box-shadow: 0px 0px 0px 1px #000000;
+      border-radius: 16px;
+      color: #FFFFFF;
+      font-weight: 600;
+      font-size: large;
+      backdrop-filter: blur(24px) saturate(115%);
+    }
+
+    button:active {
+      filter: brightness(150%);
+    }
+
+    .PromptWarning {
+      box-sizing: border-box;
+      position: absolute;
+      width: calc(60% - 0px);
+      height: auto;
+      background: linear-gradient(180deg, rgba(34, 34, 34, 0.1) 0%, rgba(37, 37, 37, 0.1) 100%);
+      border-width: 1px 0px;
+      border-style: solid;
+      border-color: #515151;
+      box-shadow: 0px 0px 0px #000000;
+      backdrop-filter: blur(16px);
+      border-radius: 25px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 15px;
+      font-family: inter;
+      color: white;
+      align-items: center;
+      display: none;
+    }
+
+    .PromptWarning button {
+      width: calc(100% - 30px);
+      box-sizing: border-box;
+      margin: 0 15px;
+      background-color: rgba(255, 152, 152, 0.4);
+    }
+  </style>
+  <body>
+    <button onclick="showWarning()">Launch</button>
+    <div id="warning" class="PromptWarning">
+      <h3>Warning</h3>
+      <p id="warningmsg">Your data will be deleted when installing. Make sure all of your data is backed up. Use the shortcut from your start menu/search for minecraft to launch it as usual if you want to continue playing and not trying to switch versions.</p>
+      <br>
+      <br>
+      <br>
+      <button onclick="window.top.location.href= '/api/play'">Continue to installer</button>
+    </div>
+    <script>
+      async function showWarning() {
+        const selectedVersionResponse = await fetch("/api/vmanager/getselectedversion");
+        const selectedVersion = await selectedVersionResponse.json();
+        if (selectedVersion.selectedversion == null) {
+          alert("No selected version. Select one from your Instances.")
+          return
+        }
+        document.getElementById("warning").style.display = 'block';
+      }
+    </script>
+  </body>
+</html>

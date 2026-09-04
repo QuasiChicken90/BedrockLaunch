@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Launcher</title>
+  </head>
+  <style>
+    body {
+      font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background: #1e1e1e;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .NavSidebar {
+      position: fixed;
+      left: 0px;
+      width: 284px;
+      background: linear-gradient(180deg, rgba(39, 39, 39, 0.0) 0%, rgba(59, 59, 59, 0.2) 50.48%, rgba(39, 39, 39, 0.0) 100%);
+      border: none;
+      border-color: rgba(255, 255, 255, 0.27);
+      box-shadow: 0px 0px 0px 1px #000000;
+      backdrop-filter: blur(12px) saturate(115%);
+      z-index: 1000;
+      padding: 16px;
+      height: 100%
+    }
+
+    .NavToolbar {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 50px;
+      z-index: 999;
+      background: rgba(83, 83, 83, 0.1);
+      border-bottom: 1px solid #000;
+      backdrop-filter: blur(8px) saturate(150%);
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      user-select: none;
+      padding-right: 15px;
+      box-sizing: border-box;
+      gap: 10px;
+      -webkit-transform: translateZ(0);
+      -webkit-backface-visibility: hidden;
+      -webkit-perspective: 1000;
+    }
+
+    .NavSButtonActive {
+      height: 48px;
+      background: #0B75FF;
+      border-width: 1px 0px;
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 0.27);
+      box-shadow: 0px 0px 0px 1px #000000;
+      border-radius: 8px;
+      width: 100%;
+      color: #FFFFFF;
+      font-weight: 600;
+      font-size: large;
+      text-align: left;
+      padding-left: 24px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .NavSButton {
+      height: 48px;
+      border-radius: 8px;
+      width: 100%;
+      color: #FFFFFF;
+      font-weight: 600;
+      font-size: large;
+      text-align: left;
+      padding-left: 24px;
+      margin-bottom: 16px;
+      background: none;
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .NavSButtonActive:active,
+    .NavSButton:active {
+      filter: brightness(0.5);
+    }
+
+    .NavTitle {
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: large;
+      text-align: left;
+      padding-left: 24px;
+      left: 350px;
+      text-align: center;
+    }
+
+    .ContentArea {
+      position: absolute;
+      left: 350px;
+      top: 50px;
+      width: calc(100vw - 350px);
+      height: calc(100vh - 50px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(31, 31, 31, 0);
+    }
+
+    .ContentArea iframe {
+      width: 90%;
+      height: 90%;
+      border: none;
+      z-index: 1;
+    }
+
+    .NavTButton {
+      background: linear-gradient(180deg, rgba(39, 39, 39, 0.2) 0%, rgba(31, 31, 31, 0.1) 50.48%, rgba(39, 39, 39, 0.2) 100%);
+      border-width: 1px 0px;
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 0.13);
+      box-shadow: 0px 0px 0px 0.5px #000000;
+      backdrop-filter: blur(2.5px);
+      border-radius: 64px;
+      color: #FFFFFF;
+      font-weight: 600;
+      height: 35px;
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    .NavTButton.invisible {
+      display: none;
+    }
+
+    .NavTButton:active {
+      background: #0B75FF;
+    }
+
+    .ContentArea.instances {
+      top: 0px;
+      height: 100vh;
+    }
+
+    .sidePanel {
+      position: fixed;
+      width: 400px;
+      height: calc(100vh - 50px);
+      bottom: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(8px) saturate(150%);
+      z-index: 900;
+      border-left: 1px solid rgb(0, 0, 0);
+      color: #FFFFFF;
+      transform: translateX(100%);
+      transition: transform 0.25s ease;
+      overflow-y: auto;
+    }
+
+    .sidePanel {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+    }
+
+    .sidePanel::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .sidePanel::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .sidePanel::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 10px;
+    }
+
+    .sidePanel.open {
+      transform: translateX(0);
+    }
+
+    .versionbtn {
+      width: 100%;
+      height: 50px;
+      background: rgba(0, 0, 0, 0.25);
+      border: none;
+      border-bottom: 1px solid #000000;
+      color: white;
+      text-align: left;
+      font-weight: 700;
+    }
+
+    .versionbtn:active {
+      background: #0B75FF;
+    }
+
+    .ContentArea.settings {
+      top: 0;
+      height: 100vh;
+    }
+  </style>
+  <body>
+    <div class="sidePanel">
+      <h2>Select to install</h2>
+      <div id="versionList"></div>
+    </div>
+    <video autoplay muted loop id="background-video" style="position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%; z-index: 0;">
+      <source src="/api/resources/Videos/background-loop.mp4" type="video/mp4">
+    </video>
+    <div class="NavSidebar">
+      <button class="NavSButtonActive" data-page="play">
+        <i class="fa-solid fa-play"></i> Play </button>
+      <button class="NavSButton" data-page="instances">
+        <i class="fa-solid fa-bars"></i> Instances </button>
+      <button class="NavSButton" data-page="files">
+        <i class="fa-solid fa-folder"></i> Files </button>
+      <button class="NavSButton" data-page="settings">
+        <i class="fa-solid fa-gear"></i> Settings </button>
+    </div>
+    <div class="NavToolbar" id="NavToolbar" data-tauri-drag-region>
+      <button id="install-new" class="NavTButton invisible">
+        <i class="fa-solid fa-plus"></i> Install New </button>
+      <button id="minimize" class="NavTButton">
+        <i class="fa-solid fa-minus"></i>
+      </button>
+      <button id="maximize" class="NavTButton">
+        <i class="fa-regular fa-square"></i>
+      </button>
+      <button id="close" class="NavTButton">
+        <i class="fa-solid fa-x"></i>
+      </button>
+    </div>
+    <div class="ContentArea">
+      <iframe src="/launcher/play" frameborder="0"></iframe>
+    </div>
+    <script>
+      const installNewButton = document.getElementById("install-new");
+      const sidePanel = document.querySelector(".sidePanel");
+      installNewButton.addEventListener("click", () => {
+        const isOpen = sidePanel.classList.toggle("open");
+        const icon = installNewButton.querySelector("i");
+        const text = installNewButton.querySelector("span");
+        if (isOpen) {
+          icon.className = "fa-solid fa-x";
+          text.textContent = "Close Panel";
+        } else {
+          icon.className = "fa-solid fa-plus";
+          text.textContent = "Install New";
+        }
+      });
+    </script>
+    <script type="module">
+      import {
+        getCurrentWindow
+      } from "https://esm.sh/@tauri-apps/api@2/window";
+      const win = getCurrentWindow();
+      document.getElementById("minimize").onclick = () => {
+        win.minimize();
+      };
+      document.getElementById("maximize").onclick = () => {
+        win.toggleMaximize();
+      };
+      document.getElementById("close").onclick = () => {
+        win.close();
+      };
+    </script>
+    <script>
+      const appWindow = window.__TAURI__.window.getCurrentWindow();
+      const toolbar = document.getElementById("NavToolbar");
+      toolbar.addEventListener("mousedown", async (e) => {
+        if (e.button !== 0) return;
+        if (e.target.closest("button")) return;
+        await appWindow.startDragging();
+      });
+    </script>
+    <script>
+      const buttons = document.querySelectorAll(".NavSButton, .NavSButtonActive");
+      buttons.forEach(button => {
+        button.addEventListener("click", () => {
+          buttons.forEach(btn => {
+            btn.classList.remove("NavSButtonActive");
+            btn.classList.add("NavSButton");
+          });
+          button.classList.remove("NavSButton");
+          button.classList.add("NavSButtonActive");
+        });
+      });
+      buttons.forEach(button => {
+        button.addEventListener("click", () => {
+          const page = button.dataset.page;
+          console.log("CLICKED:", page);
+          const iframe = document.querySelector("iframe");
+          const navButton = document.getElementById("install-new");
+          const contentArea = document.querySelector(".ContentArea");
+          const bg = document.getElementById("background-video");
+          iframe.src = "/launcher/" + page;
+          if (page === "instances") {
+            console.log("INSTANCES");
+            bg.style.opacity = "1";
+            navButton.classList.remove("invisible");
+            contentArea.classList.add("instances");
+            iframe.style.height = "100%";
+          } else if (page === "settings") {
+            console.log("SETTINGS");
+            iframe.style.height = "100%";
+            bg.style.opacity = "0";
+            navButton.classList.add("invisible");
+            contentArea.classList.add("settings");
+            iframe.style.height = "100%";
+          } else {
+            console.log("OTHER");
+            bg.style.opacity = "1";
+            navButton.classList.add("invisible");
+            sidePanel.classList.remove("open");
+            contentArea.classList.remove("instances");
+            iframe.style.width = "90%";
+            iframe.style.height = "90%";
+          }
+        });
+      });
+    </script>
+    <script>
+      async function loadVersions() {
+        const versionList = document.getElementById("versionList");
+        const response = await fetch("/api/vmanager/listall");
+        const versions = await response.json();
+        versions.forEach(version => {
+          const button = document.createElement("button");
+          button.className = "versionbtn";
+          button.textContent = version;
+          button.addEventListener("click", async () => {
+            const response = await fetch("/api/vmanager/addversion", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                version
+              })
+            });
+            if (response.ok) {
+              console.log("Version added successfully:", version);
+              location.href = '/launcher/navigate/instances';
+            } else {
+              console.error("Failed to add version:", version);
+            }
+          });
+          button.addEventListener("click", () => {
+            console.log("Selected version:", version);
+          });
+          versionList.appendChild(button);
+        });
+      }
+      loadVersions();
+    </script>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const activeTab = params.get("activetab");
+      if (activeTab) {
+        const buttons = document.querySelectorAll(".NavSButton, .NavSButtonActive");
+        const iframe = document.querySelector("iframe");
+        const navButton = document.getElementById("install-new");
+        const contentArea = document.querySelector(".ContentArea");
+        const bg = document.getElementById("background-video");
+        iframe.src = "/launcher/" + activeTab;
+        buttons.forEach(button => {
+          if (button.dataset.page === activeTab) {
+            button.classList.remove("NavSButton");
+            button.classList.add("NavSButtonActive");
+          } else {
+            button.classList.remove("NavSButtonActive");
+            button.classList.add("NavSButton");
+          }
+        });
+        if (activeTab === "instances") {
+          navButton.classList.remove("invisible");
+          contentArea.classList.add("instances");
+          contentArea.classList.remove("settings");
+          iframe.style.width = "100%";
+          iframe.style.height = "100%";
+          bg.style.opacity = "1";
+        } else if (activeTab === "settings") {
+          navButton.classList.add("invisible");
+          contentArea.classList.add("settings");
+          contentArea.classList.remove("instances");
+          iframe.style.width = "100%";
+          iframe.style.height = "100%";
+          bg.style.opacity = "0";
+        } else {
+          navButton.classList.add("invisible");
+          contentArea.classList.remove("instances");
+          contentArea.classList.remove("settings");
+          iframe.style.width = "90%";
+          iframe.style.height = "90%";
+          bg.style.opacity = "1";
+        }
+      }
+    </script>
+  </body>
+</html>

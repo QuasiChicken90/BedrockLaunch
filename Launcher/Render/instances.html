@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>instances</title>
+  </head>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      --sb-size: 2px;
+    }
+
+    body {
+      --sb-track-color: rgba(255, 255, 255, 0.0);
+      --sb-track-width: 1px;
+      --sb-thumb-color: rgba(255, 255, 255, 0.2);
+    }
+
+    body::-webkit-scrollbar {
+      width: var(--sb-size);
+    }
+
+    body::-webkit-scrollbar-track {
+      background: var(--sb-track-color);
+      border-radius: 24px;
+    }
+
+    body::-webkit-scrollbar-thumb {
+      background: var(--sb-thumb-color);
+      border-radius: 24px;
+    }
+
+    @supports not selector(::-webkit-scrollbar) {
+      body {
+        scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+      }
+    }
+
+    .instanceContainer {
+      box-sizing: border-box;
+      background: rgba(49, 49, 49, 0.1);
+      border-width: 1px 0px;
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 0.27);
+      box-shadow: 0px 0px 0px 1px #000000;
+      border-radius: 12px;
+      height: 70px;
+      color: white;
+      font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      display: flex;
+      padding: 0 16px;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(25px) saturate(115%);
+    }
+
+    h2 {
+      font-size: 24px;
+    }
+
+    button {
+      background: linear-gradient(180deg, rgba(39, 39, 39, 0.2) 0%, rgba(31, 31, 31, 0.1) 50.48%, rgba(39, 39, 39, 0.2) 100%);
+      border-width: 1px 0px;
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 0.13);
+      box-shadow: 0px 0px 0px 0.5px #000000;
+      backdrop-filter: blur(2.5px);
+      border-radius: 64px;
+      color: #FFFFFF;
+      font-weight: 600;
+      height: 35px;
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    button:active {
+      background: #0B75FF;
+    }
+
+    .instanceContainer:first-of-type {
+      margin-top: 64px;
+    }
+  </style>
+  <body>
+    <script>
+      async function loadInstances() {
+        const response = await fetch("/api/vmanager/listversion");
+        const instances = await response.json();
+        const selectedVersionResponse = await fetch("/api/vmanager/getselectedversion");
+        const selectedVersion = await selectedVersionResponse.json();
+        instances.forEach(instance => {
+          const container = document.createElement("div");
+          container.className = "instanceContainer";
+          if (instance === selectedVersion.selectedversion) {
+            container.innerHTML = `
+                
+					<h2>${instance} [SELECTED]</h2>
+					<button onclick='selectVersion("${instance}")'>Select Version</button>
+            `;
+          } else {
+            container.innerHTML = `
+                
+					<h2>${instance}</h2>
+					<button onclick='selectVersion("${instance}")'>Select Version</button>
+            `;
+          }
+          document.body.appendChild(container);
+        });
+      }
+      loadInstances();
+
+      function selectVersion(version) {
+        fetch("/api/vmanager/selectversion", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            selectedversion: version
+          })
+        }).then(response => {
+          if (response.ok) {
+            alert(`Version ${version} selected. Go to Play to launch the game.`);
+            window.top.location.reload();
+          } else {
+            alert(`Failed to select version ${version}.`);
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

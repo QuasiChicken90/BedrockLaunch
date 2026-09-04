@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launcher | Updating</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  </head>
+  <body>
+    <style>
+       @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+      body {
+        background: transparent;
+        overflow: hidden;
+      }
+
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .progressbar { position: absolute; top: 90%; left: 50%; transform: translate(-50%, -50%); width: 25%; height: 10px; background-color: rgba(255, 255, 255, 0.151); border-radius: 1024px; overflow: hidden; }
+
+.progress {
+    width: 35%;
+    height: 100%;
+    border-radius: 1024px;
+    position: relative;
+
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        #FFFFFF 100%
+    );
+
+    animation: progressAnimation 1.5s ease-in-out infinite alternate;
+}
+
+.progress::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        90deg,
+        #FFFFFF 0%,
+        rgba(255, 255, 255, 0) 100%
+    );
+
+    border-radius: inherit;
+
+    opacity: 0;
+
+    animation: gradientFlip 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes progressAnimation {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(285%);
+    }
+}
+
+@keyframes gradientFlip {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+      .windowControls {
+        background-color: rgb(26, 26, 26) !important;
+      }
+
+
+      .NavToolbar {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    z-index: 1000000;
+
+    background: rgba(83, 83, 83, 0.1);
+    border-bottom: 1px solid #000;
+    backdrop-filter: blur(8px) saturate(150%);
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    user-select: none;
+    padding-right: 15px;
+    box-sizing: border-box;
+    gap: 10px;
+
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+}
+
+.NavToolbar:active {
+    backround-color: blue;
+}
+
+.NavSButtonActive {
+    height: 48px;
+
+    background: #0B75FF;
+    border-width: 1px 0px;
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.27);
+    box-shadow: 0px 0px 0px 1px #000000;
+    border-radius: 8px;
+    width: 100%;
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: large;
+    text-align: left;
+    padding-left: 24px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.NavSButton {
+    height: 48px;
+    border-radius: 8px;
+    width: 100%;
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: large;
+    text-align: left;
+    padding-left: 24px;
+    margin-bottom: 16px;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.NavSButtonActive:active, .NavSButton:active {
+    filter: brightness(0.5);
+}
+.NavTitle {
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: large;
+    text-align: left;
+    padding-left: 24px;
+    left: 350px;
+    text-align: center;
+}
+
+.NavTButton {
+    background: linear-gradient(180deg, rgba(39, 39, 39, 0.2) 0%, rgba(31, 31, 31, 0.1) 50.48%, rgba(39, 39, 39, 0.2) 100%);
+    border-width: 1px 0px;
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.13);
+    box-shadow: 0px 0px 0px 0.5px #000000;
+    backdrop-filter: blur(2.5px);
+    border-radius: 64px;
+    color: #FFFFFF;
+    font-weight: 600;
+    height: 35px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.NavTButton.invisible {
+    display: none;
+}
+
+.NavTButton:active {
+    background: #0B75FF;
+}
+    </style>
+    <img src="http://localhost:21934/api/resources/Icons/icon.png" alt="">
+
+
+
+    <div class="NavToolbar" id="NavToolbar" data-tauri-drag-region>
+
+        <button id="minimize" class="NavTButton">
+            <i class="fa-solid fa-minus"></i>
+        </button>
+
+        <button id="maximize" class="NavTButton">
+            <i class="fa-regular fa-square"></i>
+        </button>
+
+        <button id="close" class="NavTButton">
+            <i class="fa-solid fa-x"></i>
+        </button>
+
+
+    </div>
+
+
+
+
+    <div class="progressbar">
+      <div class="progress"></div>
+    </div>
+
+
+
+
+
+      <script type="module">
+    import { getCurrentWindow } from "https://esm.sh/@tauri-apps/api@2/window";
+
+    const win = getCurrentWindow();
+
+    document.getElementById("minimize").onclick = () => {
+        win.minimize();
+    };
+
+    document.getElementById("maximize").onclick = () => {
+        win.toggleMaximize();
+    };
+
+    document.getElementById("close").onclick = () => {
+      alert("An update is in progress.");
+    };
+
+</script>
+
+    <script>
+const appWindow = window.__TAURI__.window.getCurrentWindow();
+const toolbar = document.getElementById("NavToolbar");
+
+toolbar.addEventListener("mousedown", async (e) => {
+    if (e.button !== 0) return;
+
+    if (e.target.closest("button")) return;
+
+    await appWindow.startDragging();
+});
+</script>
+
+<script>
+    fetch('/api/core/update')
+</script>
+
+  </body>
+</html>

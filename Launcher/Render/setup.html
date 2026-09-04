@@ -1,0 +1,348 @@
+<!-- quick stripped down version of welcome.html and create.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>setup</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  </head>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    * {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      overflow: hidden;
+      background: transparent;
+    }
+
+    .whats-new-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .whats-new-container {
+      background: #222222;
+      border-radius: 20px;
+      padding: 32px 28px;
+      width: 340px;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      border-width: 1px 0px;
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 0.226);
+      box-shadow: 0px 0px 0px 1px #000000;
+    }
+
+    .whats-new-container h1 {
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0 0 24px 0;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .feature-icon i {
+      font-size: 20px;
+      color: #007AFF;
+    }
+
+    .feature-text {
+      color: rgb(255, 93, 93);
+      font-size: 15px;
+      line-height: 1.5;
+      font-weight: 700;
+    }
+
+    .whats-new-continue-btn {
+      width: 100%;
+      background: #007AFF;
+      color: #ffffff;
+      border: none;
+      padding: 16px;
+      border-radius: 256px;
+      font-size: 17px;
+      font-weight: 600;
+      margin-top: 20px;
+    }
+
+    .whats-new-continue-btn:active {
+      filter: brightness(40%)
+    }
+
+    .promptWorking {
+      width: 550px;
+      max-width: 90vw;
+      max-height: 80vh;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      background: rgba(25, 25, 25, 0.719);
+      border: 1px solid #555555;
+      box-shadow: 0px 0px 0px 1px #000000;
+      border-radius: 15px;
+      z-index: 100000;
+      padding: 20px;
+      opacity: 0%;
+      backdrop-filter: blur(25px);
+    }
+
+    .promptWorking.show {
+      animation: slideDown 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    .progress-bar {
+      width: 100%;
+      max-width: 400px;
+      height: 6px;
+      background-color: #333;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .progress-fill {
+      width: 30%;
+      height: 100%;
+      background: linear-gradient(90deg, #1e90ff, #007bff);
+      border-radius: 3px;
+      animation: move 1.5s linear infinite;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translate(-50%, -150%);
+        opacity: 0;
+      }
+
+      to {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+      }
+    }
+
+    @keyframes move {
+      0% {
+        transform: translateX(-100%);
+      }
+
+      100% {
+        transform: translateX(400%);
+      }
+    }
+
+    .NavToolbar {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 50px;
+      z-index: 1000000;
+      background: rgba(83, 83, 83, 0.1);
+      border-bottom: 1px solid #000;
+      backdrop-filter: blur(8px) saturate(150%);
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      user-select: none;
+      padding-right: 15px;
+      box-sizing: border-box;
+      gap: 10px;
+      -webkit-transform: translateZ(0);
+      -webkit-backface-visibility: hidden;
+      -webkit-perspective: 1000;
+    }
+
+    .NavToolbar:active {
+      backround-color: blue;
+    }
+
+    .NavSButtonActive {
+      height: 48px;
+      background: #0B75FF;
+      border-width: 1px 0px;
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 0.27);
+      box-shadow: 0px 0px 0px 1px #000000;
+      border-radius: 8px;
+      width: 100%;
+      color: #FFFFFF;
+      font-weight: 600;
+      font-size: large;
+      text-align: left;
+      padding-left: 24px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .NavSButton {
+      height: 48px;
+      border-radius: 8px;
+      width: 100%;
+      color: #FFFFFF;
+      font-weight: 600;
+      font-size: large;
+      text-align: left;
+      padding-left: 24px;
+      margin-bottom: 16px;
+      background: none;
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .NavSButtonActive:active,
+    .NavSButton:active {
+      filter: brightness(0.5);
+    }
+
+    .NavTitle {
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: large;
+      text-align: left;
+      padding-left: 24px;
+      left: 350px;
+      text-align: center;
+    }
+
+    .NavTButton {
+      background: linear-gradient(180deg, rgba(39, 39, 39, 0.2) 0%, rgba(31, 31, 31, 0.1) 50.48%, rgba(39, 39, 39, 0.2) 100%);
+      border-width: 1px 0px;
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 0.13);
+      box-shadow: 0px 0px 0px 0.5px #000000;
+      backdrop-filter: blur(2.5px);
+      border-radius: 64px;
+      color: #FFFFFF;
+      font-weight: 600;
+      height: 35px;
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    .NavTButton.invisible {
+      display: none;
+    }
+
+    .NavTButton:active {
+      background: #0B75FF;
+    }
+  </style>
+  <body>
+    <div class="NavToolbar" id="NavToolbar" data-tauri-drag-region>
+      <button id="minimize" class="NavTButton">
+        <i class="fa-solid fa-minus"></i>
+      </button>
+      <button id="maximize" class="NavTButton">
+        <i class="fa-regular fa-square"></i>
+      </button>
+      <button id="close" class="NavTButton">
+        <i class="fa-solid fa-x"></i>
+      </button>
+    </div>
+    <div class="whats-new-overlay">
+      <div class="whats-new-container">
+        <h1>Developer mode is not enabled.</h1>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fa-solid fa-gear"></i>
+          </div>
+          <div class="feature-text"> Click continue to enable developer mode. Enabling Developer Mode will allow installation of unsigned apps and other advanced features. This may expose your computer to security risks but is required by BedrockLaunch. This can disabled in settings at any time in settings. </div>
+        </div>
+        <button class="whats-new-continue-btn" onclick="enableDevMode()">Continue and enable</button>
+      </div>
+    </div>
+    <script>
+      function enableDevMode() {
+        const createPopup = document.getElementById("creating");
+        createPopup.classList.add('show');
+        fetch('/api/core/enabledevmode', {
+          method: 'POST'
+        }).then(response => response.text()).then(text => {
+          if (text === "Ok") {
+            window.location.href = "/";
+          } else {
+            alert('Failed to enable developer mode. Please try again.');
+            createPopup.classList.remove('show');
+          }
+        }).catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while enabling developer mode.');
+          createPopup.classList.remove('show');
+        });
+      }
+    </script>
+    <div id="creating" class="promptWorking">
+      <h2 style="color:white;">Enabling</h2>
+      <p style="color: white; text-align: center;">This should only take a few seconds</p>
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+    </div>
+    <script type="module">
+      import {
+        getCurrentWindow
+      } from "https://esm.sh/@tauri-apps/api@2/window";
+      const win = getCurrentWindow();
+      document.getElementById("minimize").onclick = () => {
+        win.minimize();
+      };
+      document.getElementById("maximize").onclick = () => {
+        win.toggleMaximize();
+      };
+      document.getElementById("close").onclick = () => {
+        win.close();
+      };
+    </script>
+    <script>
+      const appWindow = window.__TAURI__.window.getCurrentWindow();
+      const toolbar = document.getElementById("NavToolbar");
+      toolbar.addEventListener("mousedown", async (e) => {
+        if (e.button !== 0) return;
+        if (e.target.closest("button")) return;
+        await appWindow.startDragging();
+      });
+    </script>
+  </body>
+</html>

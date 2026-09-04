@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <style>
+    body {
+      margin: 0px;
+      font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      --sb-size: 2px;
+      margin-top: 50px;
+    }
+
+    body {
+      --sb-track-color: rgba(255, 255, 255, 0.0);
+      --sb-track-width: 1px;
+      --sb-thumb-color: rgba(255, 255, 255, 0.2);
+    }
+
+    body::-webkit-scrollbar {
+      width: var(--sb-size);
+    }
+
+    body::-webkit-scrollbar-track {
+      background: var(--sb-track-color);
+      border-radius: 24px;
+    }
+
+    body::-webkit-scrollbar-thumb {
+      background: var(--sb-thumb-color);
+      border-radius: 24px;
+    }
+
+    @supports not selector(::-webkit-scrollbar) {
+      body {
+        scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+      }
+    }
+
+    .SettingsList {
+      box-sizing: border-box;
+      position: absolute;
+      width: 100%;
+      height: auto;
+      border-radius: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      padding: 16px;
+    }
+
+    .Setting {
+      height: auto;
+      border-style: solid;
+      border-width: 1px 0px;
+      border-color: rgba(255, 255, 255, 0.21);
+      box-shadow: 0px 0px 0px 1px #000000;
+      background: rgba(37, 37, 37, 0.1);
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 16px;
+    }
+
+    h2 {
+      color: white;
+      margin: 0 0 6px 0;
+      font-size: 18px;
+    }
+
+    p {
+      color: rgba(255, 255, 255, 0.815);
+      margin: 0 0 14px 0;
+    }
+
+    button {
+      background: linear-gradient(180deg, rgba(39, 39, 39, 0.2) 0%, rgba(31, 31, 31, 0.1) 50.48%, rgba(39, 39, 39, 0.2) 100%);
+      border-width: 1px 0px;
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 0.13);
+      box-shadow: 0px 0px 0px 0.5px #000000;
+      backdrop-filter: blur(2.5px);
+      border-radius: 64px;
+      color: #FFFFFF;
+      font-weight: 600;
+      height: 35px;
+      padding-left: 16px;
+      padding-right: 16px;
+      width: 100%;
+    }
+
+    button:active {
+      background: #0B75FF;
+    }
+  </style>
+  <body>
+    <div class="SettingsList">
+      <div class="Setting">
+        <h2>Storage Usage</h2>
+        <p style="color: #0B75FF; font-weight: 600;" id="storage">Loading...</p>
+      </div>
+      <div class="Setting">
+        <h2>Open Instances folder</h2>
+        <p>Open your instances folder. This contains MSIX and APPX downloads.</p>
+        <button onclick="openInstancesFolder()">Open</button>
+      </div>
+      <div class="Setting">
+        <h2>Open MC folder</h2>
+        <p>Open your Minecraft folder.</p>
+        <button onclick="openMCFolder()">Open</button>
+      </div>
+      <div class="Setting">
+        <h2>Open MC folder (legacy)</h2>
+        <p>Open your Minecraft folder (for versions under 1.21.120).</p>
+        <button onclick="openMCFolderLegacy()">Open</button>
+      </div>
+      <div class="Setting">
+        <h2>Update Launcher</h2>
+        <p>Update the launcher to the latest version.</p>
+        <button onclick="updateLauncher()">Update</button>
+      </div>
+      <div class="Setting">
+        <h2>Reinstall Launcher</h2>
+        <p>Reinstall the launcher to fix any issues.</p>
+        <button onclick="updateLauncher()">Reinstall</button>
+      </div>
+      <div class="Setting">
+        <h2>Enable Developer Mode</h2>
+        <p>Enable developer mode for launcher functionality.</p>
+        <button onclick="enableDevMode()">Enable</button>
+      </div>
+        <div class="Setting">
+        <h2>Whats New</h2>
+        <p style="color: #ffffff; font-weight: 600;" id="whatsnew">Loading...</p>
+      </div>
+    </div>
+    <script>
+      function enableDevMode() {
+        fetch('/api/core/enabledevmode', {
+          method: 'POST'
+        }).then(response => response.text()).then(text => {
+          if (text === "Ok") {
+            window.top.location.href = "/launcher/navigate/settings";
+          } else {
+            alert('Failed to enable developer mode. Please try again.');
+          }
+        }).catch(error => {
+          console.error('Error:', error);
+          alert('An error occurred while enabling developer mode.');
+        });
+      }
+
+      function openInstancesFolder() {
+        fetch('/api/core/opendir/instances')
+      }
+
+      function openMCFolder() {
+        fetch('/api/core/opendir/mc')
+      }
+
+      function openMCFolderLegacy() {
+        fetch('/api/core/opendir/mc/legacy')
+      }
+
+      function updateLauncher() {
+        window.top.location.href = "/launcher/update";
+      }
+
+      function getStorageUsage() {
+        fetch('/api/core/getstorageusage').then(response => response.json()).then(data => {
+          document.getElementById('storage').innerText = `Used: ${(data.used / 1024 / 1024 / 1024).toFixed(2)} GB`;
+        }).catch(error => {
+          console.error('Error fetching storage usage:', error);
+          document.getElementById('storage').innerText = 'Error loading storage usage.';
+        });
+      }
+      getStorageUsage();
+
+      function getWhatsNew() {
+        fetch("https://raw.githubusercontent.com/QuasiChicken90/BedrockLaunch/refs/heads/main/updates/1beta16.txt")
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById('whatsnew').innerText = data;
+          })
+          .catch(error => {
+            console.error('Error fetching whats new:', error);
+            document.getElementById('whatsnew').innerText = 'Error loading whats new.';
+          });
+      }
+      getWhatsNew();
+    </script>
+  </body>
+</html>
