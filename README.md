@@ -35,6 +35,7 @@ A fully functional Minecraft Bedrock launcher
 ## 🔨 Building
 - Install Python
 - Install NodeJS
+- Install Rust
 - Install Tauri
 - Create a venv. Once inside, run the below command
 - ```pip install -r requirements.txt```
