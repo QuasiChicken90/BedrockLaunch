@@ -18,27 +18,29 @@ A fully functional Minecraft Bedrock launcher
 <img width="1484" height="961" alt="image" src="https://github.com/user-attachments/assets/f6f61e7f-4190-4147-aa93-a84ac5f0b95d" />
 
 ## ✅ What you can do with BedrockLaunch
-- Play most versions from the first few Bedrock versions to the latest.
+- Play most versions from the first few Bedrock versions to the latest. (preview versions not supported)
 - Avoid the Microsoft Store, and use the launcher instead to download Bedrock Edition (You still need a valid Microsoft account with Bedrock Edition purchased!).
 - Test resource packs/behavior packs on older/newer versions for development purposes.
-- Switch between installed versions easily.
+- Switch between versions easily.
 - Explore most versions
 
 ## 🚀 Installation
 - Download release from [releases](https://github.com/QuasiChicken90/BedrockLaunch/releases/)
-- Unzip and open launcher.exe
+- Unzip and open BedrockLaunch.exe
 
 ## ⚠️ Warning
 - When installing a new version and starting it for the first time, all resource packs, worlds, and other content will be deleted!
 - You must own a legitimate copy of Minecraft Bedrock Edition.
 
 ## 🔨 Building
-- Install Python and NodeJS
-- Install NeutralinoJS with the command ```npm install -g @neutralinojs/neu```
-- Install pyinstaller with the command ```pip install pyinstaller```
-- Create a python virtual environment
-- clone/download the code into the venv
-- Activate the venv and run BuildLauncher.py
+- Install Python
+- Install NodeJS
+- Install Tauri
+- Create a venv. Once inside, run the below command
+- ```pip install -r requirements.txt```
+- Then run
+- ```python BuildLauncher.py```
+- Navigate to buildexec/exe/Launcher
 
 ## 📃 Credits
 - Some installer/launching code used from [here](https://github.com/CrystalVortex/Minecraft-Bedrock-Version-Manager/tree/TestVersion-9)
