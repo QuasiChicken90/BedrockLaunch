@@ -1,1 +1,54 @@
+Beta 16 changes:
+
+New features, changes and improvements:
+
+Completely remade UI and backend
+
+New design
+
+New window controls
+
+New tauri frontend
+
+New top toolbar with controls being there.
+
+Improved sidebar spacing to match more normal desktop apps
+
+Lower overall RAM usage
+
+Faster startup times
+
+No secondary console window (console logs now show when launching)
+
+Remade launching system for enhanced and simplified logs and usage
+
+Proper scaling and CSS to support all screen sizes
+
+Legibility improvements 
+
+Settings now shows storage usage and an improved design with additional clear descriptions for settings
+
+Added a button to enable developer mode in settings for launcher functionality
+
+New laucher updating design
+
+“What’s new” pop ups are gone and are instead in settings.
+
+Removed theme background customisations for a smaller app size
+
+Background now smoothly transitions instead of having a sudden change to the beginning
+
+Better guidance of how to use the launcher when launching, and more. 
+
+Clicking some buttons no longer takes you to a different page
+
+New Authenticator system (wip, does not yet work)
+
+Removed explore page
+
+Launcher Update change logs are now pulled from GitHub and not locally
+
+Fixed open mc button not opening the correct dir
+
+APPX version list is now local
 
