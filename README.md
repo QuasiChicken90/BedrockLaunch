@@ -3,19 +3,7 @@ A fully functional Minecraft Bedrock launcher
 
 [![Download BedrockLaunch](https://img.shields.io/sourceforge/dt/bedrocklaunch.svg)](https://sourceforge.net/projects/bedrocklaunch/files/latest/download)
 
-<img width="1940" height="1527" alt="gh3frame2" src="https://github.com/user-attachments/assets/fa8b3c8d-3cc2-4b5e-b4af-f8dbc753d7b3" />
-
-<img width="1484" height="961" alt="image" src="https://github.com/user-attachments/assets/7e682eb5-ceb4-4b85-9cf1-c052d538d82b" />
-
-<img width="1484" height="961" alt="image" src="https://github.com/user-attachments/assets/cfaf7fa8-1b2f-4417-8318-307b00295feb" />
-
-<img width="1484" height="961" alt="image" src="https://github.com/user-attachments/assets/5dfe4e37-2902-413b-ae3f-30b4d02e96fb" />
-
-<img width="1484" height="961" alt="image" src="https://github.com/user-attachments/assets/00cc5738-d787-4463-92e4-78eb5b770a59" />
-
-<img width="1484" height="961" alt="image" src="https://github.com/user-attachments/assets/3397f588-1da7-4cde-b62b-3f63d56b05d0" />
-
-<img width="1484" height="961" alt="image" src="https://github.com/user-attachments/assets/f6f61e7f-4190-4147-aa93-a84ac5f0b95d" />
+<img width="1734" height="1115" alt="Frame 1(1)" src="https://github.com/user-attachments/assets/321a971d-7dcf-4832-b0d2-e1c74c11448b" />
 
 ## ✅ What you can do with BedrockLaunch
 - Play most versions from the first few Bedrock versions to the latest. (preview versions not supported)
